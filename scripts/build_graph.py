@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import DefaultDict, Dict, Set, Tuple
 
 import networkx as nx
+from networkx.readwrite import json_graph
 
 # Add current directory to path for config import
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -230,7 +231,7 @@ def export_graph(graph: nx.Graph, output_path: str = "web/data/cna_to_cwe_map.js
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
     # Convert graph to node-link format
-    graph_data = nx.readwrite.json_graph.node_link_data(graph)
+    graph_data = json_graph.node_link_data(graph)
 
     # Add metadata
     graph_data["metadata"] = {

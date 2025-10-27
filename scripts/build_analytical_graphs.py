@@ -197,38 +197,44 @@ def build_attack_surface_timeline(data, output_file):
     timeline = sorted(data["timeline_data"], key=lambda x: x["timestamp"])
     
     # Calculate daily aggregates
-    daily_stats = defaultdict(lambda: {
-        "count": 0,
-        "critical_count": 0,
-        "high_count": 0,
-        "medium_count": 0,
-        "low_count": 0,
-        "avg_score": 0,
-        "max_score": 0,
-        "scores": []
-    })
+    daily_stats = {}
     
     for cve in timeline:
         date = cve["date"]
         score = cve["cvss_score"]
         
-        daily_stats[date]["count"] += 1
-        daily_stats[date]["scores"].append(score)
-        daily_stats[date]["max_score"] = max(daily_stats[date]["max_score"], score)
+        if date not in daily_stats:
+            daily_stats[date] = {
+                "count": 0,
+                "critical_count": 0,
+                "high_count": 0,
+                "medium_count": 0,
+                "low_count": 0,
+                "avg_score": 0.0,
+                "max_score": 0.0,
+                "scores": []
+            }
+        
+        stats = daily_stats[date]
+        stats["count"] += 1
+        stats["scores"].append(score)
+        stats["max_score"] = max(stats["max_score"], score)
         
         if score >= 9.0:
-            daily_stats[date]["critical_count"] += 1
+            stats["critical_count"] += 1
         elif score >= 7.0:
-            daily_stats[date]["high_count"] += 1
+            stats["high_count"] += 1
         elif score >= 4.0:
-            daily_stats[date]["medium_count"] += 1
+            stats["medium_count"] += 1
         else:
-            daily_stats[date]["low_count"] += 1
+            stats["low_count"] += 1
     
-    # Calculate averages
-    for date, stats in daily_stats.items():
-        if stats["scores"]:
-            stats["avg_score"] = round(sum(stats["scores"]) / len(stats["scores"]), 2)
+    # Calculate averages and remove scores list
+    for date in daily_stats:
+        stats = daily_stats[date]
+        scores_list = stats["scores"]
+        if scores_list:
+            stats["avg_score"] = round(sum(scores_list) / len(scores_list), 2)
         del stats["scores"]
     
     output_data = {
@@ -404,7 +410,8 @@ def build_cwe_cvss_distribution(data, output_file):
     
     # Show highest mean scores
     high_severity = sorted(distributions, key=lambda x: x["mean"], reverse=True)[:5]
-    print(f"  Highest mean severity: {', '.join([f'{c['cwe']} ({c['mean']})' for c in high_severity])}")
+    high_severity_str = ', '.join([f"{c['cwe']} ({c['mean']})" for c in high_severity])
+    print(f"  Highest mean severity: {high_severity_str}")
 
 
 def main():
