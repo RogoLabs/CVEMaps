@@ -42,13 +42,27 @@ Test the system locally before deploying to GitHub Pages.
 
 2. **Download CVE Data**:
    ```bash
-   # Clone the CVE List (this is large ~2GB, may take a few minutes)
+   # Use the setup script
+   chmod +x scripts/setup_cve_data.sh
+   ./scripts/setup_cve_data.sh
+   
+   # Or manually:
    git clone --depth 1 https://github.com/CVEProject/cvelistV5.git cve-data
    ```
 
-3. **Build the Graph**:
+3. **Build the Graphs**:
    ```bash
-   python build_graph.py
+   # Build main graph
+   python scripts/build_graph.py
+   
+   # Build alternative visualizations
+   python scripts/build_alternative_graphs.py
+   
+   # Build compact layouts
+   python scripts/build_compact_graphs.py
+   
+   # Build extended visualizations (vendors, CVSS, temporal)
+   python scripts/build_extended_graphs.py
    ```
    
    Expected output:
@@ -170,7 +184,7 @@ function nodeRadius(d) {
 
 ### Filter Data
 
-Edit `build_graph.py` to focus on specific CNAs or CWEs:
+Edit `scripts/build_graph.py` to focus on specific CNAs or CWEs:
 
 ```python
 # Only include certain CNAs

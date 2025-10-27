@@ -122,18 +122,22 @@
         }
         
         button {
-            background: #3b82f6;
-            color: white;
-            border: none;
+            background: #e2e8f0 !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
             padding: 8px 16px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 14px;
-            transition: background 0.2s;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         button:hover {
-            background: #2563eb;
+            background: #cbd5e1 !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
         
         #loading {
@@ -168,9 +172,13 @@
     </div>
     
     <div id="header">
-        <h1 class="text-4xl font-bold text-white mb-2">CVE Map</h1>
-        <p class="text-slate-300 text-lg">CNA to CWE Associations</p>
-        <p id="last-updated" class="text-slate-400 text-sm mt-2">Loading...</p>
+        <div style="background: rgba(15, 23, 42, 0.95); border: 1px solid #64748b; border-radius: 8px; padding: 16px; backdrop-filter: blur(10px); max-width: 500px;">
+            <h1 class="text-2xl font-bold text-slate-100 mb-1">Force-Directed Graph</h1>
+            <p class="text-sm text-slate-400">CNA to CWE associations with force simulation</p>
+            <div class="mt-2 text-xs text-slate-500">
+                <span id="last-updated">Loading...</span>
+            </div>
+        </div>
     </div>
     
     <div id="info-panel" style="display: none;">

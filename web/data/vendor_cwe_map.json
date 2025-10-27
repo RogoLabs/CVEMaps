@@ -1,0 +1,1013 @@
+{
+  "nodes": [
+    {
+      "type": "vendor",
+      "label": "OISF",
+      "id": "OISF"
+    },
+    {
+      "type": "vendor",
+      "label": "Salesforce",
+      "id": "Salesforce"
+    },
+    {
+      "type": "vendor",
+      "label": "Juniper Networks",
+      "id": "Juniper Networks"
+    },
+    {
+      "type": "vendor",
+      "label": "givanz",
+      "id": "givanz"
+    },
+    {
+      "type": "vendor",
+      "label": "ASUS",
+      "id": "ASUS"
+    },
+    {
+      "type": "vendor",
+      "label": "Growatt",
+      "id": "Growatt"
+    },
+    {
+      "type": "vendor",
+      "label": "Mozilla",
+      "id": "Mozilla"
+    },
+    {
+      "type": "vendor",
+      "label": "TOTOLINK",
+      "id": "TOTOLINK"
+    },
+    {
+      "type": "vendor",
+      "label": "Advantech",
+      "id": "Advantech"
+    },
+    {
+      "type": "vendor",
+      "label": "IROAD",
+      "id": "IROAD"
+    },
+    {
+      "type": "vendor",
+      "label": "GitLab",
+      "id": "GitLab"
+    },
+    {
+      "type": "vendor",
+      "label": "Ubiquiti Inc",
+      "id": "Ubiquiti Inc"
+    },
+    {
+      "type": "vendor",
+      "label": "open-webui",
+      "id": "open-webui"
+    },
+    {
+      "type": "vendor",
+      "label": "Hewlett Packard Enterprise",
+      "id": "Hewlett Packard Enterprise"
+    },
+    {
+      "type": "vendor",
+      "label": "dataease",
+      "id": "dataease"
+    },
+    {
+      "type": "vendor",
+      "label": "frappe",
+      "id": "frappe"
+    },
+    {
+      "type": "vendor",
+      "label": "UTT",
+      "id": "UTT"
+    },
+    {
+      "type": "vendor",
+      "label": "QNAP Systems Inc.",
+      "id": "QNAP Systems Inc."
+    },
+    {
+      "type": "vendor",
+      "label": "ZeroWdd",
+      "id": "ZeroWdd"
+    },
+    {
+      "type": "vendor",
+      "label": "Zabbix",
+      "id": "Zabbix"
+    },
+    {
+      "type": "vendor",
+      "label": "EnGenius",
+      "id": "EnGenius"
+    },
+    {
+      "type": "vendor",
+      "label": "misskey-dev",
+      "id": "misskey-dev"
+    },
+    {
+      "type": "vendor",
+      "label": "JoeyBling",
+      "id": "JoeyBling"
+    },
+    {
+      "type": "vendor",
+      "label": "element-hq",
+      "id": "element-hq"
+    },
+    {
+      "type": "vendor",
+      "label": "wpjobportal",
+      "id": "wpjobportal"
+    },
+    {
+      "type": "vendor",
+      "label": "NVIDIA",
+      "id": "NVIDIA"
+    },
+    {
+      "type": "vendor",
+      "label": "nextcloud",
+      "id": "nextcloud"
+    },
+    {
+      "type": "vendor",
+      "label": "MongoDB Inc",
+      "id": "MongoDB Inc"
+    },
+    {
+      "type": "vendor",
+      "label": "Codezips",
+      "id": "Codezips"
+    },
+    {
+      "type": "vendor",
+      "label": "Samsung Electronics",
+      "id": "Samsung Electronics"
+    },
+    {
+      "type": "vendor",
+      "label": "Rockwell Automation",
+      "id": "Rockwell Automation"
+    },
+    {
+      "type": "vendor",
+      "label": "Ashlar-Vellum",
+      "id": "Ashlar-Vellum"
+    },
+    {
+      "type": "vendor",
+      "label": "Eclipse Foundation",
+      "id": "Eclipse Foundation"
+    },
+    {
+      "type": "vendor",
+      "label": "bPlugins",
+      "id": "bPlugins"
+    },
+    {
+      "type": "vendor",
+      "label": "parisneo",
+      "id": "parisneo"
+    },
+    {
+      "type": "vendor",
+      "label": "JhumanJ",
+      "id": "JhumanJ"
+    },
+    {
+      "type": "vendor",
+      "label": "Mattermost",
+      "id": "Mattermost"
+    },
+    {
+      "type": "vendor",
+      "label": "Delta Electronics",
+      "id": "Delta Electronics"
+    },
+    {
+      "type": "vendor",
+      "label": "Canonical",
+      "id": "Canonical"
+    },
+    {
+      "type": "vendor",
+      "label": "Fanli2012",
+      "id": "Fanli2012"
+    },
+    {
+      "type": "vendor",
+      "label": "code-projects",
+      "id": "code-projects"
+    },
+    {
+      "type": "vendor",
+      "label": "Portabilis",
+      "id": "Portabilis"
+    },
+    {
+      "type": "vendor",
+      "label": "Jenkins Project",
+      "id": "Jenkins Project"
+    },
+    {
+      "type": "vendor",
+      "label": "xwiki",
+      "id": "xwiki"
+    },
+    {
+      "type": "vendor",
+      "label": "WAGO",
+      "id": "WAGO"
+    },
+    {
+      "type": "vendor",
+      "label": "Tenda",
+      "id": "Tenda"
+    },
+    {
+      "type": "vendor",
+      "label": "Wikimedia Foundation",
+      "id": "Wikimedia Foundation"
+    },
+    {
+      "type": "vendor",
+      "label": "Axis Communications AB",
+      "id": "Axis Communications AB"
+    },
+    {
+      "type": "vendor",
+      "label": "Progress Software",
+      "id": "Progress Software"
+    },
+    {
+      "type": "vendor",
+      "label": "Brocade",
+      "id": "Brocade"
+    },
+    {
+      "type": "vendor",
+      "label": "librenms",
+      "id": "librenms"
+    },
+    {
+      "type": "vendor",
+      "label": "appRain",
+      "id": "appRain"
+    },
+    {
+      "type": "vendor",
+      "label": "Enalean",
+      "id": "Enalean"
+    },
+    {
+      "type": "vendor",
+      "label": "Zyxel",
+      "id": "Zyxel"
+    },
+    {
+      "type": "vendor",
+      "label": "Allegra",
+      "id": "Allegra"
+    },
+    {
+      "type": "vendor",
+      "label": "Trimble",
+      "id": "Trimble"
+    },
+    {
+      "type": "vendor",
+      "label": "ESAFENET",
+      "id": "ESAFENET"
+    },
+    {
+      "type": "vendor",
+      "label": "Hewlett Packard Enterprise (HPE)",
+      "id": "Hewlett Packard Enterprise (HPE)"
+    },
+    {
+      "type": "vendor",
+      "label": "Schweitzer Engineering Laboratories",
+      "id": "Schweitzer Engineering Laboratories"
+    },
+    {
+      "type": "vendor",
+      "label": "Honor",
+      "id": "Honor"
+    },
+    {
+      "type": "vendor",
+      "label": "Google",
+      "id": "Google"
+    },
+    {
+      "type": "vendor",
+      "label": "CGM",
+      "id": "CGM"
+    },
+    {
+      "type": "vendor",
+      "label": "The Wikimedia Foundation",
+      "id": "The Wikimedia Foundation"
+    },
+    {
+      "type": "vendor",
+      "label": "freescout-help-desk",
+      "id": "freescout-help-desk"
+    },
+    {
+      "type": "vendor",
+      "label": "AMI",
+      "id": "AMI"
+    },
+    {
+      "type": "vendor",
+      "label": "AutomationDirect",
+      "id": "AutomationDirect"
+    },
+    {
+      "type": "vendor",
+      "label": "itsourcecode",
+      "id": "itsourcecode"
+    },
+    {
+      "type": "vendor",
+      "label": "IBM",
+      "id": "IBM"
+    },
+    {
+      "type": "vendor",
+      "label": "Crocoblock",
+      "id": "Crocoblock"
+    },
+    {
+      "type": "vendor",
+      "label": "LabRedesCefetRJ",
+      "id": "LabRedesCefetRJ"
+    },
+    {
+      "type": "vendor",
+      "label": "LambertGroup",
+      "id": "LambertGroup"
+    },
+    {
+      "type": "vendor",
+      "label": "PHPGurukul",
+      "id": "PHPGurukul"
+    },
+    {
+      "type": "vendor",
+      "label": "glpi-project",
+      "id": "glpi-project"
+    },
+    {
+      "type": "vendor",
+      "label": "PickPlugins",
+      "id": "PickPlugins"
+    },
+    {
+      "type": "vendor",
+      "label": "Newforma",
+      "id": "Newforma"
+    },
+    {
+      "type": "vendor",
+      "label": "vllm-project",
+      "id": "vllm-project"
+    },
+    {
+      "type": "vendor",
+      "label": "Project Worlds",
+      "id": "Project Worlds"
+    },
+    {
+      "type": "vendor",
+      "label": "Huawei",
+      "id": "Huawei"
+    },
+    {
+      "type": "vendor",
+      "label": "smub",
+      "id": "smub"
+    },
+    {
+      "type": "vendor",
+      "label": "Ruijie",
+      "id": "Ruijie"
+    },
+    {
+      "type": "vendor",
+      "label": "Broadcom",
+      "id": "Broadcom"
+    },
+    {
+      "type": "vendor",
+      "label": "TRENDnet",
+      "id": "TRENDnet"
+    },
+    {
+      "type": "vendor",
+      "label": "LB-LINK",
+      "id": "LB-LINK"
+    },
+    {
+      "type": "vendor",
+      "label": "Ivanti",
+      "id": "Ivanti"
+    },
+    {
+      "type": "vendor",
+      "label": "SonicWall",
+      "id": "SonicWall"
+    },
+    {
+      "type": "vendor",
+      "label": "OpenText",
+      "id": "OpenText"
+    },
+    {
+      "type": "vendor",
+      "label": "Combodo",
+      "id": "Combodo"
+    },
+    {
+      "type": "vendor",
+      "label": "n/a",
+      "id": "n/a"
+    },
+    {
+      "type": "vendor",
+      "label": "Imagination Technologies",
+      "id": "Imagination Technologies"
+    },
+    {
+      "type": "vendor",
+      "label": "F5",
+      "id": "F5"
+    },
+    {
+      "type": "vendor",
+      "label": "Projectworlds",
+      "id": "Projectworlds"
+    },
+    {
+      "type": "vendor",
+      "label": "mtons",
+      "id": "mtons"
+    },
+    {
+      "type": "vendor",
+      "label": "lunary-ai",
+      "id": "lunary-ai"
+    },
+    {
+      "type": "vendor",
+      "label": "Liferay",
+      "id": "Liferay"
+    },
+    {
+      "type": "vendor",
+      "label": "Akinsoft",
+      "id": "Akinsoft"
+    },
+    {
+      "type": "vendor",
+      "label": "gstreamer",
+      "id": "gstreamer"
+    },
+    {
+      "type": "vendor",
+      "label": "Fortinet",
+      "id": "Fortinet"
+    },
+    {
+      "type": "vendor",
+      "label": "Fuji Electric",
+      "id": "Fuji Electric"
+    },
+    {
+      "type": "vendor",
+      "label": "discourse",
+      "id": "discourse"
+    },
+    {
+      "type": "vendor",
+      "label": "Apache Software Foundation",
+      "id": "Apache Software Foundation"
+    },
+    {
+      "type": "vendor",
+      "label": "ScriptAndTools",
+      "id": "ScriptAndTools"
+    },
+    {
+      "type": "vendor",
+      "label": "Elastic",
+      "id": "Elastic"
+    },
+    {
+      "type": "vendor",
+      "label": "Progress Software Corporation",
+      "id": "Progress Software Corporation"
+    },
+    {
+      "type": "vendor",
+      "label": "yanyutao0402",
+      "id": "yanyutao0402"
+    },
+    {
+      "type": "vendor",
+      "label": "Dassault Syst\u00e8mes",
+      "id": "Dassault Syst\u00e8mes"
+    },
+    {
+      "type": "vendor",
+      "label": "Adobe",
+      "id": "Adobe"
+    },
+    {
+      "type": "vendor",
+      "label": "designthemes",
+      "id": "designthemes"
+    },
+    {
+      "type": "vendor",
+      "label": "Apple",
+      "id": "Apple"
+    },
+    {
+      "type": "vendor",
+      "label": "RTI",
+      "id": "RTI"
+    },
+    {
+      "type": "vendor",
+      "label": "ABB",
+      "id": "ABB"
+    },
+    {
+      "type": "vendor",
+      "label": "1000projects",
+      "id": "1000projects"
+    },
+    {
+      "type": "vendor",
+      "label": "OpenHarmony",
+      "id": "OpenHarmony"
+    },
+    {
+      "type": "vendor",
+      "label": "Foxit",
+      "id": "Foxit"
+    },
+    {
+      "type": "vendor",
+      "label": "Acronis",
+      "id": "Acronis"
+    },
+    {
+      "type": "vendor",
+      "label": "PDF-XChange",
+      "id": "PDF-XChange"
+    },
+    {
+      "type": "vendor",
+      "label": "videowhisper",
+      "id": "videowhisper"
+    },
+    {
+      "type": "vendor",
+      "label": "Devolutions",
+      "id": "Devolutions"
+    },
+    {
+      "type": "vendor",
+      "label": "Tomofun",
+      "id": "Tomofun"
+    },
+    {
+      "type": "vendor",
+      "label": "SUSE",
+      "id": "SUSE"
+    },
+    {
+      "type": "vendor",
+      "label": "VibeThemes",
+      "id": "VibeThemes"
+    },
+    {
+      "type": "vendor",
+      "label": "SICK AG",
+      "id": "SICK AG"
+    },
+    {
+      "type": "vendor",
+      "label": "Dell",
+      "id": "Dell"
+    },
+    {
+      "type": "vendor",
+      "label": "codeprojects",
+      "id": "codeprojects"
+    },
+    {
+      "type": "vendor",
+      "label": "Open Asset Import Library",
+      "id": "Open Asset Import Library"
+    },
+    {
+      "type": "vendor",
+      "label": "Linksys",
+      "id": "Linksys"
+    },
+    {
+      "type": "vendor",
+      "label": "argoproj",
+      "id": "argoproj"
+    },
+    {
+      "type": "vendor",
+      "label": "Hitachi Energy",
+      "id": "Hitachi Energy"
+    },
+    {
+      "type": "vendor",
+      "label": "Lenovo",
+      "id": "Lenovo"
+    },
+    {
+      "type": "vendor",
+      "label": "Tipray \u53a6\u95e8\u5929\u9510\u79d1\u6280\u80a1\u4efd\u6709\u9650\u516c\u53f8",
+      "id": "Tipray \u53a6\u95e8\u5929\u9510\u79d1\u6280\u80a1\u4efd\u6709\u9650\u516c\u53f8"
+    },
+    {
+      "type": "vendor",
+      "label": "ImageMagick",
+      "id": "ImageMagick"
+    },
+    {
+      "type": "vendor",
+      "label": "WSO2",
+      "id": "WSO2"
+    },
+    {
+      "type": "vendor",
+      "label": "GNU",
+      "id": "GNU"
+    },
+    {
+      "type": "vendor",
+      "label": "Drupal",
+      "id": "Drupal"
+    },
+    {
+      "type": "vendor",
+      "label": "Linux",
+      "id": "Linux"
+    },
+    {
+      "type": "vendor",
+      "label": "Iocharger",
+      "id": "Iocharger"
+    },
+    {
+      "type": "vendor",
+      "label": "Esri",
+      "id": "Esri"
+    },
+    {
+      "type": "vendor",
+      "label": "ManageEngine",
+      "id": "ManageEngine"
+    },
+    {
+      "type": "vendor",
+      "label": "langgenius",
+      "id": "langgenius"
+    },
+    {
+      "type": "vendor",
+      "label": "Arista Networks",
+      "id": "Arista Networks"
+    },
+    {
+      "type": "vendor",
+      "label": "Red Hat",
+      "id": "Red Hat"
+    },
+    {
+      "type": "vendor",
+      "label": "MediaTek, Inc.",
+      "id": "MediaTek, Inc."
+    },
+    {
+      "type": "vendor",
+      "label": "H3C",
+      "id": "H3C"
+    },
+    {
+      "type": "vendor",
+      "label": "Kenwood",
+      "id": "Kenwood"
+    },
+    {
+      "type": "vendor",
+      "label": "NI",
+      "id": "NI"
+    },
+    {
+      "type": "vendor",
+      "label": "Palo Alto Networks",
+      "id": "Palo Alto Networks"
+    },
+    {
+      "type": "vendor",
+      "label": "HashiCorp",
+      "id": "HashiCorp"
+    },
+    {
+      "type": "vendor",
+      "label": "HCL Software",
+      "id": "HCL Software"
+    },
+    {
+      "type": "vendor",
+      "label": "Endress+Hauser",
+      "id": "Endress+Hauser"
+    },
+    {
+      "type": "vendor",
+      "label": "FreeFloat",
+      "id": "FreeFloat"
+    },
+    {
+      "type": "vendor",
+      "label": "Belkin",
+      "id": "Belkin"
+    },
+    {
+      "type": "vendor",
+      "label": "AndSoft",
+      "id": "AndSoft"
+    },
+    {
+      "type": "vendor",
+      "label": "Veeam",
+      "id": "Veeam"
+    },
+    {
+      "type": "vendor",
+      "label": "WPDeveloper",
+      "id": "WPDeveloper"
+    },
+    {
+      "type": "vendor",
+      "label": "Trend Micro, Inc.",
+      "id": "Trend Micro, Inc."
+    },
+    {
+      "type": "vendor",
+      "label": "juzaweb",
+      "id": "juzaweb"
+    },
+    {
+      "type": "vendor",
+      "label": "projectworlds",
+      "id": "projectworlds"
+    },
+    {
+      "type": "vendor",
+      "label": "Synology",
+      "id": "Synology"
+    },
+    {
+      "type": "vendor",
+      "label": "IrfanView",
+      "id": "IrfanView"
+    },
+    {
+      "type": "vendor",
+      "label": "atjiu",
+      "id": "atjiu"
+    },
+    {
+      "type": "vendor",
+      "label": "TYPO3",
+      "id": "TYPO3"
+    },
+    {
+      "type": "vendor",
+      "label": "rack",
+      "id": "rack"
+    },
+    {
+      "type": "vendor",
+      "label": "VMware",
+      "id": "VMware"
+    },
+    {
+      "type": "vendor",
+      "label": "PCMan",
+      "id": "PCMan"
+    },
+    {
+      "type": "vendor",
+      "label": "CRM Perks",
+      "id": "CRM Perks"
+    },
+    {
+      "type": "vendor",
+      "label": "NotFound",
+      "id": "NotFound"
+    },
+    {
+      "type": "vendor",
+      "label": "Qualcomm, Inc.",
+      "id": "Qualcomm, Inc."
+    },
+    {
+      "type": "vendor",
+      "label": "Jinher",
+      "id": "Jinher"
+    },
+    {
+      "type": "vendor",
+      "label": "ZTE",
+      "id": "ZTE"
+    },
+    {
+      "type": "vendor",
+      "label": "dnnsoftware",
+      "id": "dnnsoftware"
+    },
+    {
+      "type": "vendor",
+      "label": "The Biosig Project",
+      "id": "The Biosig Project"
+    },
+    {
+      "type": "vendor",
+      "label": "Campcodes",
+      "id": "Campcodes"
+    },
+    {
+      "type": "vendor",
+      "label": "AMD",
+      "id": "AMD"
+    },
+    {
+      "type": "vendor",
+      "label": "Zoom Communications, Inc",
+      "id": "Zoom Communications, Inc"
+    },
+    {
+      "type": "vendor",
+      "label": "Vasion",
+      "id": "Vasion"
+    },
+    {
+      "type": "vendor",
+      "label": "bdthemes",
+      "id": "bdthemes"
+    },
+    {
+      "type": "vendor",
+      "label": "SourceCodester",
+      "id": "SourceCodester"
+    },
+    {
+      "type": "vendor",
+      "label": "Oracle Corporation",
+      "id": "Oracle Corporation"
+    },
+    {
+      "type": "vendor",
+      "label": "fuyang_lipengjun",
+      "id": "fuyang_lipengjun"
+    },
+    {
+      "type": "vendor",
+      "label": "Siemens",
+      "id": "Siemens"
+    },
+    {
+      "type": "vendor",
+      "label": "Tungsten Automation",
+      "id": "Tungsten Automation"
+    },
+    {
+      "type": "vendor",
+      "label": "Unknown",
+      "id": "Unknown"
+    },
+    {
+      "type": "vendor",
+      "label": "WPFactory",
+      "id": "WPFactory"
+    },
+    {
+      "type": "vendor",
+      "label": "silabs.com",
+      "id": "silabs.com"
+    },
+    {
+      "type": "vendor",
+      "label": "zj1983",
+      "id": "zj1983"
+    },
+    {
+      "type": "vendor",
+      "label": "Microsoft",
+      "id": "Microsoft"
+    },
+    {
+      "type": "vendor",
+      "label": "Sharp Corporation",
+      "id": "Sharp Corporation"
+    },
+    {
+      "type": "vendor",
+      "label": "Autodesk",
+      "id": "Autodesk"
+    },
+    {
+      "type": "vendor",
+      "label": "enituretechnology",
+      "id": "enituretechnology"
+    },
+    {
+      "type": "vendor",
+      "label": "SAP_SE",
+      "id": "SAP_SE"
+    },
+    {
+      "type": "vendor",
+      "label": "CodeAstro",
+      "id": "CodeAstro"
+    },
+    {
+      "type": "vendor",
+      "label": "Q-Free",
+      "id": "Q-Free"
+    },
+    {
+      "type": "vendor",
+      "label": "Wavlink",
+      "id": "Wavlink"
+    },
+    {
+      "type": "vendor",
+      "label": "mojoomla",
+      "id": "mojoomla"
+    },
+    {
+      "type": "vendor",
+      "label": "1000 Projects",
+      "id": "1000 Projects"
+    },
+    {
+      "type": "vendor",
+      "label": "haxtheweb",
+      "id": "haxtheweb"
+    },
+    {
+      "type": "vendor",
+      "label": "Schneider Electric",
+      "id": "Schneider Electric"
+    },
+    {
+      "type": "vendor",
+      "label": "Netgear",
+      "id": "Netgear"
+    },
+    {
+      "type": "vendor",
+      "label": "D-Link",
+      "id": "D-Link"
+    },
+    {
+      "type": "vendor",
+      "label": "binary-husky",
+      "id": "binary-husky"
+    },
+    {
+      "type": "vendor",
+      "label": "run-llama",
+      "id": "run-llama"
+    }
+  ],
+  "links": [],
+  "metadata": {
+    "generated_at": "2025-10-27T09:31:58.570406+00:00",
+    "type": "Vendor-CWE",
+    "node_count": 10304,
+    "edge_count": 20660,
+    "optimized": true,
+    "top_n": 200
+  }
+}

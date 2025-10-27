@@ -45,15 +45,6 @@ Repository = "https://github.com/RogoLabs/CVEMaps"
 Documentation = "https://github.com/RogoLabs/CVEMaps#readme"
 "Bug Tracker" = "https://github.com/RogoLabs/CVEMaps/issues"
 
-[project.scripts]
-cvemaps-build = "cvemaps.build_graph:main"
-cvemaps-build-alt = "cvemaps.build_alternative_graphs:main"
-cvemaps-build-compact = "cvemaps.build_compact_graphs:main"
-
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["cvemaps*"]
-
 [tool.black]
 line-length = 100
 target-version = ['py311']
@@ -89,4 +80,3 @@ testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-addopts = "--cov=cvemaps --cov-report=term-missing --cov-report=html"

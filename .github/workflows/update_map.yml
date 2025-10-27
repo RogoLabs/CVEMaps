@@ -80,25 +80,11 @@ jobs:
           echo "Update complete. Repository size:"
           du -sh cve-data
       
-      - name: Run main graph build script
+      - name: Run unified build script
         run: |
-          echo "Building main CVE map graph..."
-          python build_graph.py
-          echo "Main graph build complete!"
-      
-      - name: Run alternative graphs build script
-        run: |
-          echo "Building alternative visualizations..."
-          python build_alternative_graphs.py
-          echo "Alternative graphs build complete!"
-        continue-on-error: true
-      
-      - name: Run compact graphs build script
-        run: |
-          echo "Building compact visualizations..."
-          python build_compact_graphs.py
-          echo "Compact graphs build complete!"
-        continue-on-error: true
+          echo "Building all CVE visualizations..."
+          python scripts/build_all.py
+          echo "Build complete!"
       
       - name: Verify output
         run: |

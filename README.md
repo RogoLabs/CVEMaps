@@ -44,7 +44,15 @@ This project automatically:
 ├── .github/
 │   └── workflows/
 │       └── update_map.yml           # GitHub Actions workflow
-├── web/
+├── scripts/                         # Build and setup scripts
+│   ├── config.py                    # Configuration management
+│   ├── build_graph.py               # Main graph generation script
+│   ├── build_alternative_graphs.py  # Alternative visualizations
+│   ├── build_compact_graphs.py      # Compact NetworkX layouts
+│   ├── build_extended_graphs.py     # Extended visualizations (CVSS, vendors, etc.)
+│   ├── setup_cve_data.sh            # CVE data repository setup
+│   └── README.md                    # Scripts documentation
+├── web/                             # Web visualizations
 │   ├── index.html                   # Landing page with navigation
 │   ├── force-directed.html          # Force-directed graph
 │   ├── clusters.html                # Independent clusters view
@@ -55,7 +63,7 @@ This project automatically:
 │   ├── cwe-circular.html            # Circular CWE layout
 │   ├── cna-collaboration.html       # CNA collaboration network
 │   ├── mitre-ego.html               # MITRE ego network
-│   └── data/
+│   └── data/                        # Generated visualization data
 │       ├── cna_to_cwe_map.json      # Main graph data
 │       ├── cwe_cooccurrence_map.json # CWE co-occurrence
 │       ├── top_cna_cwe_bipartite.json # Bipartite layout
@@ -64,9 +72,8 @@ This project automatically:
 │       ├── cwe_circular_layout.json  # Circular layout
 │       ├── cna_collaboration.json    # Collaboration network
 │       └── mitre_ego_network.json    # MITRE ego network
-├── build_graph.py                   # Main graph generation script
-├── build_alternative_graphs.py      # Alternative visualizations
-├── build_compact_graphs.py          # Compact NetworkX layouts
+├── pyproject.toml                   # Python package configuration
+├── requirements.txt                 # Python dependencies
 ├── .gitignore
 ├── LICENSE
 └── README.md

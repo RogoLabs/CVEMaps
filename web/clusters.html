@@ -149,23 +149,25 @@
         }
         
         button {
-            background: #3b82f6;
-            color: white;
-            border: none;
+            background: #e2e8f0 !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
             padding: 8px 16px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 14px;
-            transition: background 0.2s;
+            font-weight: 600;
+            transition: all 0.2s;
             margin-right: 8px;
             margin-bottom: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         button:hover {
-            background: #2563eb;
-        }
-        
-        #loading {
+            background: #cbd5e1 !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }        #loading {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -190,18 +192,22 @@
         }
         
         input[type="text"] {
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid #64748b;
-            color: #f1f5f9;
+            background: #e2e8f0 !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #0f172a !important;
             padding: 8px 12px;
             border-radius: 6px;
-            width: 200px;
             font-size: 14px;
+            font-weight: 500;
+            width: 250px;
+            margin-right: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         input[type="text"]:focus {
             outline: none;
             border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
         }
     </style>
 </head>
@@ -212,9 +218,13 @@
     </div>
     
     <div id="header">
-        <h1 class="text-4xl font-bold text-white mb-2">CVE Map - Independent Clusters</h1>
-        <p class="text-slate-300 text-lg">Each CNA as Isolated Network</p>
-        <p id="last-updated" class="text-slate-400 text-sm mt-2">Loading...</p>
+        <div style="background: rgba(15, 23, 42, 0.95); border: 1px solid #64748b; border-radius: 8px; padding: 16px; backdrop-filter: blur(10px); max-width: 500px;">
+            <h1 class="text-2xl font-bold text-slate-100 mb-1">Independent CNA Clusters</h1>
+            <p class="text-sm text-slate-400">Each CNA as an isolated network with connected CWEs</p>
+            <div class="mt-2 text-xs text-slate-500">
+                <span id="last-updated">Loading...</span>
+            </div>
+        </div>
     </div>
     
     <div id="info-panel" style="display: none;">
@@ -235,7 +245,7 @@
         </div>
         
         <div class="mt-4 pt-4 border-t border-slate-600">
-            <h4 class="text-sm font-semibold mb-2 text-slate-300">CWEs in this cluster:</h4>
+            <h4 class="text-sm font-semibold mb-2 text-slate-300">CWEs in this cluster (sorted by CVE count):</h4>
             <div id="cwe-list" class="cwe-list"></div>
         </div>
         
@@ -649,7 +659,9 @@
                 }
             });
             
+            // Sort by CVE count (descending)
             cweList.innerHTML = Array.from(cweMap.entries())
+                .sort((a, b) => b[1].count - a[1].count)
                 .map(([id, data]) => `<div class="cwe-item">
                     <span>${data.label}</span>
                     <span class="text-slate-400">${data.count}</span>

@@ -6,7 +6,7 @@
     {
       "type": "cwe",
       "label": "CWE-79",
-      "cve_count": 10447,
+      "cve_count": 10496,
       "x": 999.9999985098837,
       "y": -4.5199531024645724e-06,
       "id": "CWE-79"
@@ -14,7 +14,7 @@
     {
       "type": "cwe",
       "label": "CWE-89",
-      "cve_count": 4892,
+      "cve_count": 4899,
       "x": 987.688361163951,
       "y": 156.43447114855022,
       "id": "CWE-89"
@@ -22,7 +22,7 @@
     {
       "type": "cwe",
       "label": "CWE-862",
-      "cve_count": 2489,
+      "cve_count": 2529,
       "x": 951.0565387434655,
       "y": 309.01699666585455,
       "id": "CWE-862"
@@ -30,7 +30,7 @@
     {
       "type": "cwe",
       "label": "CWE-74",
-      "cve_count": 2447,
+      "cve_count": 2460,
       "x": 891.0065283337364,
       "y": 453.99051247481447,
       "id": "CWE-74"
@@ -38,7 +38,7 @@
     {
       "type": "cwe",
       "label": "CWE-352",
-      "cve_count": 2396,
+      "cve_count": 2411,
       "x": 809.017001955668,
       "y": 587.7852368113223,
       "id": "CWE-352"
@@ -46,7 +46,7 @@
     {
       "type": "cwe",
       "label": "CWE-94",
-      "cve_count": 1770,
+      "cve_count": 1780,
       "x": 707.1067689186777,
       "y": 707.1067613688879,
       "id": "CWE-94"
@@ -54,7 +54,7 @@
     {
       "type": "cwe",
       "label": "CWE-284",
-      "cve_count": 1600,
+      "cve_count": 1603,
       "x": 587.7852443611122,
       "y": 809.0169944058781,
       "id": "CWE-284"
@@ -70,7 +70,7 @@
     {
       "type": "cwe",
       "label": "CWE-22",
-      "cve_count": 1496,
+      "cve_count": 1499,
       "x": 309.0169744133223,
       "y": 951.0565311936756,
       "id": "CWE-22"
@@ -78,7 +78,7 @@
     {
       "type": "cwe",
       "label": "CWE-416",
-      "cve_count": 1495,
+      "cve_count": 1496,
       "x": 156.43449359950134,
       "y": 987.6883536141611,
       "id": "CWE-416"
@@ -86,7 +86,7 @@
     {
       "type": "cwe",
       "label": "CWE-20",
-      "cve_count": 1368,
+      "cve_count": 1372,
       "x": -4.0681551232576206e-05,
       "y": 999.9999909600938,
       "id": "CWE-20"
@@ -102,7 +102,7 @@
     {
       "type": "cwe",
       "label": "CWE-119",
-      "cve_count": 1342,
+      "cve_count": 1360,
       "x": -309.01702795829306,
       "y": 951.056471589031,
       "id": "CWE-119"
@@ -118,7 +118,7 @@
     {
       "type": "cwe",
       "label": "CWE-121",
-      "cve_count": 1251,
+      "cve_count": 1259,
       "x": -587.7852383014385,
       "y": 809.0169944058781,
       "id": "CWE-121"
@@ -134,7 +134,7 @@
     {
       "type": "cwe",
       "label": "CWE-120",
-      "cve_count": 1172,
+      "cve_count": 1179,
       "x": -809.0169958959943,
       "y": 587.7852368113223,
       "id": "CWE-120"
@@ -150,7 +150,7 @@
     {
       "type": "cwe",
       "label": "CWE-476",
-      "cve_count": 987,
+      "cve_count": 991,
       "x": -951.0564730791473,
       "y": 309.0170264681768,
       "id": "CWE-476"
@@ -166,7 +166,7 @@
     {
       "type": "cwe",
       "label": "CWE-122",
-      "cve_count": 946,
+      "cve_count": 948,
       "x": -999.9999924502101,
       "y": -9.194272928079357e-05,
       "id": "CWE-122"
@@ -190,7 +190,7 @@
     {
       "type": "cwe",
       "label": "CWE-863",
-      "cve_count": 692,
+      "cve_count": 693,
       "x": -891.0065222740627,
       "y": -453.99055131704296,
       "id": "CWE-863"
@@ -198,7 +198,7 @@
     {
       "type": "cwe",
       "label": "CWE-918",
-      "cve_count": 658,
+      "cve_count": 659,
       "x": -809.0169362913498,
       "y": -587.785305455873,
       "id": "CWE-918"
@@ -245,24 +245,24 @@
     },
     {
       "type": "cwe",
-      "label": "CWE-266",
+      "label": "CWE-770",
       "cve_count": 454,
       "x": 1.4954717441191453e-05,
       "y": -1000.0,
-      "id": "CWE-266"
-    },
-    {
-      "type": "cwe",
-      "label": "CWE-770",
-      "cve_count": 451,
-      "x": 156.43453830298472,
-      "y": -987.6883030494226,
       "id": "CWE-770"
     },
     {
       "type": "cwe",
+      "label": "CWE-266",
+      "cve_count": 454,
+      "x": 156.43453830298472,
+      "y": -987.6883030494226,
+      "id": "CWE-266"
+    },
+    {
+      "type": "cwe",
       "label": "CWE-639",
-      "cve_count": 432,
+      "cve_count": 433,
       "x": 309.0171234249336,
       "y": -951.0564806289372,
       "id": "CWE-639"
@@ -286,7 +286,7 @@
     {
       "type": "cwe",
       "label": "CWE-601",
-      "cve_count": 365,
+      "cve_count": 366,
       "x": 707.1066497093888,
       "y": -707.1068896180831,
       "id": "CWE-601"
@@ -331,7 +331,7 @@
       "target": "CWE-352"
     },
     {
-      "weight": 743,
+      "weight": 752,
       "source": "CWE-79",
       "target": "CWE-94"
     },
@@ -376,7 +376,7 @@
       "target": "CWE-284"
     },
     {
-      "weight": 1,
+      "weight": 5,
       "source": "CWE-79",
       "target": "CWE-918"
     },
@@ -411,7 +411,7 @@
       "target": "CWE-798"
     },
     {
-      "weight": 2129,
+      "weight": 2141,
       "source": "CWE-89",
       "target": "CWE-74"
     },
@@ -431,7 +431,7 @@
       "target": "CWE-22"
     },
     {
-      "weight": 1,
+      "weight": 2,
       "source": "CWE-89",
       "target": "CWE-20"
     },
@@ -441,17 +441,17 @@
       "target": "CWE-78"
     },
     {
-      "weight": 2,
-      "source": "CWE-89",
-      "target": "CWE-306"
-    },
-    {
       "weight": 1,
       "source": "CWE-89",
       "target": "CWE-266"
     },
     {
-      "weight": 4,
+      "weight": 2,
+      "source": "CWE-89",
+      "target": "CWE-306"
+    },
+    {
+      "weight": 2,
       "source": "CWE-89",
       "target": "CWE-862"
     },
@@ -486,7 +486,7 @@
       "target": "CWE-287"
     },
     {
-      "weight": 1,
+      "weight": 80,
       "source": "CWE-862",
       "target": "CWE-352"
     },
@@ -591,7 +591,7 @@
       "target": "CWE-639"
     },
     {
-      "weight": 1,
+      "weight": 4,
       "source": "CWE-352",
       "target": "CWE-22"
     },
@@ -621,7 +621,7 @@
       "target": "CWE-863"
     },
     {
-      "weight": 1,
+      "weight": 5,
       "source": "CWE-94",
       "target": "CWE-121"
     },
@@ -636,7 +636,7 @@
       "target": "CWE-269"
     },
     {
-      "weight": 4,
+      "weight": 1,
       "source": "CWE-94",
       "target": "CWE-918"
     },
@@ -648,15 +648,15 @@
     {
       "weight": 4,
       "source": "CWE-94",
-      "target": "CWE-434"
-    },
-    {
-      "weight": 3,
-      "source": "CWE-94",
       "target": "CWE-306"
     },
     {
-      "weight": 6,
+      "weight": 8,
+      "source": "CWE-94",
+      "target": "CWE-434"
+    },
+    {
+      "weight": 8,
       "source": "CWE-94",
       "target": "CWE-20"
     },
@@ -696,7 +696,7 @@
       "target": "CWE-287"
     },
     {
-      "weight": 1,
+      "weight": 2,
       "source": "CWE-94",
       "target": "CWE-400"
     },
@@ -716,7 +716,7 @@
       "target": "CWE-266"
     },
     {
-      "weight": 232,
+      "weight": 235,
       "source": "CWE-284",
       "target": "CWE-434"
     },
@@ -731,12 +731,12 @@
       "target": "CWE-400"
     },
     {
-      "weight": 8,
+      "weight": 1,
       "source": "CWE-284",
       "target": "CWE-269"
     },
     {
-      "weight": 2,
+      "weight": 1,
       "source": "CWE-284",
       "target": "CWE-287"
     },
@@ -771,7 +771,7 @@
       "target": "CWE-22"
     },
     {
-      "weight": 4,
+      "weight": 1,
       "source": "CWE-284",
       "target": "CWE-285"
     },
@@ -786,7 +786,7 @@
       "target": "CWE-798"
     },
     {
-      "weight": 29,
+      "weight": 1,
       "source": "CWE-125",
       "target": "CWE-119"
     },
@@ -796,12 +796,12 @@
       "target": "CWE-122"
     },
     {
-      "weight": 21,
+      "weight": 13,
       "source": "CWE-125",
       "target": "CWE-787"
     },
     {
-      "weight": 1,
+      "weight": 3,
       "source": "CWE-125",
       "target": "CWE-416"
     },
@@ -811,7 +811,7 @@
       "target": "CWE-20"
     },
     {
-      "weight": 9,
+      "weight": 6,
       "source": "CWE-125",
       "target": "CWE-190"
     },
@@ -826,7 +826,7 @@
       "target": "CWE-120"
     },
     {
-      "weight": 6,
+      "weight": 3,
       "source": "CWE-125",
       "target": "CWE-200"
     },
@@ -846,24 +846,24 @@
       "target": "CWE-306"
     },
     {
-      "weight": 1,
+      "weight": 16,
       "source": "CWE-22",
       "target": "CWE-434"
     },
     {
-      "weight": 1,
+      "weight": 12,
       "source": "CWE-22",
       "target": "CWE-20"
     },
     {
-      "weight": 5,
-      "source": "CWE-22",
-      "target": "CWE-918"
-    },
-    {
-      "weight": 4,
+      "weight": 3,
       "source": "CWE-22",
       "target": "CWE-287"
+    },
+    {
+      "weight": 2,
+      "source": "CWE-22",
+      "target": "CWE-918"
     },
     {
       "weight": 7,
@@ -881,7 +881,7 @@
       "target": "CWE-502"
     },
     {
-      "weight": 2,
+      "weight": 1,
       "source": "CWE-22",
       "target": "CWE-98"
     },
@@ -896,12 +896,12 @@
       "target": "CWE-78"
     },
     {
-      "weight": 15,
+      "weight": 16,
       "source": "CWE-416",
       "target": "CWE-119"
     },
     {
-      "weight": 31,
+      "weight": 23,
       "source": "CWE-416",
       "target": "CWE-362"
     },
@@ -926,7 +926,7 @@
       "target": "CWE-190"
     },
     {
-      "weight": 8,
+      "weight": 2,
       "source": "CWE-20",
       "target": "CWE-121"
     },
@@ -946,14 +946,14 @@
       "target": "CWE-77"
     },
     {
-      "weight": 1,
-      "source": "CWE-20",
-      "target": "CWE-427"
-    },
-    {
       "weight": 29,
       "source": "CWE-20",
       "target": "CWE-78"
+    },
+    {
+      "weight": 1,
+      "source": "CWE-20",
+      "target": "CWE-427"
     },
     {
       "weight": 71,
@@ -991,7 +991,7 @@
       "target": "CWE-200"
     },
     {
-      "weight": 3,
+      "weight": 9,
       "source": "CWE-20",
       "target": "CWE-306"
     },
@@ -1021,17 +1021,17 @@
       "target": "CWE-119"
     },
     {
-      "weight": 5,
+      "weight": 2,
       "source": "CWE-787",
       "target": "CWE-190"
     },
     {
-      "weight": 11,
+      "weight": 1,
       "source": "CWE-787",
       "target": "CWE-122"
     },
     {
-      "weight": 3,
+      "weight": 1,
       "source": "CWE-787",
       "target": "CWE-120"
     },
@@ -1041,17 +1041,17 @@
       "target": "CWE-121"
     },
     {
-      "weight": 68,
+      "weight": 70,
       "source": "CWE-119",
       "target": "CWE-122"
     },
     {
-      "weight": 289,
+      "weight": 297,
       "source": "CWE-119",
       "target": "CWE-121"
     },
     {
-      "weight": 377,
+      "weight": 384,
       "source": "CWE-119",
       "target": "CWE-120"
     },
@@ -1096,7 +1096,7 @@
       "target": "CWE-78"
     },
     {
-      "weight": 4,
+      "weight": 5,
       "source": "CWE-200",
       "target": "CWE-306"
     },
@@ -1136,7 +1136,7 @@
       "target": "CWE-266"
     },
     {
-      "weight": 6,
+      "weight": 1,
       "source": "CWE-200",
       "target": "CWE-502"
     },
@@ -1256,7 +1256,7 @@
       "target": "CWE-306"
     },
     {
-      "weight": 27,
+      "weight": 28,
       "source": "CWE-122",
       "target": "CWE-190"
     },
@@ -1301,7 +1301,7 @@
       "target": "CWE-798"
     },
     {
-      "weight": 30,
+      "weight": 22,
       "source": "CWE-400",
       "target": "CWE-770"
     },
@@ -1323,12 +1323,12 @@
     {
       "weight": 1,
       "source": "CWE-400",
-      "target": "CWE-285"
+      "target": "CWE-269"
     },
     {
       "weight": 1,
       "source": "CWE-400",
-      "target": "CWE-269"
+      "target": "CWE-285"
     },
     {
       "weight": 1,
@@ -1366,17 +1366,17 @@
       "target": "CWE-601"
     },
     {
-      "weight": 29,
+      "weight": 1,
       "source": "CWE-287",
       "target": "CWE-306"
     },
     {
-      "weight": 2,
+      "weight": 3,
       "source": "CWE-287",
       "target": "CWE-798"
     },
     {
-      "weight": 2,
+      "weight": 1,
       "source": "CWE-287",
       "target": "CWE-269"
     },
@@ -1451,7 +1451,7 @@
       "target": "CWE-798"
     },
     {
-      "weight": 1,
+      "weight": 2,
       "source": "CWE-276",
       "target": "CWE-798"
     },
@@ -1462,7 +1462,7 @@
     }
   ],
   "metadata": {
-    "generated_at": "2025-10-26T15:58:38.085725+00:00",
+    "generated_at": "2025-10-27T09:32:51.283673+00:00",
     "type": "Circular CWE Layout",
     "layout": "circular",
     "node_count": 40,
