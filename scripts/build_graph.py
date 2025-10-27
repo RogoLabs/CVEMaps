@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 def parse_cve_files(
     data_dir: str = "cve-data/cves", days_back: int = 365
-) -> Tuple[DefaultDict[Tuple[str, str], int], Dict[str, str]]:
+) -> Tuple[DefaultDict[Tuple[str, str], int], Dict[str, str], int]:
     """
     Recursively walk through CVE data directory and extract CNA-CWE associations.
 
@@ -44,7 +44,8 @@ def parse_cve_files(
 
     Returns:
         tuple: (associations dict mapping (cna_uuid, cwe) to count,
-                cna_names dict mapping UUID to short name)
+                cna_names dict mapping UUID to short name,
+                parsed_files count of CVEs with associations)
     """
     associations: DefaultDict[Tuple[str, str], int] = defaultdict(int)
     cna_names: Dict[str, str] = {}
@@ -61,7 +62,7 @@ def parse_cve_files(
 
     if not os.path.exists(data_dir):
         logger.error(f"Directory {data_dir} does not exist!")
-        return associations, cna_names
+        return associations, cna_names, 0
 
     for root, dirs, files in os.walk(data_dir):
         for filename in files:
@@ -168,7 +169,7 @@ def parse_cve_files(
     logger.info(f"Unique CNA-CWE associations: {len(associations)}")
     logger.info(f"Unique CNAs identified: {len(cna_names)}")
 
-    return associations, cna_names
+    return associations, cna_names, parsed_files
 
 
 def build_graph(
@@ -216,13 +217,14 @@ def build_graph(
     return G
 
 
-def export_graph(graph: nx.Graph, output_path: str = "web/data/cna_to_cwe_map.json") -> None:
+def export_graph(graph: nx.Graph, output_path: str = "web/data/cna_to_cwe_map.json", cve_count: int = 0) -> None:
     """
     Export graph to JSON format for web visualization.
 
     Args:
         graph: NetworkX graph
         output_path: Path to save JSON file
+        cve_count: Number of CVEs analyzed
     """
     # Ensure output directory exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -237,6 +239,7 @@ def export_graph(graph: nx.Graph, output_path: str = "web/data/cna_to_cwe_map.js
         "edge_count": graph.number_of_edges(),
         "cna_count": len([n for n, d in graph.nodes(data=True) if d.get("type") == "cna"]),
         "cwe_count": len([n for n, d in graph.nodes(data=True) if d.get("type") == "cwe"]),
+        "cve_count": cve_count,
     }
 
     # Write to file
@@ -264,7 +267,7 @@ def main() -> None:
     config = Config.from_env()
 
     # Parse CVE files
-    associations, cna_names = parse_cve_files(config.CVE_DATA_DIR, config.DAYS_BACK)
+    associations, cna_names, cve_count = parse_cve_files(config.CVE_DATA_DIR, config.DAYS_BACK)
 
     if not associations:
         logger.error("No associations found. Please check the data directory.")
@@ -275,7 +278,7 @@ def main() -> None:
 
     # Export graph
     config.ensure_output_dir()
-    export_graph(graph, f"{config.WEB_DATA_DIR}/cna_to_cwe_map.json")
+    export_graph(graph, f"{config.WEB_DATA_DIR}/cna_to_cwe_map.json", cve_count)
 
     logger.info("=" * 60)
     logger.info("Build complete!")

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVSS Severity Distribution - CVE Maps</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        
+        .content {
+            flex: 1;
+            display: flex;
+            padding: 2rem;
+            gap: 2rem;
+            overflow: hidden;
+        }
+        
+        .chart-panel {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chart-title {
+            color: #f1f5f9;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-svg {
+            flex: 1;
+        }
+        
+        .bar {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        
+        .bar:hover {
+            opacity: 0.8;
+        }
+        
+        .axis-label {
+            font-size: 12px;
+            fill: #94a3b8;
+        }
+        
+        .axis path,
+        .axis line {
+            stroke: #475569;
+        }
+        
+        .axis text {
+            fill: #94a3b8;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            color: #f1f5f9;
+            font-size: 14px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .severity-critical { fill: #dc2626; }
+        .severity-high { fill: #f97316; }
+        .severity-medium { fill: #eab308; }
+        .severity-low { fill: #22c55e; }
+        .severity-none { fill: #64748b; }
+        .severity-unknown { fill: #94a3b8; }
+        
+        .cna-bar { fill: #3b82f6; }
+        
+        .back-button {
+            background: rgba(59, 130, 246, 0.1) !important;
+            color: #60a5fa !important;
+            border: 1px solid rgba(59, 130, 246, 0.3) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px !important;
+            text-decoration: none !important;
+            font-weight: 500 !important;
+            transition: all 0.2s !important;
+            display: inline-block !important;
+        }
+        
+        .back-button:hover {
+            background: rgba(59, 130, 246, 0.2) !important;
+            border-color: rgba(59, 130, 246, 0.5) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="viz-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-white mb-2">CVSS Severity Distribution</h1>
+                    <p class="text-slate-400">
+                        Analysis of <span id="total-cves" class="text-blue-400 font-semibold">-</span> CVEs by severity rating
+                    </p>
+                </div>
+                <a href="index.html" class="back-button">← Back to Home</a>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            <!-- Severity Distribution Chart -->
+            <div class="chart-panel">
+                <h2 class="chart-title">Distribution by Severity Level</h2>
+                <svg class="chart-svg" id="severity-chart"></svg>
+            </div>
+            
+            <!-- Top Critical CNAs Chart -->
+            <div class="chart-panel">
+                <h2 class="chart-title">Top 20 CNAs by Critical CVEs</h2>
+                <svg class="chart-svg" id="cna-chart"></svg>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+    
+    <script>
+        // Load and visualize data
+        async function loadData() {
+            try {
+                const response = await fetch('./data/cvss_severity_distribution.json');
+                const data = await response.json();
+                
+                // Update total count
+                document.getElementById('total-cves').textContent = data.total_cves.toLocaleString();
+                
+                // Create visualizations
+                createSeverityChart(data.score_ranges);
+                createCNAChart(data.top_critical_cnas);
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        function createSeverityChart(scoreRanges) {
+            const svg = d3.select('#severity-chart');
+            const container = svg.node().parentNode;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const margin = {top: 20, right: 30, bottom: 80, left: 80};
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+            
+            svg.attr('width', width).attr('height', height);
+            
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            // Prepare data
+            const severityOrder = [
+                'None (0.0)',
+                'Low (0.1-3.9)',
+                'Medium (4.0-6.9)',
+                'High (7.0-8.9)',
+                'Critical (9.0-10.0)'
+            ];
+            
+            const data = severityOrder.map(key => ({
+                severity: key,
+                count: scoreRanges[key],
+                className: 'severity-' + key.split(' ')[0].toLowerCase()
+            }));
+            
+            // Scales
+            const x = d3.scaleBand()
+                .domain(severityOrder)
+                .range([0, chartWidth])
+                .padding(0.2);
+            
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.count) * 1.1])
+                .range([chartHeight, 0]);
+            
+            // Axes
+            g.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${chartHeight})`)
+                .call(d3.axisBottom(x))
+                .selectAll('text')
+                .attr('transform', 'rotate(-45)')
+                .style('text-anchor', 'end')
+                .style('fill', '#94a3b8');
+            
+            g.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(y).ticks(8).tickFormat(d3.format(',d')));
+            
+            // Y-axis label
+            g.append('text')
+                .attr('class', 'axis-label')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', -60)
+                .attr('x', -chartHeight / 2)
+                .attr('text-anchor', 'middle')
+                .text('Number of CVEs');
+            
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+            
+            // Bars
+            g.selectAll('.bar')
+                .data(data)
+                .join('rect')
+                .attr('class', d => `bar ${d.className}`)
+                .attr('x', d => x(d.severity))
+                .attr('y', chartHeight)
+                .attr('width', x.bandwidth())
+                .attr('height', 0)
+                .on('mouseover', function(event, d) {
+                    const percentage = ((d.count / scoreRanges['None (0.0)'] + scoreRanges['Low (0.1-3.9)'] + 
+                        scoreRanges['Medium (4.0-6.9)'] + scoreRanges['High (7.0-8.9)'] + 
+                        scoreRanges['Critical (9.0-10.0)']) * 100).toFixed(1);
+                    
+                    tooltip.html(`
+                        <div style="font-weight: 600; margin-bottom: 8px;">${d.severity}</div>
+                        <div><strong>CVEs:</strong> ${d.count.toLocaleString()}</div>
+                        <div><strong>Percentage:</strong> ${percentage}%</div>
+                    `)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 10) + 'px')
+                    .style('opacity', 1);
+                })
+                .on('mouseout', function() {
+                    tooltip.style('opacity', 0);
+                })
+                .transition()
+                .duration(800)
+                .attr('y', d => y(d.count))
+                .attr('height', d => chartHeight - y(d.count));
+            
+            // Add value labels on bars
+            g.selectAll('.bar-label')
+                .data(data)
+                .join('text')
+                .attr('class', 'bar-label')
+                .attr('x', d => x(d.severity) + x.bandwidth() / 2)
+                .attr('y', d => y(d.count) - 5)
+                .attr('text-anchor', 'middle')
+                .attr('fill', '#f1f5f9')
+                .attr('font-size', '12px')
+                .attr('font-weight', '600')
+                .text(d => d.count.toLocaleString())
+                .style('opacity', 0)
+                .transition()
+                .delay(800)
+                .duration(400)
+                .style('opacity', 1);
+        }
+        
+        function createCNAChart(topCNAs) {
+            const svg = d3.select('#cna-chart');
+            const container = svg.node().parentNode;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const margin = {top: 20, right: 30, bottom: 50, left: 120};
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+            
+            svg.attr('width', width).attr('height', height);
+            
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            // Scales
+            const x = d3.scaleLinear()
+                .domain([0, d3.max(topCNAs, d => d.count) * 1.1])
+                .range([0, chartWidth]);
+            
+            const y = d3.scaleBand()
+                .domain(topCNAs.map(d => d.cna))
+                .range([0, chartHeight])
+                .padding(0.2);
+            
+            // Axes
+            g.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${chartHeight})`)
+                .call(d3.axisBottom(x).ticks(6).tickFormat(d3.format(',d')));
+            
+            g.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(y))
+                .selectAll('text')
+                .style('fill', '#94a3b8');
+            
+            // X-axis label
+            g.append('text')
+                .attr('class', 'axis-label')
+                .attr('x', chartWidth / 2)
+                .attr('y', chartHeight + 40)
+                .attr('text-anchor', 'middle')
+                .text('Number of Critical CVEs');
+            
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+            
+            // Bars
+            g.selectAll('.bar')
+                .data(topCNAs)
+                .join('rect')
+                .attr('class', 'bar cna-bar')
+                .attr('x', 0)
+                .attr('y', d => y(d.cna))
+                .attr('width', 0)
+                .attr('height', y.bandwidth())
+                .on('mouseover', function(event, d) {
+                    tooltip.html(`
+                        <div style="font-weight: 600; margin-bottom: 8px;">${d.cna}</div>
+                        <div><strong>Critical CVEs:</strong> ${d.count.toLocaleString()}</div>
+                    `)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 10) + 'px')
+                    .style('opacity', 1);
+                })
+                .on('mouseout', function() {
+                    tooltip.style('opacity', 0);
+                })
+                .transition()
+                .duration(800)
+                .attr('width', d => x(d.count));
+            
+            // Add value labels
+            g.selectAll('.bar-label')
+                .data(topCNAs)
+                .join('text')
+                .attr('class', 'bar-label')
+                .attr('x', d => x(d.count) + 5)
+                .attr('y', d => y(d.cna) + y.bandwidth() / 2)
+                .attr('dy', '0.35em')
+                .attr('fill', '#f1f5f9')
+                .attr('font-size', '11px')
+                .attr('font-weight', '600')
+                .text(d => d.count)
+                .style('opacity', 0)
+                .transition()
+                .delay(800)
+                .duration(400)
+                .style('opacity', 1);
+        }
+        
+        // Initialize
+        loadData();
+        
+        // Handle window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                d3.select('#severity-chart').selectAll('*').remove();
+                d3.select('#cna-chart').selectAll('*').remove();
+                loadData();
+            }, 250);
+        });
+    </script>
+</body>
+</html>

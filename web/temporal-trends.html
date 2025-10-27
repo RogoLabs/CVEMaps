@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporal Trends - CVE Maps</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            gap: 2rem;
+            overflow: auto;
+        }
+        
+        .chart-panel {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+        }
+        
+        .chart-title {
+            color: #f1f5f9;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-svg {
+            flex: 1;
+            min-height: 300px;
+        }
+        
+        .line {
+            fill: none;
+            stroke-width: 2.5;
+            transition: stroke-width 0.2s;
+        }
+        
+        .line:hover {
+            stroke-width: 4;
+        }
+        
+        .area {
+            opacity: 0.2;
+        }
+        
+        .dot {
+            cursor: pointer;
+            transition: r 0.2s;
+        }
+        
+        .dot:hover {
+            r: 6;
+        }
+        
+        .axis-label {
+            font-size: 12px;
+            fill: #94a3b8;
+        }
+        
+        .axis path,
+        .axis line {
+            stroke: #475569;
+        }
+        
+        .axis text {
+            fill: #94a3b8;
+        }
+        
+        .grid line {
+            stroke: #334155;
+            stroke-opacity: 0.3;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            color: #f1f5f9;
+            font-size: 14px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            max-width: 300px;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            opacity: 1;
+            transition: opacity 0.2s;
+        }
+        
+        .legend-item.inactive {
+            opacity: 0.3;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 3px;
+            border-radius: 2px;
+        }
+        
+        .legend-label {
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .back-button {
+            background: rgba(59, 130, 246, 0.1) !important;
+            color: #60a5fa !important;
+            border: 1px solid rgba(59, 130, 246, 0.3) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px !important;
+            text-decoration: none !important;
+            font-weight: 500 !important;
+            transition: all 0.2s !important;
+            display: inline-block !important;
+        }
+        
+        .back-button:hover {
+            background: rgba(59, 130, 246, 0.2) !important;
+            border-color: rgba(59, 130, 246, 0.5) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="viz-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-white mb-2">CVE Publication Trends</h1>
+                    <p class="text-slate-400">
+                        Timeline of <span id="total-cves" class="text-blue-400 font-semibold">-</span> CVE publications 
+                        from <span id="date-range" class="text-blue-400 font-semibold">-</span>
+                    </p>
+                </div>
+                <a href="index.html" class="back-button">← Back to Home</a>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            <!-- Total Timeline Chart -->
+            <div class="chart-panel">
+                <h2 class="chart-title">Monthly CVE Publications</h2>
+                <svg class="chart-svg" id="total-chart"></svg>
+            </div>
+            
+            <!-- Top CNAs Timeline Chart -->
+            <div class="chart-panel">
+                <h2 class="chart-title">Top 10 CNAs Over Time</h2>
+                <p class="text-slate-400 text-sm mb-3">Click legend items to show/hide individual CNAs</p>
+                <svg class="chart-svg" id="cna-chart"></svg>
+                <div class="legend" id="legend"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+    
+    <script>
+        // Color palette for CNAs
+        const colorScale = d3.scaleOrdinal()
+            .range([
+                '#3b82f6', '#ef4444', '#22c55e', '#f59e0b', '#8b5cf6',
+                '#ec4899', '#14b8a6', '#f97316', '#06b6d4', '#84cc16'
+            ]);
+        
+        let activeCNAs = new Set();
+        
+        // Load and visualize data
+        async function loadData() {
+            try {
+                const response = await fetch('./data/temporal_trends.json');
+                const data = await response.json();
+                
+                // Update stats
+                document.getElementById('total-cves').textContent = data.metadata.total_cves.toLocaleString();
+                document.getElementById('date-range').textContent = data.metadata.date_range;
+                
+                // Initialize active CNAs
+                activeCNAs = new Set(data.top_cnas);
+                
+                // Create visualizations
+                createTotalChart(data.monthly_totals);
+                createCNAChart(data.top_cnas, data.cna_timelines);
+                createLegend(data.top_cnas);
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        function createTotalChart(monthlyTotals) {
+            const svg = d3.select('#total-chart');
+            const container = svg.node().parentNode;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const margin = {top: 20, right: 30, bottom: 60, left: 80};
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+            
+            svg.attr('width', width).attr('height', height);
+            
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            // Prepare data
+            const months = Object.keys(monthlyTotals).sort();
+            const data = months.map(month => ({
+                month: month,
+                count: monthlyTotals[month]
+            }));
+            
+            // Scales
+            const x = d3.scalePoint()
+                .domain(months)
+                .range([0, chartWidth])
+                .padding(0.5);
+            
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.count) * 1.1])
+                .range([chartHeight, 0]);
+            
+            // Grid
+            g.append('g')
+                .attr('class', 'grid')
+                .call(d3.axisLeft(y).tickSize(-chartWidth).tickFormat(''));
+            
+            // Axes
+            g.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${chartHeight})`)
+                .call(d3.axisBottom(x))
+                .selectAll('text')
+                .attr('transform', 'rotate(-45)')
+                .style('text-anchor', 'end');
+            
+            g.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(y).ticks(8).tickFormat(d3.format(',d')));
+            
+            // Y-axis label
+            g.append('text')
+                .attr('class', 'axis-label')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', -60)
+                .attr('x', -chartHeight / 2)
+                .attr('text-anchor', 'middle')
+                .text('Number of CVEs');
+            
+            // Area
+            const area = d3.area()
+                .x(d => x(d.month))
+                .y0(chartHeight)
+                .y1(d => y(d.count))
+                .curve(d3.curveMonotoneX);
+            
+            g.append('path')
+                .datum(data)
+                .attr('class', 'area')
+                .attr('d', area)
+                .attr('fill', '#3b82f6')
+                .style('opacity', 0)
+                .transition()
+                .duration(1000)
+                .style('opacity', 0.2);
+            
+            // Line
+            const line = d3.line()
+                .x(d => x(d.month))
+                .y(d => y(d.count))
+                .curve(d3.curveMonotoneX);
+            
+            const path = g.append('path')
+                .datum(data)
+                .attr('class', 'line')
+                .attr('d', line)
+                .attr('stroke', '#3b82f6')
+                .attr('stroke-width', 2.5);
+            
+            // Animate line drawing
+            const totalLength = path.node().getTotalLength();
+            path.attr('stroke-dasharray', totalLength + ' ' + totalLength)
+                .attr('stroke-dashoffset', totalLength)
+                .transition()
+                .duration(2000)
+                .ease(d3.easeLinear)
+                .attr('stroke-dashoffset', 0);
+            
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+            
+            // Dots
+            g.selectAll('.dot')
+                .data(data)
+                .join('circle')
+                .attr('class', 'dot')
+                .attr('cx', d => x(d.month))
+                .attr('cy', d => y(d.count))
+                .attr('r', 0)
+                .attr('fill', '#3b82f6')
+                .on('mouseover', function(event, d) {
+                    tooltip.html(`
+                        <div style="font-weight: 600; margin-bottom: 8px;">${d.month}</div>
+                        <div><strong>CVEs:</strong> ${d.count.toLocaleString()}</div>
+                    `)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 10) + 'px')
+                    .style('opacity', 1);
+                })
+                .on('mouseout', function() {
+                    tooltip.style('opacity', 0);
+                })
+                .transition()
+                .delay((d, i) => i * 50)
+                .duration(500)
+                .attr('r', 4);
+        }
+        
+        function createCNAChart(topCNAs, cnaTimelines) {
+            const svg = d3.select('#cna-chart');
+            const container = svg.node().parentNode;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const margin = {top: 20, right: 30, bottom: 60, left: 80};
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+            
+            svg.attr('width', width).attr('height', height);
+            
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            // Prepare data
+            const months = Object.keys(cnaTimelines[topCNAs[0]]).sort();
+            
+            // Scales
+            const x = d3.scalePoint()
+                .domain(months)
+                .range([0, chartWidth])
+                .padding(0.5);
+            
+            const maxCount = d3.max(topCNAs, cna => 
+                d3.max(Object.values(cnaTimelines[cna]))
+            );
+            
+            const y = d3.scaleLinear()
+                .domain([0, maxCount * 1.1])
+                .range([chartHeight, 0]);
+            
+            // Grid
+            g.append('g')
+                .attr('class', 'grid')
+                .call(d3.axisLeft(y).tickSize(-chartWidth).tickFormat(''));
+            
+            // Axes
+            g.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${chartHeight})`)
+                .call(d3.axisBottom(x))
+                .selectAll('text')
+                .attr('transform', 'rotate(-45)')
+                .style('text-anchor', 'end');
+            
+            g.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(y).ticks(8).tickFormat(d3.format(',d')));
+            
+            // Y-axis label
+            g.append('text')
+                .attr('class', 'axis-label')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', -60)
+                .attr('x', -chartHeight / 2)
+                .attr('text-anchor', 'middle')
+                .text('Number of CVEs');
+            
+            // Line generator
+            const line = d3.line()
+                .x(d => x(d.month))
+                .y(d => y(d.count))
+                .curve(d3.curveMonotoneX);
+            
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+            
+            // Create lines for each CNA
+            topCNAs.forEach((cna, i) => {
+                const data = months.map(month => ({
+                    month: month,
+                    count: cnaTimelines[cna][month]
+                }));
+                
+                const color = colorScale(cna);
+                
+                // Line
+                const path = g.append('path')
+                    .datum(data)
+                    .attr('class', `line cna-line cna-${i}`)
+                    .attr('d', line)
+                    .attr('stroke', color)
+                    .attr('opacity', 0.8);
+                
+                // Animate
+                const totalLength = path.node().getTotalLength();
+                path.attr('stroke-dasharray', totalLength + ' ' + totalLength)
+                    .attr('stroke-dashoffset', totalLength)
+                    .transition()
+                    .delay(i * 100)
+                    .duration(1500)
+                    .ease(d3.easeLinear)
+                    .attr('stroke-dashoffset', 0);
+                
+                // Dots
+                g.selectAll(`.dot-${i}`)
+                    .data(data)
+                    .join('circle')
+                    .attr('class', `dot cna-dot cna-${i}`)
+                    .attr('cx', d => x(d.month))
+                    .attr('cy', d => y(d.count))
+                    .attr('r', 3)
+                    .attr('fill', color)
+                    .attr('opacity', 0)
+                    .on('mouseover', function(event, d) {
+                        tooltip.html(`
+                            <div style="font-weight: 600; margin-bottom: 8px;">${cna}</div>
+                            <div><strong>Month:</strong> ${d.month}</div>
+                            <div><strong>CVEs:</strong> ${d.count.toLocaleString()}</div>
+                        `)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .style('opacity', 1);
+                    })
+                    .on('mouseout', function() {
+                        tooltip.style('opacity', 0);
+                    })
+                    .transition()
+                    .delay(i * 100 + 1500)
+                    .duration(300)
+                    .attr('opacity', 0.8);
+            });
+        }
+        
+        function createLegend(topCNAs) {
+            const legend = d3.select('#legend');
+            
+            topCNAs.forEach((cna, i) => {
+                const item = legend.append('div')
+                    .attr('class', 'legend-item')
+                    .attr('data-cna', cna)
+                    .on('click', function() {
+                        toggleCNA(cna, i);
+                    });
+                
+                item.append('div')
+                    .attr('class', 'legend-color')
+                    .style('background-color', colorScale(cna));
+                
+                item.append('div')
+                    .attr('class', 'legend-label')
+                    .text(cna);
+            });
+        }
+        
+        function toggleCNA(cna, index) {
+            if (activeCNAs.has(cna)) {
+                activeCNAs.delete(cna);
+                d3.selectAll(`.cna-${index}`).transition().duration(300).attr('opacity', 0);
+                d3.select(`[data-cna="${cna}"]`).classed('inactive', true);
+            } else {
+                activeCNAs.add(cna);
+                d3.selectAll(`.cna-line.cna-${index}`).transition().duration(300).attr('opacity', 0.8);
+                d3.selectAll(`.cna-dot.cna-${index}`).transition().duration(300).attr('opacity', 0.8);
+                d3.select(`[data-cna="${cna}"]`).classed('inactive', false);
+            }
+        }
+        
+        // Initialize
+        loadData();
+        
+        // Handle window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                d3.select('#total-chart').selectAll('*').remove();
+                d3.select('#cna-chart').selectAll('*').remove();
+                d3.select('#legend').selectAll('*').remove();
+                loadData();
+            }, 250);
+        });
+    </script>
+</body>
+</html>

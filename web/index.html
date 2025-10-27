@@ -106,13 +106,16 @@
         <!-- Header -->
         <header class="text-center mb-16">
             <h1 class="text-5xl font-bold text-white mb-4">CVE Maps</h1>
-            <p class="text-xl text-slate-300 mb-2">Visualizing CVE-to-CWE Relationships</p>
+            <p class="text-xl text-slate-300 mb-2">Interactive Network Analysis of Cybersecurity Vulnerabilities</p>
+            <p class="text-sm text-slate-400 mb-1">
+                <strong class="text-blue-400">Rolling 365-Day Window</strong> • Only includes CVEs published in the last year
+            </p>
             <p id="last-updated" class="text-sm text-slate-400">Loading stats...</p>
             <div class="mt-6 flex justify-center gap-4 flex-wrap">
                 <span class="stat"><strong id="stat-cnas">-</strong> CNAs</span>
                 <span class="stat"><strong id="stat-cwes">-</strong> CWEs</span>
                 <span class="stat"><strong id="stat-edges">-</strong> Associations</span>
-                <span class="stat"><strong id="stat-cves">315,567</strong> CVEs Analyzed</span>
+                <span class="stat"><strong id="stat-cves">-</strong> CVEs Analyzed</span>
             </div>
         </header>
 
@@ -319,68 +322,109 @@
                 <div class="mt-4 text-red-400 font-semibold">View Ego →</div>
             </div>
 
-            <!-- Coming Soon: Vendor-CWE Profile -->
-            <div class="card opacity-60 cursor-not-allowed" onclick="event.preventDefault()">
-                <div class="card-icon icon-coming">🏢</div>
+            <!-- Vendor Vulnerability Profiles -->
+            <div class="card" onclick="window.location.href='vendor-profiles.html'">
+                <div class="card-icon">🏢</div>
                 <h2 class="text-2xl font-bold text-white mb-3">Vendor Vulnerability Profiles</h2>
                 <p class="text-slate-300 mb-4">
-                    Bipartite graph linking vendors to their most common weakness types. 
+                    Bipartite graph linking top vendors to their most common weakness types. 
                     Identify systemic development issues.
                 </p>
                 <div class="mb-4">
-                    <span class="badge badge-purple">Coming Soon</span>
+                    <span class="badge badge-purple">Active</span>
+                    <span class="badge badge-purple">Searchable</span>
                 </div>
-                <p class="text-sm text-slate-400">
-                    This visualization shows 9,685 vendors and their vulnerability footprints. File size: 2.7 MB.
-                </p>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>50 top vendors by CVE count</li>
+                    <li>Bipartite layout with zoom/pan</li>
+                    <li>Search to filter connections</li>
+                </ul>
+                <div class="mt-4 text-purple-400 font-semibold">View Profiles →</div>
             </div>
 
-            <!-- Coming Soon: CNA-Vendor Reporting -->
-            <div class="card opacity-60 cursor-not-allowed" onclick="event.preventDefault()">
-                <div class="card-icon icon-coming">📝</div>
-                <h2 class="text-2xl font-bold text-white mb-3">CNA-Vendor Reporting Map</h2>
-                <p class="text-slate-300 mb-4">
-                    Which security organizations report on which vendors? 
-                    Shows research focus and coverage patterns.
-                </p>
-                <div class="mb-4">
-                    <span class="badge badge-purple">Coming Soon</span>
-                </div>
-                <p class="text-sm text-slate-400">
-                    Links 350 CNAs to 9,718 vendors they report vulnerabilities for. File size: 1.8 MB.
-                </p>
-            </div>
-
-            <!-- Coming Soon: Sankey Diagram -->
-            <div class="card opacity-60 cursor-not-allowed" onclick="event.preventDefault()">
-                <div class="card-icon icon-coming">📊</div>
+            <!-- Sankey Flow Diagram -->
+            <div class="card" onclick="window.location.href='sankey-flow.html'">
+                <div class="card-icon">🌊</div>
                 <h2 class="text-2xl font-bold text-white mb-3">Sankey Flow Diagram</h2>
                 <p class="text-slate-300 mb-4">
-                    Visualize the flow from CNAs to CWEs with thickness representing frequency. 
+                    Visualize the flow from top CNAs to CWEs with thickness representing frequency. 
                     Clear left-to-right flow for pattern recognition.
                 </p>
                 <div class="mb-4">
-                    <span class="badge badge-purple">Coming Soon</span>
+                    <span class="badge badge-blue">Active</span>
+                    <span class="badge badge-blue">Flow</span>
                 </div>
-                <p class="text-sm text-slate-400">
-                    This visualization will show the directional flow of vulnerabilities from CVE Numbering Authorities to specific weakness types.
-                </p>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>20 CNAs flowing to 30 CWEs</li>
+                    <li>Flow thickness = CVE count</li>
+                    <li>Gradient colors CNA to CWE</li>
+                </ul>
+                <div class="mt-4 text-blue-400 font-semibold">View Flow →</div>
             </div>
 
-            <!-- Coming Soon: Heatmap Matrix -->
-            <div class="card opacity-60 cursor-not-allowed" onclick="event.preventDefault()">
-                <div class="card-icon icon-coming">🔥</div>
+            <!-- CVSS Severity Distribution -->
+            <div class="card" onclick="window.location.href='cvss-severity.html'">
+                <div class="card-icon">📊</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CVSS Severity Distribution</h2>
+                <p class="text-slate-300 mb-4">
+                    Analyze vulnerability severity ratings across all CVEs. 
+                    See which CNAs report the most critical vulnerabilities.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-red">Active</span>
+                    <span class="badge badge-red">Interactive</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>41,384 CVEs with CVSS scores</li>
+                    <li>Severity breakdown by score ranges</li>
+                    <li>Top 20 CNAs by critical CVEs</li>
+                </ul>
+                <div class="mt-4 text-red-400 font-semibold">View Analysis →</div>
+            </div>
+
+            <!-- Temporal Trends -->
+            <div class="card" onclick="window.location.href='temporal-trends.html'">
+                <div class="card-icon">📈</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CVE Publication Trends</h2>
+                <p class="text-slate-300 mb-4">
+                    Track CVE publications over time with monthly breakdowns. 
+                    Compare activity across top CNAs with interactive timelines.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-blue">Active</span>
+                    <span class="badge badge-blue">Timeline</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>13 months of publication data</li>
+                    <li>Top 10 CNAs tracked over time</li>
+                    <li>Interactive legend to filter CNAs</li>
+                </ul>
+                <div class="mt-4 text-blue-400 font-semibold">View Timeline →</div>
+            </div>
+
+            <!-- Heatmap Matrix -->
+            <div class="card" onclick="window.location.href='heatmap-matrix.html'">
+                <div class="card-icon">🔥</div>
                 <h2 class="text-2xl font-bold text-white mb-3">Heatmap Matrix</h2>
                 <p class="text-slate-300 mb-4">
-                    CNAs vs CWEs in a color-coded matrix. 
+                    Top CNAs vs CWEs in a color-coded matrix. 
                     Instantly spot patterns and hotspots in vulnerability distributions.
                 </p>
                 <div class="mb-4">
-                    <span class="badge badge-purple">Coming Soon</span>
+                    <span class="badge badge-red">Active</span>
+                    <span class="badge badge-red">Matrix</span>
                 </div>
-                <p class="text-sm text-slate-400">
-                    Quantitative analysis view with sortable axes and exportable data for deeper investigation.
-                </p>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>30 CNAs × 40 CWEs matrix</li>
+                    <li>Color intensity = CVE count</li>
+                    <li>Click labels to highlight rows/cols</li>
+                </ul>
+                <div class="mt-4 text-red-400 font-semibold">View Matrix →</div>
             </div>
         </div>
 
@@ -392,13 +436,13 @@
                     <h4 class="font-semibold text-white mb-2">Data Source</h4>
                     <p class="text-sm">
                         Parsed from the official <a href="https://github.com/CVEProject/cvelistV5" class="text-blue-400 hover:underline">CVE List V5</a> repository. 
-                        Data includes CNA assignments and CWE mappings from both primary sources and authorized data publishers.
+                        Analyzing CVEs published in the <strong>last 365 days</strong> with CNA assignments and CWE mappings from both primary sources and authorized data publishers (ADPs).
                     </p>
                 </div>
                 <div>
                     <h4 class="font-semibold text-white mb-2">Auto-Updates</h4>
                     <p class="text-sm">
-                        Automatically rebuilds every 3 hours via GitHub Actions, ensuring you always see the latest vulnerability landscape and emerging patterns.
+                        Automatically rebuilds every 3 hours via GitHub Actions, ensuring you always see the latest vulnerability landscape and emerging patterns from recent CVEs.
                     </p>
                 </div>
                 <div>
@@ -414,13 +458,37 @@
                         Common Weakness Enumerations categorize software vulnerabilities (e.g., CWE-79: Cross-Site Scripting, CWE-89: SQL Injection).
                     </p>
                 </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-2">Visualizations</h4>
+                    <p class="text-sm">
+                        14 interactive network graphs covering CNA-CWE relationships, co-occurrence patterns, vendor profiles, CVSS severity analysis, temporal trends, and more. All visualizations support zoom, pan, and click-to-highlight interactions.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-2">Network Analysis</h4>
+                    <p class="text-sm">
+                        Built using NetworkX and D3.js force simulations. Graph layouts include force-directed, bipartite, hierarchical tree, circular, star, and ego network arrangements optimized for pattern discovery.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-2">Rolling Window</h4>
+                    <p class="text-sm">
+                        365-day rolling window keeps visualizations focused on current threats. As new CVEs are published, older ones roll off, maintaining a consistent view of the active vulnerability landscape.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-2">Open Source</h4>
+                    <p class="text-sm">
+                        Fully open source under MIT License. Fork, modify, and contribute on <a href="https://github.com/RogoLabs/CVEMaps" class="text-blue-400 hover:underline">GitHub</a>. All build scripts and data processing pipelines are available for transparency and reproducibility.
+                    </p>
+                </div>
             </div>
         </div>
 
         <!-- Footer -->
         <footer class="text-center text-slate-400 text-sm">
             <p class="mb-2">
-                Built with ❤️ using D3.js, NetworkX, and GitHub Actions
+                Built with ❤️ by <a href="https://rogolabs.net" class="text-blue-400 hover:underline font-semibold">RogoLabs</a>
             </p>
             <p class="mb-2">
                 <a href="https://github.com/RogoLabs/CVEMaps">View on GitHub</a> | 
@@ -445,6 +513,7 @@
                     document.getElementById('stat-cnas').textContent = data.metadata.cna_count || '-';
                     document.getElementById('stat-cwes').textContent = data.metadata.cwe_count || '-';
                     document.getElementById('stat-edges').textContent = data.metadata.edge_count?.toLocaleString() || '-';
+                    document.getElementById('stat-cves').textContent = data.metadata.cve_count?.toLocaleString() || '-';
                 }
                 
                 // Load timestamp

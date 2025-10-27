@@ -1,0 +1,103 @@
+{
+  "severity_counts": {
+    "HIGH": 13448,
+    "MEDIUM": 17477,
+    "CRITICAL": 1963,
+    "LOW": 2895,
+    "Unknown": 5595,
+    "NONE": 6
+  },
+  "score_ranges": {
+    "None (0.0)": 6,
+    "Low (0.1-3.9)": 3452,
+    "Medium (4.0-6.9)": 20370,
+    "High (7.0-8.9)": 15098,
+    "Critical (9.0-10.0)": 2458
+  },
+  "top_critical_cnas": [
+    {
+      "cna": "Patchstack",
+      "count": 492
+    },
+    {
+      "cna": "Wordfence",
+      "count": 262
+    },
+    {
+      "cna": "GitHub_M",
+      "count": 184
+    },
+    {
+      "cna": "talos",
+      "count": 96
+    },
+    {
+      "cna": "mitre",
+      "count": 59
+    },
+    {
+      "cna": "icscert",
+      "count": 57
+    },
+    {
+      "cna": "@huntrdev",
+      "count": 56
+    },
+    {
+      "cna": "twcert",
+      "count": 56
+    },
+    {
+      "cna": "VulDB",
+      "count": 52
+    },
+    {
+      "cna": "microsoft",
+      "count": 44
+    },
+    {
+      "cna": "TR-CERT",
+      "count": 42
+    },
+    {
+      "cna": "zdi",
+      "count": 28
+    },
+    {
+      "cna": "siemens",
+      "count": 27
+    },
+    {
+      "cna": "ABB",
+      "count": 26
+    },
+    {
+      "cna": "jpcert",
+      "count": 25
+    },
+    {
+      "cna": "adobe",
+      "count": 22
+    },
+    {
+      "cna": "ibm",
+      "count": 22
+    },
+    {
+      "cna": "sap",
+      "count": 22
+    },
+    {
+      "cna": "ivanti",
+      "count": 19
+    },
+    {
+      "cna": "hackerone",
+      "count": 18
+    }
+  ],
+  "total_cves": 41384,
+  "metadata": {
+    "description": "CVSS severity distribution across all CVEs"
+  }
+}

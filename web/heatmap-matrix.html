@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heatmap Matrix - CVE Maps</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        
+        .content {
+            flex: 1;
+            display: flex;
+            padding: 2rem;
+            overflow: auto;
+        }
+        
+        .chart-panel {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chart-title {
+            color: #f1f5f9;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .chart-subtitle {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-svg {
+            flex: 1;
+            overflow: visible;
+        }
+        
+        .cell {
+            cursor: pointer;
+            transition: stroke-width 0.2s;
+        }
+        
+        .cell:hover {
+            stroke: #fff;
+            stroke-width: 2;
+        }
+        
+        .axis-label {
+            font-size: 10px;
+            fill: #94a3b8;
+            cursor: pointer;
+        }
+        
+        .axis-label:hover {
+            fill: #f1f5f9;
+        }
+        
+        .axis path,
+        .axis line {
+            stroke: #475569;
+        }
+        
+        .axis text {
+            fill: #94a3b8;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            color: #f1f5f9;
+            font-size: 14px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .legend {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .legend-gradient {
+            width: 300px;
+            height: 15px;
+            border-radius: 4px;
+        }
+        
+        .legend-label {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+        
+        .back-button {
+            background: rgba(59, 130, 246, 0.1) !important;
+            color: #60a5fa !important;
+            border: 1px solid rgba(59, 130, 246, 0.3) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px !important;
+            text-decoration: none !important;
+            font-weight: 500 !important;
+            transition: all 0.2s !important;
+            display: inline-block !important;
+        }
+        
+        .back-button:hover {
+            background: rgba(59, 130, 246, 0.2) !important;
+            border-color: rgba(59, 130, 246, 0.5) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="viz-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-white mb-2">CNA × CWE Heatmap</h1>
+                    <p class="text-slate-400">
+                        Matrix of <span id="cna-count" class="text-blue-400 font-semibold">-</span> CNAs × 
+                        <span id="cwe-count" class="text-blue-400 font-semibold">-</span> CWEs showing vulnerability patterns
+                    </p>
+                </div>
+                <a href="index.html" class="back-button">← Back to Home</a>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            <div class="chart-panel">
+                <h2 class="chart-title">Vulnerability Distribution Heatmap</h2>
+                <p class="chart-subtitle">Darker colors indicate more CVEs. Click labels to highlight rows/columns.</p>
+                <svg class="chart-svg" id="heatmap-chart"></svg>
+                <div class="legend">
+                    <span class="legend-label">Low</span>
+                    <svg width="300" height="15" class="legend-gradient">
+                        <defs>
+                            <linearGradient id="legend-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <rect width="300" height="15" fill="url(#legend-gradient)" rx="4"/>
+                    </svg>
+                    <span class="legend-label">High</span>
+                    <span class="legend-label" id="max-value" style="margin-left: 1rem;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+    
+    <script>
+        // Load and visualize data
+        async function loadData() {
+            try {
+                const response = await fetch('./data/heatmap_matrix.json');
+                const data = await response.json();
+                
+                // Update stats
+                document.getElementById('cna-count').textContent = data.metadata.cna_count;
+                document.getElementById('cwe-count').textContent = data.metadata.cwe_count;
+                document.getElementById('max-value').textContent = `Max: ${data.metadata.max_value} CVEs`;
+                
+                // Create visualization
+                createHeatmap(data);
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        function createHeatmap(data) {
+            const svg = d3.select('#heatmap-chart');
+            const container = svg.node().parentNode;
+            const width = container.clientWidth;
+            const height = container.clientHeight - 60; // Account for legend
+            
+            const margin = {top: 10, right: 10, bottom: 150, left: 150};
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+            
+            svg.attr('width', width).attr('height', height);
+            
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            // Scales
+            const x = d3.scaleBand()
+                .domain(data.cwes)
+                .range([0, chartWidth])
+                .padding(0.05);
+            
+            const y = d3.scaleBand()
+                .domain(data.cnas)
+                .range([0, chartHeight])
+                .padding(0.05);
+            
+            const colorScale = d3.scaleSequential()
+                .domain([0, data.metadata.max_value])
+                .interpolator(t => {
+                    if (t === 0) return '#1e293b';
+                    return d3.interpolateRgb('#1e293b', '#ef4444')(t);
+                });
+            
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+            
+            // Create cells
+            data.cnas.forEach((cna, i) => {
+                data.cwes.forEach((cwe, j) => {
+                    const value = data.matrix[i][j];
+                    
+                    if (value > 0) {
+                        g.append('rect')
+                            .attr('class', 'cell')
+                            .attr('x', x(cwe))
+                            .attr('y', y(cna))
+                            .attr('width', x.bandwidth())
+                            .attr('height', y.bandwidth())
+                            .attr('fill', colorScale(value))
+                            .attr('stroke', 'none')
+                            .on('mouseover', function(event) {
+                                tooltip.html(`
+                                    <div style="font-weight: 600; margin-bottom: 8px;">${cna} × ${cwe}</div>
+                                    <div><strong>CVEs:</strong> ${value.toLocaleString()}</div>
+                                `)
+                                .style('left', (event.pageX + 10) + 'px')
+                                .style('top', (event.pageY - 10) + 'px')
+                                .style('opacity', 1);
+                            })
+                            .on('mouseout', function() {
+                                tooltip.style('opacity', 0);
+                            });
+                    }
+                });
+            });
+            
+            // X-axis (CWEs)
+            g.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${chartHeight})`)
+                .call(d3.axisBottom(x).tickSize(0))
+                .selectAll('text')
+                .attr('class', 'axis-label')
+                .attr('transform', 'rotate(-90)')
+                .attr('dx', '-0.8em')
+                .attr('dy', '-0.5em')
+                .style('text-anchor', 'end')
+                .on('click', function(event, cwe) {
+                    highlightColumn(cwe, data);
+                });
+            
+            // Y-axis (CNAs)
+            g.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(y).tickSize(0))
+                .selectAll('text')
+                .attr('class', 'axis-label')
+                .on('click', function(event, cna) {
+                    highlightRow(cna, data);
+                });
+            
+            // Remove domain lines
+            g.selectAll('.axis .domain').remove();
+        }
+        
+        function highlightRow(cna, data) {
+            const cnaIndex = data.cnas.indexOf(cna);
+            const row = data.matrix[cnaIndex];
+            const tooltip = d3.select('#tooltip');
+            
+            const nonZeroCWEs = data.cwes.filter((cwe, i) => row[i] > 0);
+            const totalCVEs = d3.sum(row);
+            
+            tooltip.html(`
+                <div style="font-weight: 600; margin-bottom: 8px;">${cna}</div>
+                <div><strong>Total CVEs:</strong> ${totalCVEs.toLocaleString()}</div>
+                <div><strong>CWEs:</strong> ${nonZeroCWEs.length}</div>
+                <div style="margin-top: 8px; font-size: 11px; color: #94a3b8;">
+                    Top CWEs: ${nonZeroCWEs.slice(0, 5).join(', ')}
+                </div>
+            `)
+            .style('left', (event.pageX + 10) + 'px')
+            .style('top', (event.pageY - 10) + 'px')
+            .style('opacity', 1);
+            
+            setTimeout(() => tooltip.style('opacity', 0), 3000);
+        }
+        
+        function highlightColumn(cwe, data) {
+            const cweIndex = data.cwes.indexOf(cwe);
+            const column = data.matrix.map(row => row[cweIndex]);
+            const totalCVEs = d3.sum(column);
+            const nonZeroCNAs = data.cnas.filter((cna, i) => column[i] > 0);
+            
+            const tooltip = d3.select('#tooltip');
+            
+            tooltip.html(`
+                <div style="font-weight: 600; margin-bottom: 8px;">${cwe}</div>
+                <div><strong>Total CVEs:</strong> ${totalCVEs.toLocaleString()}</div>
+                <div><strong>CNAs:</strong> ${nonZeroCNAs.length}</div>
+                <div style="margin-top: 8px; font-size: 11px; color: #94a3b8;">
+                    Top CNAs: ${nonZeroCNAs.slice(0, 5).join(', ')}
+                </div>
+            `)
+            .style('left', (event.pageX + 10) + 'px')
+            .style('top', (event.pageY - 10) + 'px')
+            .style('opacity', 1);
+            
+            setTimeout(() => tooltip.style('opacity', 0), 3000);
+        }
+        
+        // Initialize
+        loadData();
+        
+        // Handle window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                d3.select('#heatmap-chart').selectAll('*').remove();
+                loadData();
+            }, 250);
+        });
+    </script>
+</body>
+</html>

@@ -18,7 +18,7 @@ BUILD_SCRIPTS = [
     "build_graph.py",              # Main CNA-CWE graph
     "build_alternative_graphs.py",  # Alternative visualizations
     "build_compact_graphs.py",      # Compact layouts
-    # "build_extended_graphs.py",   # Extended visualizations (disabled until CVE data parsing is tested)
+    "build_extended_graphs.py",    # Extended visualizations (CVSS, temporal, etc.)
 ]
 
 # Post-processing scripts

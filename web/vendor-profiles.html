@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Vulnerability Profiles - CVE Maps</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        
+        .controls {
+            background: rgba(30, 41, 59, 0.5);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .content {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .node {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        
+        .node:hover {
+            opacity: 0.8;
+        }
+        
+        .node-vendor {
+            fill: #3b82f6;
+            stroke: #1e40af;
+            stroke-width: 1.5;
+        }
+        
+        .node-cwe {
+            fill: #ef4444;
+            stroke: #991b1b;
+            stroke-width: 1.5;
+        }
+        
+        .node-label {
+            font-size: 10px;
+            fill: #f1f5f9;
+            pointer-events: none;
+            text-anchor: middle;
+        }
+        
+        .link {
+            stroke: #64748b;
+            stroke-opacity: 0.3;
+            fill: none;
+        }
+        
+        .link-highlighted {
+            stroke-opacity: 0.6;
+            stroke-width: 2;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            color: #f1f5f9;
+            font-size: 14px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .search-box {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            color: #f1f5f9;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 300px;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+        
+        .control-label {
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .back-button {
+            background: rgba(59, 130, 246, 0.1) !important;
+            color: #60a5fa !important;
+            border: 1px solid rgba(59, 130, 246, 0.3) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px !important;
+            text-decoration: none !important;
+            font-weight: 500 !important;
+            transition: all 0.2s !important;
+            display: inline-block !important;
+        }
+        
+        .back-button:hover {
+            background: rgba(59, 130, 246, 0.2) !important;
+            border-color: rgba(59, 130, 246, 0.5) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="viz-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-white mb-2">Vendor Vulnerability Profiles</h1>
+                    <p class="text-slate-400">
+                        Bipartite graph of <span id="vendor-count" class="text-blue-400 font-semibold">-</span> vendors 
+                        linked to <span id="cwe-count" class="text-blue-400 font-semibold">-</span> common weakness types
+                    </p>
+                </div>
+                <a href="index.html" class="back-button">← Back to Home</a>
+            </div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="controls">
+            <span class="control-label">Search:</span>
+            <input type="text" id="search-box" class="search-box" placeholder="Search vendors or CWEs...">
+            <span class="control-label" style="margin-left: 1rem;">
+                Showing <span id="visible-nodes" class="text-blue-400 font-semibold">-</span> nodes
+            </span>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            <svg id="graph"></svg>
+        </div>
+    </div>
+    
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+    
+    <script>
+        let graphData, nodes, links, simulation;
+        let svg, g, link, node, label;
+        
+        // Load and visualize data
+        async function loadData() {
+            try {
+                const response = await fetch('./data/vendor_vulnerability_profiles.json');
+                graphData = await response.json();
+                
+                // Update stats
+                const vendorCount = graphData.nodes.filter(n => n.node_type === 'vendor').length;
+                const cweCount = graphData.nodes.filter(n => n.node_type === 'cwe').length;
+                
+                document.getElementById('vendor-count').textContent = vendorCount;
+                document.getElementById('cwe-count').textContent = cweCount;
+                
+                // Create visualization
+                initGraph();
+                
+                // Set up search
+                document.getElementById('search-box').addEventListener('input', handleSearch);
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        function initGraph() {
+            svg = d3.select('#graph');
+            const width = window.innerWidth;
+            const height = window.innerHeight - 150;
+            
+            svg.attr('width', width).attr('height', height);
+            
+            g = svg.append('g');
+            
+            // Add zoom behavior
+            const zoom = d3.zoom()
+                .scaleExtent([0.1, 4])
+                .on('zoom', (event) => {
+                    g.attr('transform', event.transform);
+                });
+            
+            svg.call(zoom);
+            
+            // Initialize data
+            nodes = graphData.nodes.map(d => ({...d}));
+            links = graphData.links.map(d => ({...d}));
+            
+            // Position nodes in bipartite layout
+            const vendors = nodes.filter(n => n.node_type === 'vendor');
+            const cwes = nodes.filter(n => n.node_type === 'cwe');
+            
+            // Use provided x, y positions (already in bipartite layout)
+            nodes.forEach(node => {
+                node.fx = node.x;
+                node.fy = node.y;
+            });
+            
+            // Create simulation
+            simulation = d3.forceSimulation(nodes)
+                .force('link', d3.forceLink(links).id(d => d.id).distance(100).strength(0.1))
+                .force('charge', d3.forceManyBody().strength(-50))
+                .force('collision', d3.forceCollide().radius(8));
+            
+            // Draw links
+            link = g.append('g')
+                .selectAll('.link')
+                .data(links)
+                .join('line')
+                .attr('class', 'link')
+                .attr('stroke-width', d => Math.sqrt(d.weight) / 2);
+            
+            // Draw nodes
+            node = g.append('g')
+                .selectAll('.node')
+                .data(nodes)
+                .join('circle')
+                .attr('class', d => `node node-${d.node_type}`)
+                .attr('r', d => d.node_type === 'vendor' ? 
+                    Math.max(4, Math.min(12, Math.sqrt(d.cve_count || 10))) : 5)
+                .on('mouseover', handleNodeHover)
+                .on('mouseout', handleNodeOut)
+                .call(d3.drag()
+                    .on('start', dragStarted)
+                    .on('drag', dragged)
+                    .on('end', dragEnded));
+            
+            // Add labels (only for larger nodes)
+            label = g.append('g')
+                .selectAll('.node-label')
+                .data(nodes.filter(d => d.node_type === 'vendor' || d.id.startsWith('CWE-')))
+                .join('text')
+                .attr('class', 'node-label')
+                .attr('dy', d => d.node_type === 'vendor' ? 20 : -10)
+                .text(d => d.label);
+            
+            // Update positions on simulation tick
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+                
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+                
+                label
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+            
+            updateVisibleCount();
+        }
+        
+        function handleNodeHover(event, d) {
+            const tooltip = d3.select('#tooltip');
+            
+            // Highlight connected nodes and links
+            const connectedIds = new Set();
+            links.forEach(l => {
+                if (l.source.id === d.id) connectedIds.add(l.target.id);
+                if (l.target.id === d.id) connectedIds.add(l.source.id);
+            });
+            
+            node.style('opacity', n => n.id === d.id || connectedIds.has(n.id) ? 1 : 0.2);
+            link.classed('link-highlighted', l => l.source.id === d.id || l.target.id === d.id);
+            
+            // Show tooltip
+            let html = `
+                <div style="font-weight: 600; margin-bottom: 8px;">${d.label}</div>
+                <div><strong>Type:</strong> ${d.node_type === 'vendor' ? 'Vendor' : 'CWE'}</div>
+            `;
+            
+            if (d.node_type === 'vendor') {
+                html += `<div><strong>CVEs:</strong> ${(d.cve_count || 0).toLocaleString()}</div>`;
+                html += `<div><strong>Connected CWEs:</strong> ${connectedIds.size}</div>`;
+            } else {
+                html += `<div><strong>Vendors:</strong> ${connectedIds.size}</div>`;
+            }
+            
+            tooltip.html(html)
+                .style('left', (event.pageX + 10) + 'px')
+                .style('top', (event.pageY - 10) + 'px')
+                .style('opacity', 1);
+        }
+        
+        function handleNodeOut() {
+            node.style('opacity', 1);
+            link.classed('link-highlighted', false);
+            d3.select('#tooltip').style('opacity', 0);
+        }
+        
+        function handleSearch(event) {
+            const query = event.target.value.toLowerCase();
+            
+            if (!query) {
+                node.style('display', 'block');
+                label.style('display', 'block');
+                link.style('display', 'block');
+                updateVisibleCount();
+                return;
+            }
+            
+            // Find matching nodes
+            const matchingIds = new Set();
+            nodes.forEach(n => {
+                if (n.label.toLowerCase().includes(query)) {
+                    matchingIds.add(n.id);
+                    
+                    // Add connected nodes
+                    links.forEach(l => {
+                        if (l.source.id === n.id) matchingIds.add(l.target.id);
+                        if (l.target.id === n.id) matchingIds.add(l.source.id);
+                    });
+                }
+            });
+            
+            // Show/hide nodes
+            node.style('display', n => matchingIds.has(n.id) ? 'block' : 'none');
+            label.style('display', n => matchingIds.has(n.id) ? 'block' : 'none');
+            
+            // Show/hide links
+            link.style('display', l => 
+                matchingIds.has(l.source.id) && matchingIds.has(l.target.id) ? 'block' : 'none'
+            );
+            
+            updateVisibleCount(matchingIds.size);
+        }
+        
+        function updateVisibleCount(count) {
+            const visibleCount = count !== undefined ? count : nodes.length;
+            document.getElementById('visible-nodes').textContent = visibleCount;
+        }
+        
+        function dragStarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+        
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+        
+        function dragEnded(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+        }
+        
+        // Initialize
+        loadData();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight - 150;
+            svg.attr('width', width).attr('height', height);
+        });
+    </script>
+</body>
+</html>

@@ -62,22 +62,19 @@ jobs:
           restore-keys: |
             cve-data-
       
+      - name: Setup CVE data directory
+        run: |
+          # Remove existing directory if it exists (handles cache restoration issues)
+          if [ -d "cve-data" ]; then
+            echo "Removing existing cve-data directory..."
+            rm -rf cve-data
+          fi
+      
       - name: Clone CVE data repository
-        if: steps.cache-cve.outputs.cache-hit != 'true'
         run: |
           echo "Cloning CVE data repository..."
           git clone --depth 1 https://github.com/CVEProject/cvelistV5.git cve-data
           echo "Clone complete. Repository size:"
-          du -sh cve-data
-      
-      - name: Update CVE data (if cached)
-        if: steps.cache-cve.outputs.cache-hit == 'true'
-        run: |
-          echo "Updating cached CVE data..."
-          cd cve-data
-          git pull --depth 1
-          cd ..
-          echo "Update complete. Repository size:"
           du -sh cve-data
       
       - name: Run unified build script

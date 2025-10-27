@@ -356,7 +356,7 @@
       "target": "CWE-77"
     },
     {
-      "weight": 12,
+      "weight": 9,
       "source": "CWE-79",
       "target": "CWE-74"
     },
@@ -451,7 +451,7 @@
       "target": "CWE-306"
     },
     {
-      "weight": 2,
+      "weight": 4,
       "source": "CWE-89",
       "target": "CWE-862"
     },
@@ -486,7 +486,7 @@
       "target": "CWE-287"
     },
     {
-      "weight": 80,
+      "weight": 70,
       "source": "CWE-862",
       "target": "CWE-352"
     },
@@ -496,7 +496,7 @@
       "target": "CWE-306"
     },
     {
-      "weight": 14,
+      "weight": 1,
       "source": "CWE-862",
       "target": "CWE-863"
     },
@@ -591,7 +591,7 @@
       "target": "CWE-639"
     },
     {
-      "weight": 4,
+      "weight": 1,
       "source": "CWE-352",
       "target": "CWE-22"
     },
@@ -636,7 +636,7 @@
       "target": "CWE-269"
     },
     {
-      "weight": 1,
+      "weight": 4,
       "source": "CWE-94",
       "target": "CWE-918"
     },
@@ -648,12 +648,12 @@
     {
       "weight": 4,
       "source": "CWE-94",
-      "target": "CWE-306"
+      "target": "CWE-434"
     },
     {
-      "weight": 8,
+      "weight": 3,
       "source": "CWE-94",
-      "target": "CWE-434"
+      "target": "CWE-306"
     },
     {
       "weight": 8,
@@ -666,7 +666,7 @@
       "target": "CWE-863"
     },
     {
-      "weight": 8,
+      "weight": 4,
       "source": "CWE-94",
       "target": "CWE-502"
     },
@@ -706,7 +706,7 @@
       "target": "CWE-362"
     },
     {
-      "weight": 4,
+      "weight": 3,
       "source": "CWE-284",
       "target": "CWE-306"
     },
@@ -731,12 +731,12 @@
       "target": "CWE-400"
     },
     {
-      "weight": 1,
+      "weight": 8,
       "source": "CWE-284",
       "target": "CWE-269"
     },
     {
-      "weight": 1,
+      "weight": 7,
       "source": "CWE-284",
       "target": "CWE-287"
     },
@@ -771,7 +771,7 @@
       "target": "CWE-22"
     },
     {
-      "weight": 1,
+      "weight": 4,
       "source": "CWE-284",
       "target": "CWE-285"
     },
@@ -786,17 +786,17 @@
       "target": "CWE-798"
     },
     {
-      "weight": 1,
+      "weight": 29,
       "source": "CWE-125",
       "target": "CWE-119"
     },
     {
-      "weight": 1,
+      "weight": 15,
       "source": "CWE-125",
       "target": "CWE-122"
     },
     {
-      "weight": 13,
+      "weight": 21,
       "source": "CWE-125",
       "target": "CWE-787"
     },
@@ -811,7 +811,7 @@
       "target": "CWE-20"
     },
     {
-      "weight": 6,
+      "weight": 9,
       "source": "CWE-125",
       "target": "CWE-190"
     },
@@ -826,7 +826,7 @@
       "target": "CWE-120"
     },
     {
-      "weight": 3,
+      "weight": 6,
       "source": "CWE-125",
       "target": "CWE-200"
     },
@@ -856,12 +856,12 @@
       "target": "CWE-20"
     },
     {
-      "weight": 3,
+      "weight": 4,
       "source": "CWE-22",
       "target": "CWE-287"
     },
     {
-      "weight": 2,
+      "weight": 5,
       "source": "CWE-22",
       "target": "CWE-918"
     },
@@ -881,7 +881,7 @@
       "target": "CWE-502"
     },
     {
-      "weight": 1,
+      "weight": 2,
       "source": "CWE-22",
       "target": "CWE-98"
     },
@@ -901,7 +901,7 @@
       "target": "CWE-119"
     },
     {
-      "weight": 23,
+      "weight": 31,
       "source": "CWE-416",
       "target": "CWE-362"
     },
@@ -926,7 +926,7 @@
       "target": "CWE-190"
     },
     {
-      "weight": 2,
+      "weight": 8,
       "source": "CWE-20",
       "target": "CWE-121"
     },
@@ -941,12 +941,7 @@
       "target": "CWE-770"
     },
     {
-      "weight": 5,
-      "source": "CWE-20",
-      "target": "CWE-77"
-    },
-    {
-      "weight": 29,
+      "weight": 30,
       "source": "CWE-20",
       "target": "CWE-78"
     },
@@ -954,6 +949,11 @@
       "weight": 1,
       "source": "CWE-20",
       "target": "CWE-427"
+    },
+    {
+      "weight": 4,
+      "source": "CWE-20",
+      "target": "CWE-77"
     },
     {
       "weight": 71,
@@ -996,7 +996,7 @@
       "target": "CWE-306"
     },
     {
-      "weight": 3,
+      "weight": 1,
       "source": "CWE-20",
       "target": "CWE-787"
     },
@@ -1021,17 +1021,17 @@
       "target": "CWE-119"
     },
     {
-      "weight": 2,
+      "weight": 5,
       "source": "CWE-787",
       "target": "CWE-190"
     },
     {
-      "weight": 1,
+      "weight": 11,
       "source": "CWE-787",
       "target": "CWE-122"
     },
     {
-      "weight": 1,
+      "weight": 3,
       "source": "CWE-787",
       "target": "CWE-120"
     },
@@ -1136,7 +1136,7 @@
       "target": "CWE-266"
     },
     {
-      "weight": 1,
+      "weight": 6,
       "source": "CWE-200",
       "target": "CWE-502"
     },
@@ -1161,17 +1161,17 @@
       "target": "CWE-306"
     },
     {
-      "weight": 137,
-      "source": "CWE-78",
-      "target": "CWE-77"
-    },
-    {
       "weight": 1,
       "source": "CWE-78",
       "target": "CWE-427"
     },
     {
-      "weight": 3,
+      "weight": 138,
+      "source": "CWE-78",
+      "target": "CWE-77"
+    },
+    {
+      "weight": 1,
       "source": "CWE-78",
       "target": "CWE-269"
     },
@@ -1186,7 +1186,7 @@
       "target": "CWE-266"
     },
     {
-      "weight": 4,
+      "weight": 2,
       "source": "CWE-78",
       "target": "CWE-434"
     },
@@ -1221,7 +1221,7 @@
       "target": "CWE-266"
     },
     {
-      "weight": 15,
+      "weight": 1,
       "source": "CWE-434",
       "target": "CWE-502"
     },
@@ -1236,14 +1236,14 @@
       "target": "CWE-427"
     },
     {
-      "weight": 1,
-      "source": "CWE-77",
-      "target": "CWE-798"
-    },
-    {
       "weight": 2,
       "source": "CWE-77",
       "target": "CWE-287"
+    },
+    {
+      "weight": 1,
+      "source": "CWE-77",
+      "target": "CWE-798"
     },
     {
       "weight": 3,
@@ -1301,7 +1301,7 @@
       "target": "CWE-798"
     },
     {
-      "weight": 22,
+      "weight": 30,
       "source": "CWE-400",
       "target": "CWE-770"
     },
@@ -1323,12 +1323,12 @@
     {
       "weight": 1,
       "source": "CWE-400",
-      "target": "CWE-269"
+      "target": "CWE-285"
     },
     {
       "weight": 1,
       "source": "CWE-400",
-      "target": "CWE-285"
+      "target": "CWE-269"
     },
     {
       "weight": 1,
@@ -1366,7 +1366,7 @@
       "target": "CWE-601"
     },
     {
-      "weight": 1,
+      "weight": 29,
       "source": "CWE-287",
       "target": "CWE-306"
     },
@@ -1376,12 +1376,12 @@
       "target": "CWE-798"
     },
     {
-      "weight": 1,
+      "weight": 2,
       "source": "CWE-287",
       "target": "CWE-269"
     },
     {
-      "weight": 3,
+      "weight": 1,
       "source": "CWE-287",
       "target": "CWE-285"
     },
@@ -1391,7 +1391,7 @@
       "target": "CWE-285"
     },
     {
-      "weight": 2,
+      "weight": 1,
       "source": "CWE-306",
       "target": "CWE-269"
     },
@@ -1462,7 +1462,7 @@
     }
   ],
   "metadata": {
-    "generated_at": "2025-10-27T09:32:51.283673+00:00",
+    "generated_at": "2025-10-27T09:47:23.869038+00:00",
     "type": "Circular CWE Layout",
     "layout": "circular",
     "node_count": 40,
