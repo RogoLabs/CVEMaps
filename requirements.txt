@@ -1,0 +1,2 @@
+# Python dependencies for CVE Maps
+networkx>=3.0

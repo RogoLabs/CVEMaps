@@ -1,3 +1,14 @@
+# CVE data (cloned repository)
+cve-data/
+
+# Large alternative graph files (not used in visualizations)
+web/data/cve_temporal_map.json
+web/data/product_dependency_map.json
+web/data/product_cwe_map.json
+web/data/vendor_cwe_map.json
+web/data/cna_vendor_map.json
+web/data/cve_references_map.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

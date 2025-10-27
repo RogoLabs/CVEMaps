@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Map: MITRE Ego Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        #graph-container {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+        }
+        
+        .node {
+            cursor: pointer;
+            stroke: #fff;
+            stroke-width: 2px;
+        }
+        
+        .node-center {
+            fill: #ef4444;
+        }
+        
+        .node-connected {
+            fill: #3b82f6;
+        }
+        
+        .node.highlighted {
+            stroke: #fbbf24;
+            stroke-width: 4px;
+        }
+        
+        .link {
+            stroke: #64748b;
+            stroke-opacity: 0.3;
+        }
+        
+        .link.highlighted {
+            stroke: #fbbf24;
+            stroke-opacity: 0.8;
+            stroke-width: 2px;
+        }
+        
+        .node-label {
+            font-size: 11px;
+            fill: #e2e8f0;
+            pointer-events: none;
+            text-anchor: middle;
+            user-select: none;
+            font-weight: 600;
+        }
+        
+        .node-label.center {
+            font-size: 14px;
+            fill: #fca5a5;
+            font-weight: bold;
+        }
+        
+        #tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #e2e8f0;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+        }
+        
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            padding: 20px;
+            color: #e2e8f0;
+            max-width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        #header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        button {
+            background: rgba(51, 65, 85, 0.9);
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 8px;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: rgba(71, 85, 105, 0.9);
+            border-color: #64748b;
+        }
+        
+        input[type="text"] {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid #475569;
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 250px;
+        }
+        
+        .legend {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 12px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+            border: 2px solid #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div style="background: rgba(15, 23, 42, 0.95); border: 1px solid #475569; border-radius: 8px; padding: 16px; backdrop-filter: blur(10px); max-width: 500px;">
+            <h1 class="text-2xl font-bold text-slate-100 mb-1">MITRE Ego Network</h1>
+            <p class="text-sm text-slate-400 mb-2">MITRE Corporation and direct CNA connections</p>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ef4444;"></div>
+                    <span class="text-slate-200">MITRE (Center)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3b82f6;"></div>
+                    <span class="text-slate-200">Connected CNAs</span>
+                </div>
+            </div>
+            <div class="mt-2 text-xs text-slate-500">
+                <span id="stats">Loading...</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="controls">
+        <input type="text" id="search-input" placeholder="Filter CNA..." />
+        <button id="reset-btn">Reset View</button>
+        <button id="clear-selection-btn">Clear Selection</button>
+        <button id="toggle-labels-btn">Toggle Labels</button>
+        <button id="back-btn" onclick="window.location.href='index.html'">← Back</button>
+    </div>
+    
+    <div id="info-panel">
+        <h2 class="text-lg font-bold mb-3">CNA Details</h2>
+        <div class="text-sm">
+            <div class="mb-2"><strong>Selected:</strong> <span id="cna-name">-</span></div>
+            <div class="mb-2"><strong>CWE Count:</strong> <span id="cwe-count">-</span></div>
+            <div class="mb-3"><strong>Shared CWEs:</strong> <span id="shared-count">-</span></div>
+            <div class="text-xs text-slate-400 mb-2"><strong>Top Shared CWEs:</strong></div>
+            <div id="cwe-list" class="text-xs text-slate-300"></div>
+        </div>
+    </div>
+    
+    <div id="tooltip"></div>
+    <svg id="graph-container"></svg>
+    
+    <script>
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        const svg = d3.select("#graph-container")
+            .attr("width", width)
+            .attr("height", height);
+        
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 10])
+            .on("zoom", (event) => {
+                g.attr("transform", event.transform);
+            });
+        
+        svg.call(zoom);
+        
+        const g = svg.append("g");
+        const tooltip = d3.select("#tooltip");
+        
+        let graphData = null;
+        let selectedNode = null;
+        let showLabels = true;
+        let allNodes = [];
+        let allLinks = [];
+        
+        async function loadData() {
+            try {
+                const response = await fetch('./data/mitre_ego_network.json');
+                graphData = await response.json();
+                
+                allNodes = graphData.nodes.map(d => ({...d}));
+                allLinks = graphData.links.map(d => ({...d}));
+                
+                const centerNode = allNodes.find(n => n.center);
+                document.getElementById('stats').textContent = 
+                    `${graphData.metadata.node_count} nodes • ${graphData.metadata.edge_count} connections • Radius: ${graphData.metadata.radius}`;
+                
+                visualizeGraph();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        function visualizeGraph() {
+            g.selectAll('*').remove();
+            
+            // Use pre-computed positions
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const scale = Math.min(width, height) * 0.35;
+            
+            allNodes.forEach(n => {
+                n.displayX = centerX + n.x * scale;
+                n.displayY = centerY + n.y * scale;
+            });
+            
+            // Draw links
+            const link = g.append("g")
+                .selectAll("line")
+                .data(allLinks)
+                .join("line")
+                .attr("class", "link")
+                .attr("stroke-width", d => Math.sqrt(d.weight || 1) / 2)
+                .attr("x1", d => {
+                    const source = allNodes.find(n => n.id === (typeof d.source === 'object' ? d.source.id : d.source));
+                    return source ? source.displayX : 0;
+                })
+                .attr("y1", d => {
+                    const source = allNodes.find(n => n.id === (typeof d.source === 'object' ? d.source.id : d.source));
+                    return source ? source.displayY : 0;
+                })
+                .attr("x2", d => {
+                    const target = allNodes.find(n => n.id === (typeof d.target === 'object' ? d.target.id : d.target));
+                    return target ? target.displayX : 0;
+                })
+                .attr("y2", d => {
+                    const target = allNodes.find(n => n.id === (typeof d.target === 'object' ? d.target.id : d.target));
+                    return target ? target.displayY : 0;
+                });
+            
+            // Draw nodes
+            const node = g.append("g")
+                .selectAll("circle")
+                .data(allNodes)
+                .join("circle")
+                .attr("class", d => d.center ? "node node-center" : "node node-connected")
+                .attr("r", d => d.center ? 12 : 4 + Math.sqrt(d.cwe_count || 0) / 3)
+                .attr("cx", d => d.displayX)
+                .attr("cy", d => d.displayY)
+                .on("mouseover", function(event, d) {
+                    if (!selectedNode || selectedNode.id !== d.id) {
+                        d3.select(this).classed("highlighted", true);
+                    }
+                    const getNodeId = (node) => typeof node === 'object' ? node.id : node;
+                    const connections = allLinks.filter(l => {
+                        const sourceId = getNodeId(l.source);
+                        const targetId = getNodeId(l.target);
+                        return sourceId === d.id || targetId === d.id;
+                    });
+                    tooltip
+                        .style("opacity", 1)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 10) + "px")
+                        .html(`<strong>${d.label}</strong><br>CWEs: ${d.cwe_count || 0}<br>Connections: ${connections.length}${d.center ? '<br><span style="color: #fca5a5;">⬤ CENTER</span>' : ''}`);
+                })
+                .on("mouseout", function(event, d) {
+                    if (!selectedNode || selectedNode.id !== d.id) {
+                        d3.select(this).classed("highlighted", false);
+                    }
+                    tooltip.style("opacity", 0);
+                })
+                .on("click", function(event, d) {
+                    event.stopPropagation();
+                    selectNode(d);
+                });
+            
+            // Draw labels
+            const topCNAs = allNodes.filter(n => n.center || (n.cwe_count || 0) > 10).slice(0, 50);
+            const label = g.append("g")
+                .selectAll("text")
+                .data(topCNAs)
+                .join("text")
+                .attr("class", d => d.center ? "node-label center" : "node-label")
+                .text(d => d.label)
+                .attr("x", d => d.displayX)
+                .attr("y", d => d.displayY + (d.center ? -15 : -8))
+                .style("display", showLabels ? "block" : "none");
+            
+            window.graphElements = { link, node, label };
+        }
+        
+        function selectNode(d) {
+            selectedNode = d;
+            
+            document.getElementById('cna-name').textContent = d.label + (d.center ? ' (MITRE)' : '');
+            document.getElementById('cwe-count').textContent = d.cwe_count || '0';
+            
+            const getNodeId = (node) => typeof node === 'object' ? node.id : node;
+            const connectedLinks = allLinks.filter(l => {
+                const sourceId = getNodeId(l.source);
+                const targetId = getNodeId(l.target);
+                return sourceId === d.id || targetId === d.id;
+            });
+            
+            const totalShared = connectedLinks.reduce((sum, l) => sum + (l.weight || 1), 0);
+            document.getElementById('shared-count').textContent = totalShared;
+            
+            // Get shared CWEs if available
+            if (d.shared_cwes && d.shared_cwes.length > 0) {
+                document.getElementById('cwe-list').innerHTML = d.shared_cwes
+                    .sort((a, b) => b.count - a.count)
+                    .slice(0, 20)
+                    .map(c => `<div class="flex justify-between py-1"><span>${c.cwe}</span><span class="text-slate-500">${c.count} CVEs</span></div>`)
+                    .join('');
+            } else {
+                document.getElementById('cwe-list').innerHTML = '<div class="text-slate-500">No detailed CWE data</div>';
+            }
+            
+            // Highlight
+            const connectedNodeIds = new Set(connectedLinks.flatMap(l => {
+                const sourceId = getNodeId(l.source);
+                const targetId = getNodeId(l.target);
+                return [sourceId, targetId];
+            }));
+            
+            window.graphElements.node.classed("highlighted", n => n.id === d.id || connectedNodeIds.has(n.id));
+            window.graphElements.link.classed("highlighted", l => {
+                const sourceId = getNodeId(l.source);
+                const targetId = getNodeId(l.target);
+                return sourceId === d.id || targetId === d.id;
+            });
+        }
+        
+        function clearSelection() {
+            selectedNode = null;
+            window.graphElements.node.classed("highlighted", false);
+            window.graphElements.link.classed("highlighted", false);
+            
+            document.getElementById('cna-name').textContent = '-';
+            document.getElementById('cwe-count').textContent = '-';
+            document.getElementById('shared-count').textContent = '-';
+            document.getElementById('cwe-list').innerHTML = '';
+        }
+        
+        function filterGraph() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            
+            if (!query) {
+                allNodes.forEach(n => n.visible = true);
+                allLinks.forEach(l => l.visible = true);
+            } else {
+                allNodes.forEach(n => {
+                    n.visible = n.label.toLowerCase().includes(query);
+                });
+                
+                const visibleNodeIds = new Set(allNodes.filter(n => n.visible).map(n => n.id));
+                allLinks.forEach(l => {
+                    const getNodeId = (node) => typeof node === 'object' ? node.id : node;
+                    const sourceId = getNodeId(l.source);
+                    const targetId = getNodeId(l.target);
+                    l.visible = visibleNodeIds.has(sourceId) && visibleNodeIds.has(targetId);
+                });
+            }
+            
+            window.graphElements.node.style("display", d => d.visible ? "block" : "none");
+            window.graphElements.link.style("display", d => d.visible ? "block" : "none");
+        }
+        
+        function resetView() {
+            svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+        }
+        
+        function toggleLabels() {
+            showLabels = !showLabels;
+            window.graphElements.label.style("display", showLabels ? "block" : "none");
+        }
+        
+        document.getElementById('reset-btn').addEventListener('click', resetView);
+        document.getElementById('clear-selection-btn').addEventListener('click', clearSelection);
+        document.getElementById('toggle-labels-btn').addEventListener('click', toggleLabels);
+        document.getElementById('search-input').addEventListener('input', filterGraph);
+        svg.on('click', clearSelection);
+        
+        loadData();
+    </script>
+</body>
+</html>

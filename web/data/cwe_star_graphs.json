@@ -1,0 +1,3484 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "type": "cwe",
+      "label": "CWE-79",
+      "role": "center",
+      "cve_count": 10447,
+      "x": -29.45157964161228,
+      "y": -84.66653215341188,
+      "id": "CWE-79"
+    },
+    {
+      "type": "cna",
+      "label": "Patchstack",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": -79.54236611224043,
+      "y": -83.97442191007339,
+      "id": "CWE-79_Patchstack"
+    },
+    {
+      "type": "cna",
+      "label": "Wordfence",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": -20.120698440160204,
+      "y": -140.52338667411183,
+      "id": "CWE-79_Wordfence"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": 20.29530388809361,
+      "y": -68.07216919694085,
+      "id": "CWE-79_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "WPScan",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": 62.63991582584355,
+      "y": -115.86238912681803,
+      "id": "CWE-79_WPScan"
+    },
+    {
+      "type": "cna",
+      "label": "VulDB",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": -92.20292162628073,
+      "y": -141.51300855298862,
+      "id": "CWE-79_VulDB"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": 57.880947484908276,
+      "y": -195.2253199852475,
+      "id": "CWE-79_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "adobe",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": -69.60501166643814,
+      "y": -255.772081036095,
+      "id": "CWE-79_adobe"
+    },
+    {
+      "type": "cna",
+      "label": "@huntrdev",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": 51.17889988799858,
+      "y": 70.15668298972595,
+      "id": "CWE-79_@huntrdev"
+    },
+    {
+      "type": "cna",
+      "label": "INCIBE",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": -136.04022585723368,
+      "y": -351.8509638297326,
+      "id": "CWE-79_INCIBE"
+    },
+    {
+      "type": "cna",
+      "label": "cisco",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": 2.3058793646464326,
+      "y": -391.2133692631914,
+      "id": "CWE-79_cisco"
+    },
+    {
+      "type": "cna",
+      "label": "redhat",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": -256.08298106324696,
+      "y": -377.3797250460664,
+      "id": "CWE-79_redhat"
+    },
+    {
+      "type": "cna",
+      "label": "hackerone",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": 42.40093245110935,
+      "y": 287.82574942500247,
+      "id": "CWE-79_hackerone"
+    },
+    {
+      "type": "cna",
+      "label": "ibm",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": 54.10984386673619,
+      "y": -446.201965781645,
+      "id": "CWE-79_ibm"
+    },
+    {
+      "type": "cna",
+      "label": "Liferay",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": -326.41870579827986,
+      "y": 235.56658466605617,
+      "id": "CWE-79_Liferay"
+    },
+    {
+      "type": "cna",
+      "label": "drupal",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": -473.23118454476287,
+      "y": 90.55505927076267,
+      "id": "CWE-79_drupal"
+    },
+    {
+      "type": "cna",
+      "label": "sap",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": -73.12686443499301,
+      "y": -698.8786981701193,
+      "id": "CWE-79_sap"
+    },
+    {
+      "type": "cna",
+      "label": "TR-CERT",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": 128.05404623274694,
+      "y": 584.365621738557,
+      "id": "CWE-79_TR-CERT"
+    },
+    {
+      "type": "cna",
+      "label": "icscert",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": 361.6641833021139,
+      "y": -490.4083342167111,
+      "id": "CWE-79_icscert"
+    },
+    {
+      "type": "cna",
+      "label": "wikimedia-foundation",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": -5.8735122557234005,
+      "y": 555.5195881798462,
+      "id": "CWE-79_wikimedia-foundation"
+    },
+    {
+      "type": "cna",
+      "label": "@huntr_ai",
+      "role": "spoke",
+      "parent": "CWE-79",
+      "x": 33.07666313000041,
+      "y": 672.1081905915777,
+      "id": "CWE-79_@huntr_ai"
+    },
+    {
+      "type": "cwe",
+      "label": "CWE-89",
+      "role": "center",
+      "cve_count": 4892,
+      "x": 221.08548954167426,
+      "y": 479.7237473894424,
+      "id": "CWE-89"
+    },
+    {
+      "type": "cna",
+      "label": "VulDB",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 211.408372878334,
+      "y": 528.567126863334,
+      "id": "CWE-89_VulDB"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 303.14304635395393,
+      "y": 562.4256162778413,
+      "id": "CWE-89_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "Patchstack",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 277.5903970127254,
+      "y": 623.1796228981112,
+      "id": "CWE-89_Patchstack"
+    },
+    {
+      "type": "cna",
+      "label": "WPScan",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 101.3274846276594,
+      "y": 635.6586599860368,
+      "id": "CWE-89_WPScan"
+    },
+    {
+      "type": "cna",
+      "label": "Wordfence",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 253.92213587300657,
+      "y": 716.5602745141681,
+      "id": "CWE-89_Wordfence"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 313.6254577763051,
+      "y": 56.45999959065233,
+      "id": "CWE-89_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "talos",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 16.309154178541508,
+      "y": 810.7718658068616,
+      "id": "CWE-89_talos"
+    },
+    {
+      "type": "cna",
+      "label": "siemens",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": -98.39492329587198,
+      "y": 40.770227998043474,
+      "id": "CWE-89_siemens"
+    },
+    {
+      "type": "cna",
+      "label": "INCIBE",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 696.3478683225686,
+      "y": 674.0031877077936,
+      "id": "CWE-89_INCIBE"
+    },
+    {
+      "type": "cna",
+      "label": "zdi",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 864.5194895357565,
+      "y": 423.4607044418302,
+      "id": "CWE-89_zdi"
+    },
+    {
+      "type": "cna",
+      "label": "TR-CERT",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 688.0282200431071,
+      "y": 609.8224874918021,
+      "id": "CWE-89_TR-CERT"
+    },
+    {
+      "type": "cna",
+      "label": "icscert",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 570.8381040724045,
+      "y": 622.4807730337639,
+      "id": "CWE-89_icscert"
+    },
+    {
+      "type": "cna",
+      "label": "ivanti",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 93.42352611997977,
+      "y": 913.1892564198482,
+      "id": "CWE-89_ivanti"
+    },
+    {
+      "type": "cna",
+      "label": "Joomla",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": -341.7295035505637,
+      "y": 930.7198346475068,
+      "id": "CWE-89_Joomla"
+    },
+    {
+      "type": "cna",
+      "label": "twcert",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": -795.8193917350422,
+      "y": 166.29890675052943,
+      "id": "CWE-89_twcert"
+    },
+    {
+      "type": "cna",
+      "label": "hackerone",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 475.24646043901384,
+      "y": 766.6906761180904,
+      "id": "CWE-89_hackerone"
+    },
+    {
+      "type": "cna",
+      "label": "CERT-PL",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": -349.16833298459136,
+      "y": -616.0062904433477,
+      "id": "CWE-89_CERT-PL"
+    },
+    {
+      "type": "cna",
+      "label": "VulnCheck",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": -439.1665983102668,
+      "y": 826.4314383471279,
+      "id": "CWE-89_VulnCheck"
+    },
+    {
+      "type": "cna",
+      "label": "@huntrdev",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 639.3845735354424,
+      "y": -650.1831954554104,
+      "id": "CWE-89_@huntrdev"
+    },
+    {
+      "type": "cna",
+      "label": "@huntr_ai",
+      "role": "spoke",
+      "parent": "CWE-89",
+      "x": 234.20370176629788,
+      "y": 955.3944999890838,
+      "id": "CWE-89_@huntr_ai"
+    },
+    {
+      "type": "cwe",
+      "label": "CWE-862",
+      "role": "center",
+      "cve_count": 2489,
+      "x": -181.61769050980567,
+      "y": 175.16797843616953,
+      "id": "CWE-862"
+    },
+    {
+      "type": "cna",
+      "label": "Patchstack",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -239.9024426700891,
+      "y": 134.64387673395908,
+      "id": "CWE-862_Patchstack"
+    },
+    {
+      "type": "cna",
+      "label": "Wordfence",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -108.30696009055409,
+      "y": 245.19741875652062,
+      "id": "CWE-862_Wordfence"
+    },
+    {
+      "type": "cna",
+      "label": "VulDB",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -575.5763542924253,
+      "y": 370.27002186013544,
+      "id": "CWE-862_VulDB"
+    },
+    {
+      "type": "cna",
+      "label": "sap",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -582.1910284015373,
+      "y": 118.93634288141918,
+      "id": "CWE-862_sap"
+    },
+    {
+      "type": "cna",
+      "label": "WPScan",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -594.9455642048541,
+      "y": -61.39068155710932,
+      "id": "CWE-862_WPScan"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": 335.5777214152316,
+      "y": 259.03756404026245,
+      "id": "CWE-862_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": 251.09455059072596,
+      "y": 649.7883274471634,
+      "id": "CWE-862_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "apple",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": 536.5611120228028,
+      "y": -99.25841657593394,
+      "id": "CWE-862_apple"
+    },
+    {
+      "type": "cna",
+      "label": "redhat",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -33.76192732368482,
+      "y": 939.4106183515574,
+      "id": "CWE-862_redhat"
+    },
+    {
+      "type": "cna",
+      "label": "google_android",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -981.6590521946326,
+      "y": 53.31136137086346,
+      "id": "CWE-862_google_android"
+    },
+    {
+      "type": "cna",
+      "label": "@huntr_ai",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": 138.66975561901654,
+      "y": 912.4424254973819,
+      "id": "CWE-862_@huntr_ai"
+    },
+    {
+      "type": "cna",
+      "label": "drupal",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": 592.5748609445396,
+      "y": -792.4066236013716,
+      "id": "CWE-862_drupal"
+    },
+    {
+      "type": "cna",
+      "label": "@huntrdev",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -886.5927735072557,
+      "y": -12.119523694329278,
+      "id": "CWE-862_@huntrdev"
+    },
+    {
+      "type": "cna",
+      "label": "Mattermost",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -966.9463043058807,
+      "y": -263.55863670651615,
+      "id": "CWE-862_Mattermost"
+    },
+    {
+      "type": "cna",
+      "label": "Nozomi",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -733.6893334689927,
+      "y": -559.5306360052139,
+      "id": "CWE-862_Nozomi"
+    },
+    {
+      "type": "cna",
+      "label": "GitLab",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": 914.7829434947282,
+      "y": -12.30507577596267,
+      "id": "CWE-862_GitLab"
+    },
+    {
+      "type": "cna",
+      "label": "jenkins",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -594.1938697115652,
+      "y": 795.8560836240912,
+      "id": "CWE-862_jenkins"
+    },
+    {
+      "type": "cna",
+      "label": "ivanti",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -102.92029888936612,
+      "y": 954.2627344353422,
+      "id": "CWE-862_ivanti"
+    },
+    {
+      "type": "cna",
+      "label": "oracle",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -784.7159385553016,
+      "y": -609.6439723188338,
+      "id": "CWE-862_oracle"
+    },
+    {
+      "type": "cna",
+      "label": "microsoft",
+      "role": "spoke",
+      "parent": "CWE-862",
+      "x": -502.52510451759645,
+      "y": -851.4470823953941,
+      "id": "CWE-862_microsoft"
+    },
+    {
+      "type": "cwe",
+      "label": "CWE-74",
+      "role": "center",
+      "cve_count": 2447,
+      "x": 287.9763476210412,
+      "y": 429.75039127306775,
+      "id": "CWE-74"
+    },
+    {
+      "type": "cna",
+      "label": "VulDB",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": 367.9964216776894,
+      "y": 435.7060383346415,
+      "id": "CWE-74_VulDB"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": 603.5604575583785,
+      "y": 714.631089422519,
+      "id": "CWE-74_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": -830.4808366695971,
+      "y": 562.2215733215004,
+      "id": "CWE-74_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "talos",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": 738.603468466719,
+      "y": -555.4071206980855,
+      "id": "CWE-74_talos"
+    },
+    {
+      "type": "cna",
+      "label": "apache",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": -433.12084952696205,
+      "y": 883.9785339856519,
+      "id": "CWE-74_apache"
+    },
+    {
+      "type": "cna",
+      "label": "certcc",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": -202.38886405590972,
+      "y": -950.8685464237838,
+      "id": "CWE-74_certcc"
+    },
+    {
+      "type": "cna",
+      "label": "icscert",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": 621.6521184217268,
+      "y": 788.1929855408083,
+      "id": "CWE-74_icscert"
+    },
+    {
+      "type": "cna",
+      "label": "schneider",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": -624.2931923825353,
+      "y": -771.2902363761715,
+      "id": "CWE-74_schneider"
+    },
+    {
+      "type": "cna",
+      "label": "wikimedia-foundation",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": -947.6776711356168,
+      "y": -163.38777849321704,
+      "id": "CWE-74_wikimedia-foundation"
+    },
+    {
+      "type": "cna",
+      "label": "siemens",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": 336.7280829355829,
+      "y": -831.8069068943432,
+      "id": "CWE-74_siemens"
+    },
+    {
+      "type": "cna",
+      "label": "INCIBE",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": -791.4206197697417,
+      "y": 644.6089974846287,
+      "id": "CWE-74_INCIBE"
+    },
+    {
+      "type": "cna",
+      "label": "Mend",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": -490.16535044657815,
+      "y": 752.0680266540764,
+      "id": "CWE-74_Mend"
+    },
+    {
+      "type": "cna",
+      "label": "trendmicro",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": 992.9693578365784,
+      "y": 39.1428705303325,
+      "id": "CWE-74_trendmicro"
+    },
+    {
+      "type": "cna",
+      "label": "Rockwell",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": 872.7116601976237,
+      "y": 301.53707150733726,
+      "id": "CWE-74_Rockwell"
+    },
+    {
+      "type": "cna",
+      "label": "TR-CERT",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": 799.254578052902,
+      "y": 460.97760377025253,
+      "id": "CWE-74_TR-CERT"
+    },
+    {
+      "type": "cna",
+      "label": "apple",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": -400.9583571015627,
+      "y": 872.1041879069655,
+      "id": "CWE-74_apple"
+    },
+    {
+      "type": "cna",
+      "label": "facebook",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": -934.9140538050224,
+      "y": -344.5794672571557,
+      "id": "CWE-74_facebook"
+    },
+    {
+      "type": "cna",
+      "label": "WPScan",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": 940.6626311924781,
+      "y": 273.5927977477596,
+      "id": "CWE-74_WPScan"
+    },
+    {
+      "type": "cna",
+      "label": "ASRG",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": -869.4636320505373,
+      "y": -362.9401577048443,
+      "id": "CWE-74_ASRG"
+    },
+    {
+      "type": "cna",
+      "label": "sap",
+      "role": "spoke",
+      "parent": "CWE-74",
+      "x": -924.3112020680666,
+      "y": 254.24759021067572,
+      "id": "CWE-74_sap"
+    },
+    {
+      "type": "cwe",
+      "label": "CWE-352",
+      "role": "center",
+      "cve_count": 2396,
+      "x": -192.08620591871883,
+      "y": 160.46826648316497,
+      "id": "CWE-352"
+    },
+    {
+      "type": "cna",
+      "label": "Patchstack",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": -271.6055378147554,
+      "y": 204.0212771128156,
+      "id": "CWE-352_Patchstack"
+    },
+    {
+      "type": "cna",
+      "label": "Wordfence",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": -403.48764627031085,
+      "y": 231.08072983062937,
+      "id": "CWE-352_Wordfence"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": -389.79517451691663,
+      "y": 314.58461398142316,
+      "id": "CWE-352_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "WPScan",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": -199.8811149669184,
+      "y": 361.5802824297965,
+      "id": "CWE-352_WPScan"
+    },
+    {
+      "type": "cna",
+      "label": "VulDB",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": 38.75856123435434,
+      "y": 422.12701929067475,
+      "id": "CWE-352_VulDB"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": -441.2604584869814,
+      "y": -255.18147214810003,
+      "id": "CWE-352_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "@huntrdev",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": -568.3543010699569,
+      "y": 618.7804466016437,
+      "id": "CWE-352_@huntrdev"
+    },
+    {
+      "type": "cna",
+      "label": "drupal",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": 25.83202186577026,
+      "y": -841.9728443950067,
+      "id": "CWE-352_drupal"
+    },
+    {
+      "type": "cna",
+      "label": "cisco",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": -645.8666736742024,
+      "y": -607.8209034253208,
+      "id": "CWE-352_cisco"
+    },
+    {
+      "type": "cna",
+      "label": "@huntr_ai",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": -860.7479307272159,
+      "y": 262.44270679323614,
+      "id": "CWE-352_@huntr_ai"
+    },
+    {
+      "type": "cna",
+      "label": "redhat",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": 397.45813503334665,
+      "y": 918.0204246259011,
+      "id": "CWE-352_redhat"
+    },
+    {
+      "type": "cna",
+      "label": "hackerone",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": 276.63156228572836,
+      "y": 950.6235149760862,
+      "id": "CWE-352_hackerone"
+    },
+    {
+      "type": "cna",
+      "label": "icscert",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": 926.9982607494741,
+      "y": -374.96646982829617,
+      "id": "CWE-352_icscert"
+    },
+    {
+      "type": "cna",
+      "label": "siemens",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": 873.7943966266575,
+      "y": -164.66607567717676,
+      "id": "CWE-352_siemens"
+    },
+    {
+      "type": "cna",
+      "label": "oracle",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": -967.7125578358966,
+      "y": 202.21227732198585,
+      "id": "CWE-352_oracle"
+    },
+    {
+      "type": "cna",
+      "label": "ibm",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": 680.2202868977075,
+      "y": -651.8343083274598,
+      "id": "CWE-352_ibm"
+    },
+    {
+      "type": "cna",
+      "label": "jpcert",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": 705.5622483194396,
+      "y": 787.995759887883,
+      "id": "CWE-352_jpcert"
+    },
+    {
+      "type": "cna",
+      "label": "twcert",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": -274.43784277335726,
+      "y": 947.2653208241511,
+      "id": "CWE-352_twcert"
+    },
+    {
+      "type": "cna",
+      "label": "jenkins",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": 856.3222373341125,
+      "y": -490.30759663334095,
+      "id": "CWE-352_jenkins"
+    },
+    {
+      "type": "cna",
+      "label": "fedora",
+      "role": "spoke",
+      "parent": "CWE-352",
+      "x": -923.9063710351988,
+      "y": 130.90611217505867,
+      "id": "CWE-352_fedora"
+    },
+    {
+      "type": "cwe",
+      "label": "CWE-94",
+      "role": "center",
+      "cve_count": 1770,
+      "x": 3.632940124004985,
+      "y": 160.17843963639004,
+      "id": "CWE-94"
+    },
+    {
+      "type": "cna",
+      "label": "VulDB",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -72.91719748852604,
+      "y": 135.58972930410096,
+      "id": "CWE-94_VulDB"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -52.92952852545985,
+      "y": 284.1869713414786,
+      "id": "CWE-94_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": 25.52697218846281,
+      "y": -162.46249105838217,
+      "id": "CWE-94_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "Wordfence",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -277.7549076011792,
+      "y": 440.48034651965315,
+      "id": "CWE-94_Wordfence"
+    },
+    {
+      "type": "cna",
+      "label": "Patchstack",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": 296.44796513717483,
+      "y": -352.73729806158383,
+      "id": "CWE-94_Patchstack"
+    },
+    {
+      "type": "cna",
+      "label": "VulnCheck",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": 741.5254579184285,
+      "y": -181.73668808953383,
+      "id": "CWE-94_VulnCheck"
+    },
+    {
+      "type": "cna",
+      "label": "microsoft",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -647.4076822268497,
+      "y": 814.3825942678207,
+      "id": "CWE-94_microsoft"
+    },
+    {
+      "type": "cna",
+      "label": "hackerone",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -143.08788702042565,
+      "y": -860.652862672868,
+      "id": "CWE-94_hackerone"
+    },
+    {
+      "type": "cna",
+      "label": "nvidia",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": 553.227570249556,
+      "y": 807.2745173183192,
+      "id": "CWE-94_nvidia"
+    },
+    {
+      "type": "cna",
+      "label": "sap",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": 893.1229922882735,
+      "y": 455.7029902276488,
+      "id": "CWE-94_sap"
+    },
+    {
+      "type": "cna",
+      "label": "Samsung Mobile",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": 779.4753293376066,
+      "y": -639.133964302834,
+      "id": "CWE-94_Samsung Mobile"
+    },
+    {
+      "type": "cna",
+      "label": "redhat",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -741.2069077113127,
+      "y": 720.883673604461,
+      "id": "CWE-94_redhat"
+    },
+    {
+      "type": "cna",
+      "label": "@huntrdev",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -205.87862358452935,
+      "y": 911.9348747399437,
+      "id": "CWE-94_@huntrdev"
+    },
+    {
+      "type": "cna",
+      "label": "@huntr_ai",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": 788.9402128549133,
+      "y": 536.9787891962717,
+      "id": "CWE-94_@huntr_ai"
+    },
+    {
+      "type": "cna",
+      "label": "apache",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -929.6656564905376,
+      "y": -112.22288358199135,
+      "id": "CWE-94_apache"
+    },
+    {
+      "type": "cna",
+      "label": "ABB",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -836.3963544847577,
+      "y": 426.4133918100921,
+      "id": "CWE-94_ABB"
+    },
+    {
+      "type": "cna",
+      "label": "WPScan",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -314.4437196466877,
+      "y": 921.2189191935271,
+      "id": "CWE-94_WPScan"
+    },
+    {
+      "type": "cna",
+      "label": "JetBrains",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -481.61295980584265,
+      "y": -749.2798148644288,
+      "id": "CWE-94_JetBrains"
+    },
+    {
+      "type": "cna",
+      "label": "apple",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": -712.4238382688169,
+      "y": 663.6974447445972,
+      "id": "CWE-94_apple"
+    },
+    {
+      "type": "cna",
+      "label": "fedora",
+      "role": "spoke",
+      "parent": "CWE-94",
+      "x": 692.8155391944298,
+      "y": 700.1899882325378,
+      "id": "CWE-94_fedora"
+    },
+    {
+      "type": "cwe",
+      "label": "CWE-284",
+      "role": "center",
+      "cve_count": 1600,
+      "x": 83.04197068767563,
+      "y": -597.8783134439609,
+      "id": "CWE-284"
+    },
+    {
+      "type": "cna",
+      "label": "VulDB",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": 178.7756783589567,
+      "y": -740.1858670625941,
+      "id": "CWE-284_VulDB"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": -32.235184571460806,
+      "y": -646.7846886565341,
+      "id": "CWE-284_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": -86.35588767678382,
+      "y": -915.6730261392778,
+      "id": "CWE-284_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "Samsung Mobile",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": 493.06463765551007,
+      "y": -760.8253018696755,
+      "id": "CWE-284_Samsung Mobile"
+    },
+    {
+      "type": "cna",
+      "label": "microsoft",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": 9.362881399143106,
+      "y": -925.0175392426257,
+      "id": "CWE-284_microsoft"
+    },
+    {
+      "type": "cna",
+      "label": "oracle",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": 601.5508585953704,
+      "y": -575.8126053859963,
+      "id": "CWE-284_oracle"
+    },
+    {
+      "type": "cna",
+      "label": "apple",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": 587.8238712302784,
+      "y": -460.37432362226616,
+      "id": "CWE-284_apple"
+    },
+    {
+      "type": "cna",
+      "label": "redhat",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": -216.71609755932903,
+      "y": -919.50508798355,
+      "id": "CWE-284_redhat"
+    },
+    {
+      "type": "cna",
+      "label": "icscert",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": 195.83147815091175,
+      "y": -911.8609804231593,
+      "id": "CWE-284_icscert"
+    },
+    {
+      "type": "cna",
+      "label": "hackerone",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": -585.8672626853362,
+      "y": -631.9004221214252,
+      "id": "CWE-284_hackerone"
+    },
+    {
+      "type": "cna",
+      "label": "intel",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": -622.6461855176709,
+      "y": 30.3590382194621,
+      "id": "CWE-284_intel"
+    },
+    {
+      "type": "cna",
+      "label": "siemens",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": -675.133275778236,
+      "y": 166.54406171902713,
+      "id": "CWE-284_siemens"
+    },
+    {
+      "type": "cna",
+      "label": "@huntrdev",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": 582.1404494453742,
+      "y": -544.7483472148904,
+      "id": "CWE-284_@huntrdev"
+    },
+    {
+      "type": "cna",
+      "label": "Wordfence",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": 405.39916651416155,
+      "y": -834.1059144971297,
+      "id": "CWE-284_Wordfence"
+    },
+    {
+      "type": "cna",
+      "label": "WPScan",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": -495.07616319322256,
+      "y": -800.780515777704,
+      "id": "CWE-284_WPScan"
+    },
+    {
+      "type": "cna",
+      "label": "adobe",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": 886.2024525960852,
+      "y": -2.906827457001078,
+      "id": "CWE-284_adobe"
+    },
+    {
+      "type": "cna",
+      "label": "nvidia",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": -271.7262843999818,
+      "y": -959.3405789364059,
+      "id": "CWE-284_nvidia"
+    },
+    {
+      "type": "cna",
+      "label": "odoo",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": 65.77790865746354,
+      "y": -973.5090380467404,
+      "id": "CWE-284_odoo"
+    },
+    {
+      "type": "cna",
+      "label": "zdi",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": 919.8356130861628,
+      "y": -352.87977517258435,
+      "id": "CWE-284_zdi"
+    },
+    {
+      "type": "cna",
+      "label": "tenable",
+      "role": "spoke",
+      "parent": "CWE-284",
+      "x": -895.3865183422693,
+      "y": -511.5197756642974,
+      "id": "CWE-284_tenable"
+    },
+    {
+      "type": "cwe",
+      "label": "CWE-125",
+      "role": "center",
+      "cve_count": 1554,
+      "x": -401.16842792540103,
+      "y": 152.56718567238914,
+      "id": "CWE-125"
+    },
+    {
+      "type": "cna",
+      "label": "zdi",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -478.4774905282691,
+      "y": 252.99892048889308,
+      "id": "CWE-125_zdi"
+    },
+    {
+      "type": "cna",
+      "label": "microsoft",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -530.3101030213544,
+      "y": -95.839422664836,
+      "id": "CWE-125_microsoft"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -252.53507947878526,
+      "y": 422.5487077484947,
+      "id": "CWE-125_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "adobe",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -691.1788696126691,
+      "y": -37.794845176465884,
+      "id": "CWE-125_adobe"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -719.3675359743888,
+      "y": 97.32191954687188,
+      "id": "CWE-125_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "redhat",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -331.2439390064707,
+      "y": 528.9163770313417,
+      "id": "CWE-125_redhat"
+    },
+    {
+      "type": "cna",
+      "label": "siemens",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -803.6987161965127,
+      "y": 64.29750112881797,
+      "id": "CWE-125_siemens"
+    },
+    {
+      "type": "cna",
+      "label": "apple",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": 148.2683692552096,
+      "y": 13.828750352408903,
+      "id": "CWE-125_apple"
+    },
+    {
+      "type": "cna",
+      "label": "icscert",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -227.20433134273932,
+      "y": 803.8777963970916,
+      "id": "CWE-125_icscert"
+    },
+    {
+      "type": "cna",
+      "label": "Linux",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": 256.3933240976234,
+      "y": -300.0722637831625,
+      "id": "CWE-125_Linux"
+    },
+    {
+      "type": "cna",
+      "label": "google_android",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -1000.0000000000001,
+      "y": -36.83360630386006,
+      "id": "CWE-125_google_android"
+    },
+    {
+      "type": "cna",
+      "label": "MediaTek",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -667.6814885427614,
+      "y": 523.7608078895795,
+      "id": "CWE-125_MediaTek"
+    },
+    {
+      "type": "cna",
+      "label": "@huntrdev",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -700.624878494929,
+      "y": 577.0978540521346,
+      "id": "CWE-125_@huntrdev"
+    },
+    {
+      "type": "cna",
+      "label": "VulDB",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -150.38808239044187,
+      "y": -675.1447335976188,
+      "id": "CWE-125_VulDB"
+    },
+    {
+      "type": "cna",
+      "label": "huawei",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -816.6243297491088,
+      "y": 575.2832694492078,
+      "id": "CWE-125_huawei"
+    },
+    {
+      "type": "cna",
+      "label": "Samsung Mobile",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -206.77550711270544,
+      "y": 970.5837390528912,
+      "id": "CWE-125_Samsung Mobile"
+    },
+    {
+      "type": "cna",
+      "label": "jpcert",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": 256.3654304687846,
+      "y": 848.3257197506746,
+      "id": "CWE-125_jpcert"
+    },
+    {
+      "type": "cna",
+      "label": "nvidia",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": 477.2512549958458,
+      "y": -266.84301572335187,
+      "id": "CWE-125_nvidia"
+    },
+    {
+      "type": "cna",
+      "label": "OpenHarmony",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -742.1337810545415,
+      "y": -722.4635145743663,
+      "id": "CWE-125_OpenHarmony"
+    },
+    {
+      "type": "cna",
+      "label": "autodesk",
+      "role": "spoke",
+      "parent": "CWE-125",
+      "x": -894.6225722897184,
+      "y": -405.2711033545347,
+      "id": "CWE-125_autodesk"
+    },
+    {
+      "type": "cwe",
+      "label": "CWE-22",
+      "role": "center",
+      "cve_count": 1496,
+      "x": 248.50357400247717,
+      "y": -115.06231253442121,
+      "id": "CWE-22"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 451.5718778496127,
+      "y": -187.01898511864852,
+      "id": "CWE-22_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 365.9521977487108,
+      "y": -277.9903018681887,
+      "id": "CWE-22_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "VulDB",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": -59.96527950608663,
+      "y": -191.3897994501453,
+      "id": "CWE-22_VulDB"
+    },
+    {
+      "type": "cna",
+      "label": "Wordfence",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 602.1840369061317,
+      "y": -106.76920143794977,
+      "id": "CWE-22_Wordfence"
+    },
+    {
+      "type": "cna",
+      "label": "Patchstack",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 314.57289998159524,
+      "y": 266.708146050236,
+      "id": "CWE-22_Patchstack"
+    },
+    {
+      "type": "cna",
+      "label": "zdi",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": -103.00404280328422,
+      "y": 268.02301168842183,
+      "id": "CWE-22_zdi"
+    },
+    {
+      "type": "cna",
+      "label": "VulnCheck",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 783.3030154546952,
+      "y": -62.192710002412326,
+      "id": "CWE-22_VulnCheck"
+    },
+    {
+      "type": "cna",
+      "label": "redhat",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 707.5454626020639,
+      "y": -431.0140244659399,
+      "id": "CWE-22_redhat"
+    },
+    {
+      "type": "cna",
+      "label": "WPScan",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 286.32917118904186,
+      "y": -927.4620380319848,
+      "id": "CWE-22_WPScan"
+    },
+    {
+      "type": "cna",
+      "label": "hackerone",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 860.4638544545578,
+      "y": 326.50756635417474,
+      "id": "CWE-22_hackerone"
+    },
+    {
+      "type": "cna",
+      "label": "@huntr_ai",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 946.1245772083771,
+      "y": -209.355885603405,
+      "id": "CWE-22_@huntr_ai"
+    },
+    {
+      "type": "cna",
+      "label": "icscert",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 751.9314363479,
+      "y": 641.7535181514261,
+      "id": "CWE-22_icscert"
+    },
+    {
+      "type": "cna",
+      "label": "siemens",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": -452.8105217425184,
+      "y": -479.7648801169351,
+      "id": "CWE-22_siemens"
+    },
+    {
+      "type": "cna",
+      "label": "schneider",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": -550.1637862672228,
+      "y": -685.7854358155747,
+      "id": "CWE-22_schneider"
+    },
+    {
+      "type": "cna",
+      "label": "jpcert",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 834.5903430156976,
+      "y": 560.3951311326,
+      "id": "CWE-22_jpcert"
+    },
+    {
+      "type": "cna",
+      "label": "talos",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": -300.57502778516215,
+      "y": -949.9333282522659,
+      "id": "CWE-22_talos"
+    },
+    {
+      "type": "cna",
+      "label": "@huntrdev",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": -966.8283592539748,
+      "y": -230.19821463080544,
+      "id": "CWE-22_@huntrdev"
+    },
+    {
+      "type": "cna",
+      "label": "qnap",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": -516.7862653170913,
+      "y": 865.2207220194063,
+      "id": "CWE-22_qnap"
+    },
+    {
+      "type": "cna",
+      "label": "apple",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": -830.8801294652931,
+      "y": 190.79042790193972,
+      "id": "CWE-22_apple"
+    },
+    {
+      "type": "cna",
+      "label": "ibm",
+      "role": "spoke",
+      "parent": "CWE-22",
+      "x": 450.92498061389375,
+      "y": -893.8313063893308,
+      "id": "CWE-22_ibm"
+    },
+    {
+      "type": "cwe",
+      "label": "CWE-416",
+      "role": "center",
+      "cve_count": 1495,
+      "x": 341.8161431016193,
+      "y": -218.5715045064083,
+      "id": "CWE-416"
+    },
+    {
+      "type": "cna",
+      "label": "zdi",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 253.69655042404275,
+      "y": -21.48433905311503,
+      "id": "CWE-416_zdi"
+    },
+    {
+      "type": "cna",
+      "label": "Linux",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 491.9759947197924,
+      "y": -116.33947171449711,
+      "id": "CWE-416_Linux"
+    },
+    {
+      "type": "cna",
+      "label": "microsoft",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 221.3866006986144,
+      "y": -249.20474882153786,
+      "id": "CWE-416_microsoft"
+    },
+    {
+      "type": "cna",
+      "label": "redhat",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 233.53505788762405,
+      "y": -426.2714878698036,
+      "id": "CWE-416_redhat"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 623.9261302712533,
+      "y": -599.4942715877957,
+      "id": "CWE-416_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "qualcomm",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 766.0650913839856,
+      "y": 64.36035663621922,
+      "id": "CWE-416_qualcomm"
+    },
+    {
+      "type": "cna",
+      "label": "adobe",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 213.95439203266267,
+      "y": -678.8957249715052,
+      "id": "CWE-416_adobe"
+    },
+    {
+      "type": "cna",
+      "label": "@huntrdev",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 887.3894981095026,
+      "y": 201.87395636925976,
+      "id": "CWE-416_@huntrdev"
+    },
+    {
+      "type": "cna",
+      "label": "google_android",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 942.9325650011467,
+      "y": 11.635162783868136,
+      "id": "CWE-416_google_android"
+    },
+    {
+      "type": "cna",
+      "label": "talos",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 481.58419204270723,
+      "y": -774.6470515572979,
+      "id": "CWE-416_talos"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": -309.5710445047795,
+      "y": -927.5305036015147,
+      "id": "CWE-416_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "Chrome",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 971.3603021044023,
+      "y": -69.49863696283543,
+      "id": "CWE-416_Chrome"
+    },
+    {
+      "type": "cna",
+      "label": "siemens",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 407.847035485574,
+      "y": -927.0594863373707,
+      "id": "CWE-416_siemens"
+    },
+    {
+      "type": "cna",
+      "label": "mozilla",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 965.9446430385417,
+      "y": -245.06075854345508,
+      "id": "CWE-416_mozilla"
+    },
+    {
+      "type": "cna",
+      "label": "VulDB",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": -244.768679395487,
+      "y": -866.8521949643015,
+      "id": "CWE-416_VulDB"
+    },
+    {
+      "type": "cna",
+      "label": "icscert",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": -926.5593455619653,
+      "y": 367.5187721962911,
+      "id": "CWE-416_icscert"
+    },
+    {
+      "type": "cna",
+      "label": "imaginationtech",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": -570.5813186871584,
+      "y": 690.9888823748354,
+      "id": "CWE-416_imaginationtech"
+    },
+    {
+      "type": "cna",
+      "label": "OpenHarmony",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": -42.461468391268184,
+      "y": -927.9551179659519,
+      "id": "CWE-416_OpenHarmony"
+    },
+    {
+      "type": "cna",
+      "label": "apple",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 451.79903988614143,
+      "y": 848.4369490151623,
+      "id": "CWE-416_apple"
+    },
+    {
+      "type": "cna",
+      "label": "hackerone",
+      "role": "spoke",
+      "parent": "CWE-416",
+      "x": 81.15453416195656,
+      "y": -832.0776767557444,
+      "id": "CWE-416_hackerone"
+    },
+    {
+      "type": "cwe",
+      "label": "CWE-20",
+      "role": "center",
+      "cve_count": 1368,
+      "x": -203.33816698897013,
+      "y": -258.52261595607814,
+      "id": "CWE-20"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -416.6935690361622,
+      "y": -204.99283320195696,
+      "id": "CWE-20_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "redhat",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -456.20578759300946,
+      "y": -414.2011518751357,
+      "id": "CWE-20_redhat"
+    },
+    {
+      "type": "cna",
+      "label": "cisco",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -155.58056096999263,
+      "y": -510.7669953888008,
+      "id": "CWE-20_cisco"
+    },
+    {
+      "type": "cna",
+      "label": "Samsung Mobile",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -465.5286276984594,
+      "y": -60.90593013572589,
+      "id": "CWE-20_Samsung Mobile"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -39.53653435379012,
+      "y": 155.23282303764563,
+      "id": "CWE-20_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "VulDB",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -513.1530970907596,
+      "y": -585.6804533631058,
+      "id": "CWE-20_VulDB"
+    },
+    {
+      "type": "cna",
+      "label": "microsoft",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": 139.2819954577701,
+      "y": 75.65745616698469,
+      "id": "CWE-20_microsoft"
+    },
+    {
+      "type": "cna",
+      "label": "VulnCheck",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -166.35247801718313,
+      "y": -659.0304733688746,
+      "id": "CWE-20_VulnCheck"
+    },
+    {
+      "type": "cna",
+      "label": "intel",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -808.0382186570296,
+      "y": -535.3207582676505,
+      "id": "CWE-20_intel"
+    },
+    {
+      "type": "cna",
+      "label": "icscert",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -418.14605775998433,
+      "y": -836.295984824858,
+      "id": "CWE-20_icscert"
+    },
+    {
+      "type": "cna",
+      "label": "apache",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -992.4586974108289,
+      "y": 61.93003332466867,
+      "id": "CWE-20_apache"
+    },
+    {
+      "type": "cna",
+      "label": "siemens",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -606.7614098557026,
+      "y": -842.3135500310641,
+      "id": "CWE-20_siemens"
+    },
+    {
+      "type": "cna",
+      "label": "krcert",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": 468.33166273616723,
+      "y": -891.1414948447679,
+      "id": "CWE-20_krcert"
+    },
+    {
+      "type": "cna",
+      "label": "apple",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -375.6647828465788,
+      "y": 571.0697661001185,
+      "id": "CWE-20_apple"
+    },
+    {
+      "type": "cna",
+      "label": "schneider",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": 482.5799419534643,
+      "y": 342.0015075578984,
+      "id": "CWE-20_schneider"
+    },
+    {
+      "type": "cna",
+      "label": "sap",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -946.1903404769658,
+      "y": -65.71377692151432,
+      "id": "CWE-20_sap"
+    },
+    {
+      "type": "cna",
+      "label": "huawei",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": -288.7307920339044,
+      "y": 756.9738724377105,
+      "id": "CWE-20_huawei"
+    },
+    {
+      "type": "cna",
+      "label": "qualcomm",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": 807.0774583897307,
+      "y": -632.1302912582403,
+      "id": "CWE-20_qualcomm"
+    },
+    {
+      "type": "cna",
+      "label": "adobe",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": 905.35424991876,
+      "y": 84.46118871196275,
+      "id": "CWE-20_adobe"
+    },
+    {
+      "type": "cna",
+      "label": "f5",
+      "role": "spoke",
+      "parent": "CWE-20",
+      "x": 959.7814837915404,
+      "y": -172.00883484327488,
+      "id": "CWE-20_f5"
+    },
+    {
+      "type": "cwe",
+      "label": "CWE-787",
+      "role": "center",
+      "cve_count": 1363,
+      "x": 264.93924611578336,
+      "y": 76.7337299551956,
+      "id": "CWE-787"
+    },
+    {
+      "type": "cna",
+      "label": "zdi",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 488.239324680409,
+      "y": 142.16110867260863,
+      "id": "CWE-787_zdi"
+    },
+    {
+      "type": "cna",
+      "label": "mitre",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 100.65283167731867,
+      "y": 57.85562778246959,
+      "id": "CWE-787_mitre"
+    },
+    {
+      "type": "cna",
+      "label": "adobe",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 593.193009816548,
+      "y": 210.40754345030987,
+      "id": "CWE-787_adobe"
+    },
+    {
+      "type": "cna",
+      "label": "siemens",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": -29.19537911474754,
+      "y": 443.66319455686977,
+      "id": "CWE-787_siemens"
+    },
+    {
+      "type": "cna",
+      "label": "redhat",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": -209.6018065146167,
+      "y": -204.6879921361635,
+      "id": "CWE-787_redhat"
+    },
+    {
+      "type": "cna",
+      "label": "google_android",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 391.2096101885321,
+      "y": 665.6779966897053,
+      "id": "CWE-787_google_android"
+    },
+    {
+      "type": "cna",
+      "label": "MediaTek",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 699.4768107085129,
+      "y": 61.30558593828941,
+      "id": "CWE-787_MediaTek"
+    },
+    {
+      "type": "cna",
+      "label": "sap",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 916.5605080636744,
+      "y": -71.7137413116495,
+      "id": "CWE-787_sap"
+    },
+    {
+      "type": "cna",
+      "label": "apple",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 131.92380729690092,
+      "y": -734.7666893344417,
+      "id": "CWE-787_apple"
+    },
+    {
+      "type": "cna",
+      "label": "icscert",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 288.5398928292973,
+      "y": 794.1085938632393,
+      "id": "CWE-787_icscert"
+    },
+    {
+      "type": "cna",
+      "label": "Linux",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 916.30313680854,
+      "y": -408.6228735996005,
+      "id": "CWE-787_Linux"
+    },
+    {
+      "type": "cna",
+      "label": "GitHub_M",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 542.5999781282718,
+      "y": 838.2189304116328,
+      "id": "CWE-787_GitHub_M"
+    },
+    {
+      "type": "cna",
+      "label": "mozilla",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 887.4900748365288,
+      "y": 183.08456502368952,
+      "id": "CWE-787_mozilla"
+    },
+    {
+      "type": "cna",
+      "label": "autodesk",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": -618.567000402689,
+      "y": 468.9682016508179,
+      "id": "CWE-787_autodesk"
+    },
+    {
+      "type": "cna",
+      "label": "qualcomm",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": -802.3715748233725,
+      "y": -576.0880417741788,
+      "id": "CWE-787_qualcomm"
+    },
+    {
+      "type": "cna",
+      "label": "schneider",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": -735.1342714831042,
+      "y": -264.5554156168784,
+      "id": "CWE-787_schneider"
+    },
+    {
+      "type": "cna",
+      "label": "jpcert",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 722.4353016563671,
+      "y": -707.6692045409732,
+      "id": "CWE-787_jpcert"
+    },
+    {
+      "type": "cna",
+      "label": "talos",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": -51.70148469151377,
+      "y": 799.8004945592271,
+      "id": "CWE-787_talos"
+    },
+    {
+      "type": "cna",
+      "label": "Google_Devices",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 337.9961891192097,
+      "y": -875.5958873923904,
+      "id": "CWE-787_Google_Devices"
+    },
+    {
+      "type": "cna",
+      "label": "Deltaww",
+      "role": "spoke",
+      "parent": "CWE-787",
+      "x": 335.5691375736671,
+      "y": -930.8925785929689,
+      "id": "CWE-787_Deltaww"
+    }
+  ],
+  "links": [
+    {
+      "weight": 3028,
+      "source": "CWE-79",
+      "target": "CWE-79_Patchstack"
+    },
+    {
+      "weight": 1438,
+      "source": "CWE-79",
+      "target": "CWE-79_Wordfence"
+    },
+    {
+      "weight": 1343,
+      "source": "CWE-79",
+      "target": "CWE-79_mitre"
+    },
+    {
+      "weight": 893,
+      "source": "CWE-79",
+      "target": "CWE-79_WPScan"
+    },
+    {
+      "weight": 773,
+      "source": "CWE-79",
+      "target": "CWE-79_VulDB"
+    },
+    {
+      "weight": 603,
+      "source": "CWE-79",
+      "target": "CWE-79_GitHub_M"
+    },
+    {
+      "weight": 379,
+      "source": "CWE-79",
+      "target": "CWE-79_adobe"
+    },
+    {
+      "weight": 255,
+      "source": "CWE-79",
+      "target": "CWE-79_@huntrdev"
+    },
+    {
+      "weight": 145,
+      "source": "CWE-79",
+      "target": "CWE-79_INCIBE"
+    },
+    {
+      "weight": 105,
+      "source": "CWE-79",
+      "target": "CWE-79_cisco"
+    },
+    {
+      "weight": 95,
+      "source": "CWE-79",
+      "target": "CWE-79_redhat"
+    },
+    {
+      "weight": 88,
+      "source": "CWE-79",
+      "target": "CWE-79_hackerone"
+    },
+    {
+      "weight": 88,
+      "source": "CWE-79",
+      "target": "CWE-79_ibm"
+    },
+    {
+      "weight": 64,
+      "source": "CWE-79",
+      "target": "CWE-79_Liferay"
+    },
+    {
+      "weight": 58,
+      "source": "CWE-79",
+      "target": "CWE-79_drupal"
+    },
+    {
+      "weight": 50,
+      "source": "CWE-79",
+      "target": "CWE-79_sap"
+    },
+    {
+      "weight": 50,
+      "source": "CWE-79",
+      "target": "CWE-79_TR-CERT"
+    },
+    {
+      "weight": 49,
+      "source": "CWE-79",
+      "target": "CWE-79_icscert"
+    },
+    {
+      "weight": 49,
+      "source": "CWE-79",
+      "target": "CWE-79_wikimedia-foundation"
+    },
+    {
+      "weight": 45,
+      "source": "CWE-79",
+      "target": "CWE-79_@huntr_ai"
+    },
+    {
+      "weight": 2207,
+      "source": "CWE-89",
+      "target": "CWE-89_VulDB"
+    },
+    {
+      "weight": 944,
+      "source": "CWE-89",
+      "target": "CWE-89_mitre"
+    },
+    {
+      "weight": 409,
+      "source": "CWE-89",
+      "target": "CWE-89_Patchstack"
+    },
+    {
+      "weight": 233,
+      "source": "CWE-89",
+      "target": "CWE-89_WPScan"
+    },
+    {
+      "weight": 229,
+      "source": "CWE-89",
+      "target": "CWE-89_Wordfence"
+    },
+    {
+      "weight": 141,
+      "source": "CWE-89",
+      "target": "CWE-89_GitHub_M"
+    },
+    {
+      "weight": 96,
+      "source": "CWE-89",
+      "target": "CWE-89_talos"
+    },
+    {
+      "weight": 86,
+      "source": "CWE-89",
+      "target": "CWE-89_siemens"
+    },
+    {
+      "weight": 60,
+      "source": "CWE-89",
+      "target": "CWE-89_INCIBE"
+    },
+    {
+      "weight": 42,
+      "source": "CWE-89",
+      "target": "CWE-89_zdi"
+    },
+    {
+      "weight": 42,
+      "source": "CWE-89",
+      "target": "CWE-89_TR-CERT"
+    },
+    {
+      "weight": 32,
+      "source": "CWE-89",
+      "target": "CWE-89_icscert"
+    },
+    {
+      "weight": 21,
+      "source": "CWE-89",
+      "target": "CWE-89_ivanti"
+    },
+    {
+      "weight": 21,
+      "source": "CWE-89",
+      "target": "CWE-89_Joomla"
+    },
+    {
+      "weight": 21,
+      "source": "CWE-89",
+      "target": "CWE-89_twcert"
+    },
+    {
+      "weight": 17,
+      "source": "CWE-89",
+      "target": "CWE-89_hackerone"
+    },
+    {
+      "weight": 14,
+      "source": "CWE-89",
+      "target": "CWE-89_CERT-PL"
+    },
+    {
+      "weight": 14,
+      "source": "CWE-89",
+      "target": "CWE-89_VulnCheck"
+    },
+    {
+      "weight": 13,
+      "source": "CWE-89",
+      "target": "CWE-89_@huntrdev"
+    },
+    {
+      "weight": 13,
+      "source": "CWE-89",
+      "target": "CWE-89_@huntr_ai"
+    },
+    {
+      "weight": 1437,
+      "source": "CWE-862",
+      "target": "CWE-862_Patchstack"
+    },
+    {
+      "weight": 441,
+      "source": "CWE-862",
+      "target": "CWE-862_Wordfence"
+    },
+    {
+      "weight": 78,
+      "source": "CWE-862",
+      "target": "CWE-862_VulDB"
+    },
+    {
+      "weight": 66,
+      "source": "CWE-862",
+      "target": "CWE-862_sap"
+    },
+    {
+      "weight": 61,
+      "source": "CWE-862",
+      "target": "CWE-862_WPScan"
+    },
+    {
+      "weight": 58,
+      "source": "CWE-862",
+      "target": "CWE-862_GitHub_M"
+    },
+    {
+      "weight": 55,
+      "source": "CWE-862",
+      "target": "CWE-862_mitre"
+    },
+    {
+      "weight": 27,
+      "source": "CWE-862",
+      "target": "CWE-862_apple"
+    },
+    {
+      "weight": 23,
+      "source": "CWE-862",
+      "target": "CWE-862_redhat"
+    },
+    {
+      "weight": 21,
+      "source": "CWE-862",
+      "target": "CWE-862_google_android"
+    },
+    {
+      "weight": 16,
+      "source": "CWE-862",
+      "target": "CWE-862_@huntr_ai"
+    },
+    {
+      "weight": 16,
+      "source": "CWE-862",
+      "target": "CWE-862_drupal"
+    },
+    {
+      "weight": 15,
+      "source": "CWE-862",
+      "target": "CWE-862_@huntrdev"
+    },
+    {
+      "weight": 13,
+      "source": "CWE-862",
+      "target": "CWE-862_Mattermost"
+    },
+    {
+      "weight": 12,
+      "source": "CWE-862",
+      "target": "CWE-862_Nozomi"
+    },
+    {
+      "weight": 12,
+      "source": "CWE-862",
+      "target": "CWE-862_GitLab"
+    },
+    {
+      "weight": 9,
+      "source": "CWE-862",
+      "target": "CWE-862_jenkins"
+    },
+    {
+      "weight": 7,
+      "source": "CWE-862",
+      "target": "CWE-862_ivanti"
+    },
+    {
+      "weight": 6,
+      "source": "CWE-862",
+      "target": "CWE-862_oracle"
+    },
+    {
+      "weight": 5,
+      "source": "CWE-862",
+      "target": "CWE-862_microsoft"
+    },
+    {
+      "weight": 2321,
+      "source": "CWE-74",
+      "target": "CWE-74_VulDB"
+    },
+    {
+      "weight": 73,
+      "source": "CWE-74",
+      "target": "CWE-74_GitHub_M"
+    },
+    {
+      "weight": 16,
+      "source": "CWE-74",
+      "target": "CWE-74_mitre"
+    },
+    {
+      "weight": 6,
+      "source": "CWE-74",
+      "target": "CWE-74_talos"
+    },
+    {
+      "weight": 3,
+      "source": "CWE-74",
+      "target": "CWE-74_apache"
+    },
+    {
+      "weight": 2,
+      "source": "CWE-74",
+      "target": "CWE-74_certcc"
+    },
+    {
+      "weight": 2,
+      "source": "CWE-74",
+      "target": "CWE-74_icscert"
+    },
+    {
+      "weight": 2,
+      "source": "CWE-74",
+      "target": "CWE-74_schneider"
+    },
+    {
+      "weight": 2,
+      "source": "CWE-74",
+      "target": "CWE-74_wikimedia-foundation"
+    },
+    {
+      "weight": 2,
+      "source": "CWE-74",
+      "target": "CWE-74_siemens"
+    },
+    {
+      "weight": 2,
+      "source": "CWE-74",
+      "target": "CWE-74_INCIBE"
+    },
+    {
+      "weight": 1,
+      "source": "CWE-74",
+      "target": "CWE-74_Mend"
+    },
+    {
+      "weight": 1,
+      "source": "CWE-74",
+      "target": "CWE-74_trendmicro"
+    },
+    {
+      "weight": 1,
+      "source": "CWE-74",
+      "target": "CWE-74_Rockwell"
+    },
+    {
+      "weight": 1,
+      "source": "CWE-74",
+      "target": "CWE-74_TR-CERT"
+    },
+    {
+      "weight": 1,
+      "source": "CWE-74",
+      "target": "CWE-74_apple"
+    },
+    {
+      "weight": 1,
+      "source": "CWE-74",
+      "target": "CWE-74_facebook"
+    },
+    {
+      "weight": 1,
+      "source": "CWE-74",
+      "target": "CWE-74_WPScan"
+    },
+    {
+      "weight": 1,
+      "source": "CWE-74",
+      "target": "CWE-74_ASRG"
+    },
+    {
+      "weight": 1,
+      "source": "CWE-74",
+      "target": "CWE-74_sap"
+    },
+    {
+      "weight": 1219,
+      "source": "CWE-352",
+      "target": "CWE-352_Patchstack"
+    },
+    {
+      "weight": 252,
+      "source": "CWE-352",
+      "target": "CWE-352_Wordfence"
+    },
+    {
+      "weight": 247,
+      "source": "CWE-352",
+      "target": "CWE-352_mitre"
+    },
+    {
+      "weight": 223,
+      "source": "CWE-352",
+      "target": "CWE-352_WPScan"
+    },
+    {
+      "weight": 71,
+      "source": "CWE-352",
+      "target": "CWE-352_VulDB"
+    },
+    {
+      "weight": 70,
+      "source": "CWE-352",
+      "target": "CWE-352_GitHub_M"
+    },
+    {
+      "weight": 46,
+      "source": "CWE-352",
+      "target": "CWE-352_@huntrdev"
+    },
+    {
+      "weight": 21,
+      "source": "CWE-352",
+      "target": "CWE-352_drupal"
+    },
+    {
+      "weight": 20,
+      "source": "CWE-352",
+      "target": "CWE-352_cisco"
+    },
+    {
+      "weight": 17,
+      "source": "CWE-352",
+      "target": "CWE-352_@huntr_ai"
+    },
+    {
+      "weight": 17,
+      "source": "CWE-352",
+      "target": "CWE-352_redhat"
+    },
+    {
+      "weight": 16,
+      "source": "CWE-352",
+      "target": "CWE-352_hackerone"
+    },
+    {
+      "weight": 15,
+      "source": "CWE-352",
+      "target": "CWE-352_icscert"
+    },
+    {
+      "weight": 13,
+      "source": "CWE-352",
+      "target": "CWE-352_siemens"
+    },
+    {
+      "weight": 12,
+      "source": "CWE-352",
+      "target": "CWE-352_oracle"
+    },
+    {
+      "weight": 10,
+      "source": "CWE-352",
+      "target": "CWE-352_ibm"
+    },
+    {
+      "weight": 7,
+      "source": "CWE-352",
+      "target": "CWE-352_jpcert"
+    },
+    {
+      "weight": 7,
+      "source": "CWE-352",
+      "target": "CWE-352_twcert"
+    },
+    {
+      "weight": 6,
+      "source": "CWE-352",
+      "target": "CWE-352_jenkins"
+    },
+    {
+      "weight": 5,
+      "source": "CWE-352",
+      "target": "CWE-352_fedora"
+    },
+    {
+      "weight": 766,
+      "source": "CWE-94",
+      "target": "CWE-94_VulDB"
+    },
+    {
+      "weight": 426,
+      "source": "CWE-94",
+      "target": "CWE-94_mitre"
+    },
+    {
+      "weight": 113,
+      "source": "CWE-94",
+      "target": "CWE-94_GitHub_M"
+    },
+    {
+      "weight": 94,
+      "source": "CWE-94",
+      "target": "CWE-94_Wordfence"
+    },
+    {
+      "weight": 44,
+      "source": "CWE-94",
+      "target": "CWE-94_Patchstack"
+    },
+    {
+      "weight": 25,
+      "source": "CWE-94",
+      "target": "CWE-94_VulnCheck"
+    },
+    {
+      "weight": 24,
+      "source": "CWE-94",
+      "target": "CWE-94_microsoft"
+    },
+    {
+      "weight": 23,
+      "source": "CWE-94",
+      "target": "CWE-94_hackerone"
+    },
+    {
+      "weight": 17,
+      "source": "CWE-94",
+      "target": "CWE-94_nvidia"
+    },
+    {
+      "weight": 14,
+      "source": "CWE-94",
+      "target": "CWE-94_sap"
+    },
+    {
+      "weight": 13,
+      "source": "CWE-94",
+      "target": "CWE-94_Samsung Mobile"
+    },
+    {
+      "weight": 13,
+      "source": "CWE-94",
+      "target": "CWE-94_redhat"
+    },
+    {
+      "weight": 11,
+      "source": "CWE-94",
+      "target": "CWE-94_@huntrdev"
+    },
+    {
+      "weight": 11,
+      "source": "CWE-94",
+      "target": "CWE-94_@huntr_ai"
+    },
+    {
+      "weight": 8,
+      "source": "CWE-94",
+      "target": "CWE-94_apache"
+    },
+    {
+      "weight": 8,
+      "source": "CWE-94",
+      "target": "CWE-94_ABB"
+    },
+    {
+      "weight": 8,
+      "source": "CWE-94",
+      "target": "CWE-94_WPScan"
+    },
+    {
+      "weight": 7,
+      "source": "CWE-94",
+      "target": "CWE-94_JetBrains"
+    },
+    {
+      "weight": 7,
+      "source": "CWE-94",
+      "target": "CWE-94_apple"
+    },
+    {
+      "weight": 7,
+      "source": "CWE-94",
+      "target": "CWE-94_fedora"
+    },
+    {
+      "weight": 397,
+      "source": "CWE-284",
+      "target": "CWE-284_VulDB"
+    },
+    {
+      "weight": 342,
+      "source": "CWE-284",
+      "target": "CWE-284_mitre"
+    },
+    {
+      "weight": 97,
+      "source": "CWE-284",
+      "target": "CWE-284_GitHub_M"
+    },
+    {
+      "weight": 72,
+      "source": "CWE-284",
+      "target": "CWE-284_Samsung Mobile"
+    },
+    {
+      "weight": 69,
+      "source": "CWE-284",
+      "target": "CWE-284_microsoft"
+    },
+    {
+      "weight": 69,
+      "source": "CWE-284",
+      "target": "CWE-284_oracle"
+    },
+    {
+      "weight": 66,
+      "source": "CWE-284",
+      "target": "CWE-284_apple"
+    },
+    {
+      "weight": 50,
+      "source": "CWE-284",
+      "target": "CWE-284_redhat"
+    },
+    {
+      "weight": 31,
+      "source": "CWE-284",
+      "target": "CWE-284_icscert"
+    },
+    {
+      "weight": 31,
+      "source": "CWE-284",
+      "target": "CWE-284_hackerone"
+    },
+    {
+      "weight": 28,
+      "source": "CWE-284",
+      "target": "CWE-284_intel"
+    },
+    {
+      "weight": 26,
+      "source": "CWE-284",
+      "target": "CWE-284_siemens"
+    },
+    {
+      "weight": 26,
+      "source": "CWE-284",
+      "target": "CWE-284_@huntrdev"
+    },
+    {
+      "weight": 22,
+      "source": "CWE-284",
+      "target": "CWE-284_Wordfence"
+    },
+    {
+      "weight": 22,
+      "source": "CWE-284",
+      "target": "CWE-284_WPScan"
+    },
+    {
+      "weight": 21,
+      "source": "CWE-284",
+      "target": "CWE-284_adobe"
+    },
+    {
+      "weight": 10,
+      "source": "CWE-284",
+      "target": "CWE-284_nvidia"
+    },
+    {
+      "weight": 10,
+      "source": "CWE-284",
+      "target": "CWE-284_odoo"
+    },
+    {
+      "weight": 10,
+      "source": "CWE-284",
+      "target": "CWE-284_zdi"
+    },
+    {
+      "weight": 10,
+      "source": "CWE-284",
+      "target": "CWE-284_tenable"
+    },
+    {
+      "weight": 351,
+      "source": "CWE-125",
+      "target": "CWE-125_zdi"
+    },
+    {
+      "weight": 132,
+      "source": "CWE-125",
+      "target": "CWE-125_microsoft"
+    },
+    {
+      "weight": 120,
+      "source": "CWE-125",
+      "target": "CWE-125_mitre"
+    },
+    {
+      "weight": 109,
+      "source": "CWE-125",
+      "target": "CWE-125_adobe"
+    },
+    {
+      "weight": 107,
+      "source": "CWE-125",
+      "target": "CWE-125_GitHub_M"
+    },
+    {
+      "weight": 87,
+      "source": "CWE-125",
+      "target": "CWE-125_redhat"
+    },
+    {
+      "weight": 81,
+      "source": "CWE-125",
+      "target": "CWE-125_siemens"
+    },
+    {
+      "weight": 47,
+      "source": "CWE-125",
+      "target": "CWE-125_apple"
+    },
+    {
+      "weight": 46,
+      "source": "CWE-125",
+      "target": "CWE-125_icscert"
+    },
+    {
+      "weight": 45,
+      "source": "CWE-125",
+      "target": "CWE-125_Linux"
+    },
+    {
+      "weight": 39,
+      "source": "CWE-125",
+      "target": "CWE-125_google_android"
+    },
+    {
+      "weight": 31,
+      "source": "CWE-125",
+      "target": "CWE-125_MediaTek"
+    },
+    {
+      "weight": 30,
+      "source": "CWE-125",
+      "target": "CWE-125_@huntrdev"
+    },
+    {
+      "weight": 27,
+      "source": "CWE-125",
+      "target": "CWE-125_VulDB"
+    },
+    {
+      "weight": 22,
+      "source": "CWE-125",
+      "target": "CWE-125_huawei"
+    },
+    {
+      "weight": 21,
+      "source": "CWE-125",
+      "target": "CWE-125_Samsung Mobile"
+    },
+    {
+      "weight": 20,
+      "source": "CWE-125",
+      "target": "CWE-125_jpcert"
+    },
+    {
+      "weight": 19,
+      "source": "CWE-125",
+      "target": "CWE-125_nvidia"
+    },
+    {
+      "weight": 16,
+      "source": "CWE-125",
+      "target": "CWE-125_OpenHarmony"
+    },
+    {
+      "weight": 14,
+      "source": "CWE-125",
+      "target": "CWE-125_autodesk"
+    },
+    {
+      "weight": 260,
+      "source": "CWE-22",
+      "target": "CWE-22_mitre"
+    },
+    {
+      "weight": 199,
+      "source": "CWE-22",
+      "target": "CWE-22_GitHub_M"
+    },
+    {
+      "weight": 137,
+      "source": "CWE-22",
+      "target": "CWE-22_VulDB"
+    },
+    {
+      "weight": 111,
+      "source": "CWE-22",
+      "target": "CWE-22_Wordfence"
+    },
+    {
+      "weight": 100,
+      "source": "CWE-22",
+      "target": "CWE-22_Patchstack"
+    },
+    {
+      "weight": 74,
+      "source": "CWE-22",
+      "target": "CWE-22_zdi"
+    },
+    {
+      "weight": 45,
+      "source": "CWE-22",
+      "target": "CWE-22_VulnCheck"
+    },
+    {
+      "weight": 39,
+      "source": "CWE-22",
+      "target": "CWE-22_redhat"
+    },
+    {
+      "weight": 33,
+      "source": "CWE-22",
+      "target": "CWE-22_WPScan"
+    },
+    {
+      "weight": 32,
+      "source": "CWE-22",
+      "target": "CWE-22_hackerone"
+    },
+    {
+      "weight": 27,
+      "source": "CWE-22",
+      "target": "CWE-22_@huntr_ai"
+    },
+    {
+      "weight": 26,
+      "source": "CWE-22",
+      "target": "CWE-22_icscert"
+    },
+    {
+      "weight": 26,
+      "source": "CWE-22",
+      "target": "CWE-22_siemens"
+    },
+    {
+      "weight": 24,
+      "source": "CWE-22",
+      "target": "CWE-22_schneider"
+    },
+    {
+      "weight": 22,
+      "source": "CWE-22",
+      "target": "CWE-22_jpcert"
+    },
+    {
+      "weight": 18,
+      "source": "CWE-22",
+      "target": "CWE-22_talos"
+    },
+    {
+      "weight": 14,
+      "source": "CWE-22",
+      "target": "CWE-22_@huntrdev"
+    },
+    {
+      "weight": 13,
+      "source": "CWE-22",
+      "target": "CWE-22_qnap"
+    },
+    {
+      "weight": 12,
+      "source": "CWE-22",
+      "target": "CWE-22_apple"
+    },
+    {
+      "weight": 12,
+      "source": "CWE-22",
+      "target": "CWE-22_ibm"
+    },
+    {
+      "weight": 353,
+      "source": "CWE-416",
+      "target": "CWE-416_zdi"
+    },
+    {
+      "weight": 268,
+      "source": "CWE-416",
+      "target": "CWE-416_Linux"
+    },
+    {
+      "weight": 249,
+      "source": "CWE-416",
+      "target": "CWE-416_microsoft"
+    },
+    {
+      "weight": 109,
+      "source": "CWE-416",
+      "target": "CWE-416_redhat"
+    },
+    {
+      "weight": 64,
+      "source": "CWE-416",
+      "target": "CWE-416_mitre"
+    },
+    {
+      "weight": 53,
+      "source": "CWE-416",
+      "target": "CWE-416_qualcomm"
+    },
+    {
+      "weight": 47,
+      "source": "CWE-416",
+      "target": "CWE-416_adobe"
+    },
+    {
+      "weight": 41,
+      "source": "CWE-416",
+      "target": "CWE-416_@huntrdev"
+    },
+    {
+      "weight": 31,
+      "source": "CWE-416",
+      "target": "CWE-416_google_android"
+    },
+    {
+      "weight": 29,
+      "source": "CWE-416",
+      "target": "CWE-416_talos"
+    },
+    {
+      "weight": 26,
+      "source": "CWE-416",
+      "target": "CWE-416_GitHub_M"
+    },
+    {
+      "weight": 23,
+      "source": "CWE-416",
+      "target": "CWE-416_Chrome"
+    },
+    {
+      "weight": 16,
+      "source": "CWE-416",
+      "target": "CWE-416_siemens"
+    },
+    {
+      "weight": 16,
+      "source": "CWE-416",
+      "target": "CWE-416_mozilla"
+    },
+    {
+      "weight": 15,
+      "source": "CWE-416",
+      "target": "CWE-416_VulDB"
+    },
+    {
+      "weight": 13,
+      "source": "CWE-416",
+      "target": "CWE-416_icscert"
+    },
+    {
+      "weight": 13,
+      "source": "CWE-416",
+      "target": "CWE-416_imaginationtech"
+    },
+    {
+      "weight": 11,
+      "source": "CWE-416",
+      "target": "CWE-416_OpenHarmony"
+    },
+    {
+      "weight": 11,
+      "source": "CWE-416",
+      "target": "CWE-416_apple"
+    },
+    {
+      "weight": 8,
+      "source": "CWE-416",
+      "target": "CWE-416_hackerone"
+    },
+    {
+      "weight": 166,
+      "source": "CWE-20",
+      "target": "CWE-20_GitHub_M"
+    },
+    {
+      "weight": 140,
+      "source": "CWE-20",
+      "target": "CWE-20_redhat"
+    },
+    {
+      "weight": 110,
+      "source": "CWE-20",
+      "target": "CWE-20_cisco"
+    },
+    {
+      "weight": 87,
+      "source": "CWE-20",
+      "target": "CWE-20_Samsung Mobile"
+    },
+    {
+      "weight": 70,
+      "source": "CWE-20",
+      "target": "CWE-20_mitre"
+    },
+    {
+      "weight": 70,
+      "source": "CWE-20",
+      "target": "CWE-20_VulDB"
+    },
+    {
+      "weight": 54,
+      "source": "CWE-20",
+      "target": "CWE-20_microsoft"
+    },
+    {
+      "weight": 49,
+      "source": "CWE-20",
+      "target": "CWE-20_VulnCheck"
+    },
+    {
+      "weight": 41,
+      "source": "CWE-20",
+      "target": "CWE-20_intel"
+    },
+    {
+      "weight": 38,
+      "source": "CWE-20",
+      "target": "CWE-20_icscert"
+    },
+    {
+      "weight": 36,
+      "source": "CWE-20",
+      "target": "CWE-20_apache"
+    },
+    {
+      "weight": 35,
+      "source": "CWE-20",
+      "target": "CWE-20_siemens"
+    },
+    {
+      "weight": 32,
+      "source": "CWE-20",
+      "target": "CWE-20_krcert"
+    },
+    {
+      "weight": 25,
+      "source": "CWE-20",
+      "target": "CWE-20_apple"
+    },
+    {
+      "weight": 23,
+      "source": "CWE-20",
+      "target": "CWE-20_schneider"
+    },
+    {
+      "weight": 21,
+      "source": "CWE-20",
+      "target": "CWE-20_sap"
+    },
+    {
+      "weight": 21,
+      "source": "CWE-20",
+      "target": "CWE-20_huawei"
+    },
+    {
+      "weight": 20,
+      "source": "CWE-20",
+      "target": "CWE-20_qualcomm"
+    },
+    {
+      "weight": 19,
+      "source": "CWE-20",
+      "target": "CWE-20_adobe"
+    },
+    {
+      "weight": 15,
+      "source": "CWE-20",
+      "target": "CWE-20_f5"
+    },
+    {
+      "weight": 232,
+      "source": "CWE-787",
+      "target": "CWE-787_zdi"
+    },
+    {
+      "weight": 208,
+      "source": "CWE-787",
+      "target": "CWE-787_mitre"
+    },
+    {
+      "weight": 117,
+      "source": "CWE-787",
+      "target": "CWE-787_adobe"
+    },
+    {
+      "weight": 96,
+      "source": "CWE-787",
+      "target": "CWE-787_siemens"
+    },
+    {
+      "weight": 81,
+      "source": "CWE-787",
+      "target": "CWE-787_redhat"
+    },
+    {
+      "weight": 59,
+      "source": "CWE-787",
+      "target": "CWE-787_google_android"
+    },
+    {
+      "weight": 56,
+      "source": "CWE-787",
+      "target": "CWE-787_MediaTek"
+    },
+    {
+      "weight": 38,
+      "source": "CWE-787",
+      "target": "CWE-787_sap"
+    },
+    {
+      "weight": 35,
+      "source": "CWE-787",
+      "target": "CWE-787_apple"
+    },
+    {
+      "weight": 35,
+      "source": "CWE-787",
+      "target": "CWE-787_icscert"
+    },
+    {
+      "weight": 33,
+      "source": "CWE-787",
+      "target": "CWE-787_Linux"
+    },
+    {
+      "weight": 32,
+      "source": "CWE-787",
+      "target": "CWE-787_GitHub_M"
+    },
+    {
+      "weight": 23,
+      "source": "CWE-787",
+      "target": "CWE-787_mozilla"
+    },
+    {
+      "weight": 22,
+      "source": "CWE-787",
+      "target": "CWE-787_autodesk"
+    },
+    {
+      "weight": 17,
+      "source": "CWE-787",
+      "target": "CWE-787_qualcomm"
+    },
+    {
+      "weight": 17,
+      "source": "CWE-787",
+      "target": "CWE-787_schneider"
+    },
+    {
+      "weight": 13,
+      "source": "CWE-787",
+      "target": "CWE-787_jpcert"
+    },
+    {
+      "weight": 13,
+      "source": "CWE-787",
+      "target": "CWE-787_talos"
+    },
+    {
+      "weight": 12,
+      "source": "CWE-787",
+      "target": "CWE-787_Google_Devices"
+    },
+    {
+      "weight": 12,
+      "source": "CWE-787",
+      "target": "CWE-787_Deltaww"
+    }
+  ],
+  "metadata": {
+    "generated_at": "2025-10-26T15:58:38.068378+00:00",
+    "type": "CWE Star Graphs",
+    "layout": "spring",
+    "node_count": 252,
+    "edge_count": 240
+  }
+}

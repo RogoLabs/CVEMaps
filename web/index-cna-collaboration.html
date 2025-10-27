@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Map: CNA Collaboration Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        #graph-container {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+        }
+        
+        .node {
+            cursor: pointer;
+            stroke: #fff;
+            stroke-width: 2px;
+            fill: #3b82f6;
+        }
+        
+        .node.highlighted {
+            stroke: #fbbf24;
+            stroke-width: 4px;
+        }
+        
+        .link {
+            stroke: #64748b;
+            stroke-opacity: 0.2;
+        }
+        
+        .link.highlighted {
+            stroke: #fbbf24;
+            stroke-opacity: 0.8;
+            stroke-width: 2px;
+        }
+        
+        .node-label {
+            font-size: 10px;
+            fill: #e2e8f0;
+            pointer-events: none;
+            text-anchor: middle;
+            user-select: none;
+            font-weight: 600;
+        }
+        
+        #tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #e2e8f0;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+        }
+        
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            padding: 20px;
+            color: #e2e8f0;
+            max-width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        #header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        button {
+            background: rgba(51, 65, 85, 0.9);
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 8px;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: rgba(71, 85, 105, 0.9);
+            border-color: #64748b;
+        }
+        
+        input[type="text"] {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid #475569;
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div style="background: rgba(15, 23, 42, 0.95); border: 1px solid #475569; border-radius: 8px; padding: 16px; backdrop-filter: blur(10px);">
+            <h1 class="text-2xl font-bold text-slate-100 mb-1">CNA Collaboration Network</h1>
+            <p class="text-sm text-slate-400">CNAs connected by shared CWE focus</p>
+            <div class="mt-2 text-xs text-slate-500">
+                <span id="stats">Loading...</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="controls">
+        <input type="text" id="search-input" placeholder="Filter CNA..." />
+        <button id="reset-btn">Reset View</button>
+        <button id="clear-selection-btn">Clear Selection</button>
+        <button id="toggle-labels-btn">Toggle Labels</button>
+        <button id="back-btn" onclick="window.location.href='index.html'">← Back</button>
+    </div>
+    
+    <div id="info-panel">
+        <h2 class="text-lg font-bold mb-3">CNA Details</h2>
+        <div class="text-sm">
+            <div class="mb-2"><strong>Selected:</strong> <span id="cna-name">-</span></div>
+            <div class="mb-2"><strong>CWE Count:</strong> <span id="cwe-count">-</span></div>
+            <div class="mb-3"><strong>Collaborators:</strong> <span id="collab-count">-</span></div>
+            <div class="text-xs text-slate-400 mb-2"><strong>Top Collaborators:</strong></div>
+            <div id="collab-list" class="text-xs text-slate-300"></div>
+        </div>
+    </div>
+    
+    <div id="tooltip"></div>
+    <svg id="graph-container"></svg>
+    
+    <script>
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        const svg = d3.select("#graph-container")
+            .attr("width", width)
+            .attr("height", height);
+        
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 10])
+            .on("zoom", (event) => {
+                g.attr("transform", event.transform);
+            });
+        
+        svg.call(zoom);
+        
+        const g = svg.append("g");
+        const tooltip = d3.select("#tooltip");
+        
+        let graphData = null;
+        let selectedNode = null;
+        let showLabels = false;
+        let allNodes = [];
+        let allLinks = [];
+        
+        async function loadData() {
+            try {
+                const response = await fetch('./data/cna_collaboration.json');
+                graphData = await response.json();
+                
+                allNodes = graphData.nodes.map(d => ({...d}));
+                allLinks = graphData.links.map(d => ({...d}));
+                
+                document.getElementById('stats').textContent = 
+                    `${graphData.metadata.node_count} CNAs • ${graphData.metadata.edge_count} collaborations`;
+                
+                visualizeGraph();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        function visualizeGraph() {
+            g.selectAll('*').remove();
+            
+            // Use pre-computed positions
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const scale = Math.min(width, height) * 0.4;
+            
+            allNodes.forEach(n => {
+                n.displayX = centerX + n.x * scale / 1000;
+                n.displayY = centerY + n.y * scale / 1000;
+            });
+            
+            // Draw links
+            const link = g.append("g")
+                .selectAll("line")
+                .data(allLinks)
+                .join("line")
+                .attr("class", "link")
+                .attr("stroke-width", d => Math.sqrt(d.weight) / 4)
+                .attr("x1", d => {
+                    const source = allNodes.find(n => n.id === (typeof d.source === 'object' ? d.source.id : d.source));
+                    return source ? source.displayX : 0;
+                })
+                .attr("y1", d => {
+                    const source = allNodes.find(n => n.id === (typeof d.source === 'object' ? d.source.id : d.source));
+                    return source ? source.displayY : 0;
+                })
+                .attr("x2", d => {
+                    const target = allNodes.find(n => n.id === (typeof d.target === 'object' ? d.target.id : d.target));
+                    return target ? target.displayX : 0;
+                })
+                .attr("y2", d => {
+                    const target = allNodes.find(n => n.id === (typeof d.target === 'object' ? d.target.id : d.target));
+                    return target ? target.displayY : 0;
+                });
+            
+            // Draw nodes
+            const node = g.append("g")
+                .selectAll("circle")
+                .data(allNodes)
+                .join("circle")
+                .attr("class", "node")
+                .attr("r", d => 3 + Math.sqrt(d.cwe_count || 0) / 3)
+                .attr("cx", d => d.displayX)
+                .attr("cy", d => d.displayY)
+                .on("mouseover", function(event, d) {
+                    if (!selectedNode || selectedNode.id !== d.id) {
+                        d3.select(this).classed("highlighted", true);
+                    }
+                    const getNodeId = (node) => typeof node === 'object' ? node.id : node;
+                    const connections = allLinks.filter(l => {
+                        const sourceId = getNodeId(l.source);
+                        const targetId = getNodeId(l.target);
+                        return sourceId === d.id || targetId === d.id;
+                    });
+                    tooltip
+                        .style("opacity", 1)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 10) + "px")
+                        .html(`<strong>${d.label}</strong><br>CWEs: ${d.cwe_count || 0}<br>Collaborations: ${connections.length}`);
+                })
+                .on("mouseout", function(event, d) {
+                    if (!selectedNode || selectedNode.id !== d.id) {
+                        d3.select(this).classed("highlighted", false);
+                    }
+                    tooltip.style("opacity", 0);
+                })
+                .on("click", function(event, d) {
+                    event.stopPropagation();
+                    selectNode(d);
+                });
+            
+            // Draw labels (top CNAs only)
+            const topCNAs = allNodes.sort((a, b) => (b.cwe_count || 0) - (a.cwe_count || 0)).slice(0, 30);
+            const label = g.append("g")
+                .selectAll("text")
+                .data(topCNAs)
+                .join("text")
+                .attr("class", "node-label")
+                .text(d => d.label)
+                .attr("x", d => d.displayX)
+                .attr("y", d => d.displayY - 10)
+                .style("display", showLabels ? "block" : "none");
+            
+            window.graphElements = { link, node, label };
+        }
+        
+        function selectNode(d) {
+            selectedNode = d;
+            
+            document.getElementById('cna-name').textContent = d.label;
+            document.getElementById('cwe-count').textContent = d.cwe_count || '0';
+            
+            const getNodeId = (node) => typeof node === 'object' ? node.id : node;
+            const connectedLinks = allLinks.filter(l => {
+                const sourceId = getNodeId(l.source);
+                const targetId = getNodeId(l.target);
+                return sourceId === d.id || targetId === d.id;
+            });
+            
+            document.getElementById('collab-count').textContent = connectedLinks.length;
+            
+            const collaborators = connectedLinks
+                .map(l => {
+                    const sourceId = getNodeId(l.source);
+                    const targetId = getNodeId(l.target);
+                    const partnerId = sourceId === d.id ? targetId : sourceId;
+                    const partnerNode = allNodes.find(n => n.id === partnerId);
+                    return {
+                        cna: partnerNode ? partnerNode.label : partnerId,
+                        shared: l.shared_count || l.weight
+                    };
+                })
+                .sort((a, b) => b.shared - a.shared)
+                .slice(0, 20);
+            
+            document.getElementById('collab-list').innerHTML = collaborators
+                .map(c => `<div class="flex justify-between py-1"><span>${c.cna}</span><span class="text-slate-500">${c.shared} shared</span></div>`)
+                .join('');
+            
+            // Highlight
+            const connectedNodeIds = new Set(connectedLinks.flatMap(l => {
+                const sourceId = getNodeId(l.source);
+                const targetId = getNodeId(l.target);
+                return [sourceId, targetId];
+            }));
+            
+            window.graphElements.node.classed("highlighted", n => n.id === d.id || connectedNodeIds.has(n.id));
+            window.graphElements.link.classed("highlighted", l => {
+                const sourceId = getNodeId(l.source);
+                const targetId = getNodeId(l.target);
+                return sourceId === d.id || targetId === d.id;
+            });
+        }
+        
+        function clearSelection() {
+            selectedNode = null;
+            window.graphElements.node.classed("highlighted", false);
+            window.graphElements.link.classed("highlighted", false);
+            
+            document.getElementById('cna-name').textContent = '-';
+            document.getElementById('cwe-count').textContent = '-';
+            document.getElementById('collab-count').textContent = '-';
+            document.getElementById('collab-list').innerHTML = '';
+        }
+        
+        function filterGraph() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            
+            if (!query) {
+                allNodes.forEach(n => n.visible = true);
+                allLinks.forEach(l => l.visible = true);
+            } else {
+                allNodes.forEach(n => {
+                    n.visible = n.label.toLowerCase().includes(query);
+                });
+                
+                const visibleNodeIds = new Set(allNodes.filter(n => n.visible).map(n => n.id));
+                allLinks.forEach(l => {
+                    const getNodeId = (node) => typeof node === 'object' ? node.id : node;
+                    const sourceId = getNodeId(l.source);
+                    const targetId = getNodeId(l.target);
+                    l.visible = visibleNodeIds.has(sourceId) && visibleNodeIds.has(targetId);
+                });
+            }
+            
+            window.graphElements.node.style("display", d => d.visible ? "block" : "none");
+            window.graphElements.link.style("display", d => d.visible ? "block" : "none");
+        }
+        
+        function resetView() {
+            svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+        }
+        
+        function toggleLabels() {
+            showLabels = !showLabels;
+            window.graphElements.label.style("display", showLabels ? "block" : "none");
+        }
+        
+        document.getElementById('reset-btn').addEventListener('click', resetView);
+        document.getElementById('clear-selection-btn').addEventListener('click', clearSelection);
+        document.getElementById('toggle-labels-btn').addEventListener('click', toggleLabels);
+        document.getElementById('search-input').addEventListener('input', filterGraph);
+        svg.on('click', clearSelection);
+        
+        loadData();
+    </script>
+</body>
+</html>

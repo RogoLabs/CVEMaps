@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Map: CWE Hierarchy Tree</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        #graph-container {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+        }
+        
+        .node {
+            cursor: pointer;
+            stroke: #fff;
+            stroke-width: 2px;
+        }
+        
+        .node.root {
+            fill: #3b82f6;
+        }
+        
+        .node.category {
+            fill: #8b5cf6;
+        }
+        
+        .node.cwe {
+            fill: #ef4444;
+        }
+        
+        .node.highlighted {
+            stroke: #fbbf24;
+            stroke-width: 4px;
+        }
+        
+        .link {
+            stroke: #64748b;
+            stroke-opacity: 0.4;
+            stroke-width: 2px;
+            fill: none;
+        }
+        
+        .link.highlighted {
+            stroke: #fbbf24;
+            stroke-opacity: 0.8;
+            stroke-width: 3px;
+        }
+        
+        .node-label {
+            font-size: 11px;
+            fill: #e2e8f0;
+            pointer-events: none;
+            text-anchor: middle;
+            user-select: none;
+            font-weight: 600;
+        }
+        
+        #tooltip, #info-panel, #header, #controls, button {
+            /* Same styles as circular... */
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div style="background: rgba(15, 23, 42, 0.95); border: 1px solid #475569; border-radius: 8px; padding: 16px; backdrop-filter: blur(10px);">
+            <h1 class="text-2xl font-bold text-slate-100 mb-1">CWE Hierarchy Tree</h1>
+            <p class="text-sm text-slate-400">Top weaknesses organized by category</p>
+            <div class="mt-2 text-xs text-slate-500">
+                <span id="stats">Loading...</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="controls" style="position: absolute; bottom: 20px; left: 20px; z-index: 100;">
+        <button id="reset-btn" style="background: rgba(51, 65, 85, 0.9); color: #e2e8f0; border: 1px solid #475569; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-right: 8px;">Reset View</button>
+        <button id="clear-selection-btn" style="background: rgba(51, 65, 85, 0.9); color: #e2e8f0; border: 1px solid #475569; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-right: 8px;">Clear Selection</button>
+        <button id="back-btn" onclick="window.location.href='index.html'" style="background: rgba(51, 65, 85, 0.9); color: #e2e8f0; border: 1px solid #475569; padding: 8px 16px; border-radius: 6px; cursor: pointer;">← Back to Home</button>
+    </div>
+    
+    <div id="info-panel" style="position: absolute; top: 20px; right: 20px; background: rgba(15, 23, 42, 0.95); border: 1px solid #475569; border-radius: 8px; padding: 20px; color: #e2e8f0; max-width: 350px; backdrop-filter: blur(10px);">
+        <h2 class="text-lg font-bold mb-3">Node Details</h2>
+        <div class="text-sm">
+            <div class="mb-2"><strong>Selected:</strong> <span id="node-name">-</span></div>
+            <div class="mb-2"><strong>Type:</strong> <span id="node-type">-</span></div>
+            <div class="mb-2"><strong>CVE Count:</strong> <span id="cve-count">-</span></div>
+            <div class="mb-3"><strong>Level:</strong> <span id="node-level">-</span></div>
+        </div>
+    </div>
+    
+    <div id="tooltip" style="position: absolute; background: rgba(15, 23, 42, 0.95); border: 1px solid #475569; border-radius: 6px; padding: 8px 12px; color: #e2e8f0; font-size: 12px; pointer-events: none; opacity: 0; z-index: 1000;"></div>
+    <svg id="graph-container"></svg>
+    
+    <script>
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        const svg = d3.select("#graph-container")
+            .attr("width", width)
+            .attr("height", height);
+        
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 10])
+            .on("zoom", (event) => {
+                g.attr("transform", event.transform);
+            });
+        
+        svg.call(zoom);
+        
+        const g = svg.append("g");
+        const tooltip = d3.select("#tooltip");
+        
+        let graphData = null;
+        let selectedNode = null;
+        
+        async function loadData() {
+            try {
+                const response = await fetch('./data/cwe_hierarchy_tree.json');
+                graphData = await response.json();
+                
+                document.getElementById('stats').textContent = 
+                    `${graphData.metadata.node_count} nodes • ${graphData.metadata.edge_count} edges`;
+                
+                visualizeGraph();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        function visualizeGraph() {
+            const nodes = graphData.nodes.map(d => ({...d}));
+            const links = graphData.links.map(d => ({...d}));
+            
+            // Scale positions
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const scale = Math.min(width, height) * 0.4;
+            
+            nodes.forEach(n => {
+                n.x = centerX + n.x * scale / 1000;
+                n.y = centerY + n.y * scale / 1000;
+            });
+            
+            // Draw curved links
+            const link = g.append("g")
+                .selectAll("path")
+                .data(links)
+                .join("path")
+                .attr("class", "link")
+                .attr("d", d => {
+                    const source = nodes.find(n => n.id === (typeof d.source === 'object' ? d.source.id : d.source));
+                    const target = nodes.find(n => n.id === (typeof d.target === 'object' ? d.target.id : d.target));
+                    if (!source || !target) return "";
+                    return `M${source.x},${source.y} L${target.x},${target.y}`;
+                });
+            
+            // Draw nodes with different sizes by level
+            const node = g.append("g")
+                .selectAll("circle")
+                .data(nodes)
+                .join("circle")
+                .attr("class", d => `node ${d.type}`)
+                .attr("r", d => d.type === 'root' ? 20 : d.type === 'category' ? 12 : 6 + Math.sqrt(d.count || 0) / 5)
+                .attr("cx", d => d.x)
+                .attr("cy", d => d.y)
+                .on("mouseover", function(event, d) {
+                    d3.select(this).classed("highlighted", true);
+                    tooltip
+                        .style("opacity", 1)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 10) + "px")
+                        .html(`<strong>${d.label}</strong><br>Type: ${d.type}<br>Level: ${d.level || 0}${d.count ? `<br>CVEs: ${d.count}` : ''}`);
+                })
+                .on("mouseout", function() {
+                    if (!selectedNode || this.__data__.id !== selectedNode.id) {
+                        d3.select(this).classed("highlighted", false);
+                    }
+                    tooltip.style("opacity", 0);
+                })
+                .on("click", function(event, d) {
+                    event.stopPropagation();
+                    selectNode(d);
+                });
+            
+            // Draw labels
+            const label = g.append("g")
+                .selectAll("text")
+                .data(nodes)
+                .join("text")
+                .attr("class", "node-label")
+                .text(d => d.label)
+                .attr("x", d => d.x)
+                .attr("y", d => d.y - (d.type === 'root' ? 25 : d.type === 'category' ? 18 : 12));
+            
+            window.graphElements = { link, node, label };
+        }
+        
+        function selectNode(d) {
+            selectedNode = d;
+            
+            document.getElementById('node-name').textContent = d.label;
+            document.getElementById('node-type').textContent = d.type;
+            document.getElementById('cve-count').textContent = d.count || '0';
+            document.getElementById('node-level').textContent = d.level || '0';
+            
+            window.graphElements.node.classed("highlighted", n => n.id === d.id);
+            
+            // Highlight connected edges
+            const getNodeId = (node) => typeof node === 'object' ? node.id : node;
+            window.graphElements.link.classed("highlighted", l => {
+                const sourceId = getNodeId(l.source);
+                const targetId = getNodeId(l.target);
+                return sourceId === d.id || targetId === d.id;
+            });
+        }
+        
+        function clearSelection() {
+            selectedNode = null;
+            window.graphElements.node.classed("highlighted", false);
+            window.graphElements.link.classed("highlighted", false);
+            
+            document.getElementById('node-name').textContent = '-';
+            document.getElementById('node-type').textContent = '-';
+            document.getElementById('cve-count').textContent = '-';
+            document.getElementById('node-level').textContent = '-';
+        }
+        
+        function resetView() {
+            svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+        }
+        
+        document.getElementById('reset-btn').addEventListener('click', resetView);
+        document.getElementById('clear-selection-btn').addEventListener('click', clearSelection);
+        svg.on('click', clearSelection);
+        
+        loadData();
+    </script>
+</body>
+</html>

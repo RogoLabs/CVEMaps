@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Map: CWE Co-occurrence Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        #graph-container {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+        }
+        
+        .node {
+            cursor: pointer;
+            stroke: #fff;
+            stroke-width: 2px;
+            fill: #ef4444;
+        }
+        
+        .node.highlighted {
+            stroke: #fbbf24;
+            stroke-width: 4px;
+        }
+        
+        .link {
+            stroke: #64748b;
+            stroke-opacity: 0.4;
+        }
+        
+        .link.highlighted {
+            stroke: #fbbf24;
+            stroke-opacity: 0.8;
+            stroke-width: 2px;
+        }
+        
+        .node-label {
+            font-size: 10px;
+            fill: #e2e8f0;
+            pointer-events: none;
+            text-anchor: middle;
+            user-select: none;
+            font-weight: 600;
+        }
+        
+        #tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #e2e8f0;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+        }
+        
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            padding: 20px;
+            color: #e2e8f0;
+            max-width: 350px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        #header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        button {
+            background: rgba(51, 65, 85, 0.9);
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 8px;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: rgba(71, 85, 105, 0.9);
+            border-color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div style="background: rgba(15, 23, 42, 0.95); border: 1px solid #475569; border-radius: 8px; padding: 16px; backdrop-filter: blur(10px);">
+            <h1 class="text-2xl font-bold text-slate-100 mb-1">CWE Co-occurrence Network</h1>
+            <p class="text-sm text-slate-400">Weaknesses that commonly appear together</p>
+            <div class="mt-2 text-xs text-slate-500">
+                <span id="stats">Loading...</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="controls">
+        <button id="reset-btn">Reset View</button>
+        <button id="clear-selection-btn">Clear Selection</button>
+        <button id="toggle-labels-btn">Toggle Labels</button>
+        <button id="back-btn" onclick="window.location.href='index.html'">← Back to Home</button>
+    </div>
+    
+    <div id="info-panel">
+        <h2 class="text-lg font-bold mb-3">CWE Details</h2>
+        <div class="text-sm">
+            <div class="mb-2"><strong>Selected:</strong> <span id="cwe-name">-</span></div>
+            <div class="mb-2"><strong>Co-occurs with:</strong> <span id="cooccurrence-count">-</span> CWEs</div>
+            <div class="mb-3"><strong>Total instances:</strong> <span id="total-count">-</span></div>
+            <div class="text-xs text-slate-400 mb-2"><strong>Most common partners:</strong></div>
+            <div id="partner-list" class="text-xs text-slate-300 max-h-60 overflow-y-auto"></div>
+        </div>
+    </div>
+    
+    <div id="tooltip"></div>
+    <svg id="graph-container"></svg>
+    
+    <script>
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        const svg = d3.select("#graph-container")
+            .attr("width", width)
+            .attr("height", height);
+        
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 10])
+            .on("zoom", (event) => {
+                g.attr("transform", event.transform);
+            });
+        
+        svg.call(zoom);
+        
+        const g = svg.append("g");
+        const tooltip = d3.select("#tooltip");
+        
+        let graphData = null;
+        let selectedNode = null;
+        let showLabels = false;
+        
+        async function loadData() {
+            try {
+                const response = await fetch('./data/cwe_cooccurrence_map.json');
+                graphData = await response.json();
+                
+                document.getElementById('stats').textContent = 
+                    `${graphData.metadata.node_count} CWEs • ${graphData.metadata.edge_count} co-occurrences`;
+                
+                visualizeGraph();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('stats').textContent = 'Error loading data';
+            }
+        }
+        
+        function visualizeGraph() {
+            const nodes = graphData.nodes.map(d => ({...d}));
+            const links = graphData.links.map(d => ({...d}));
+            
+            // Calculate node degrees
+            const nodeDegrees = {};
+            nodes.forEach(n => nodeDegrees[n.id] = 0);
+            links.forEach(l => {
+                nodeDegrees[l.source]++;
+                nodeDegrees[l.target]++;
+            });
+            
+            // Create force simulation
+            const simulation = d3.forceSimulation(nodes)
+                .force("link", d3.forceLink(links).id(d => d.id).distance(d => 50 + Math.log(d.weight + 1) * 10))
+                .force("charge", d3.forceManyBody().strength(-300))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("collision", d3.forceCollide().radius(d => Math.sqrt(nodeDegrees[d.id]) * 3 + 8));
+            
+            // Draw links
+            const link = g.append("g")
+                .selectAll("line")
+                .data(links)
+                .join("line")
+                .attr("class", "link")
+                .attr("stroke-width", d => Math.sqrt(d.weight) / 2);
+            
+            // Draw nodes
+            const node = g.append("g")
+                .selectAll("circle")
+                .data(nodes)
+                .join("circle")
+                .attr("class", "node")
+                .attr("r", d => Math.sqrt(nodeDegrees[d.id]) * 3 + 5)
+                .on("mouseover", function(event, d) {
+                    handleMouseOver(event, d, this);
+                })
+                .on("mouseout", function(event, d) {
+                    handleMouseOut(event, d, this);
+                })
+                .on("click", function(event, d) {
+                    event.stopPropagation();
+                    selectNode(d);
+                })
+                .call(d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended));
+            
+            // Draw labels
+            const label = g.append("g")
+                .selectAll("text")
+                .data(nodes)
+                .join("text")
+                .attr("class", "node-label")
+                .text(d => d.label)
+                .style("display", showLabels ? "block" : "none");
+            
+            simulation.on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+                
+                node
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y);
+                
+                label
+                    .attr("x", d => d.x)
+                    .attr("y", d => d.y - (Math.sqrt(nodeDegrees[d.id]) * 3 + 12));
+            });
+            
+            window.graphElements = { link, node, label, simulation };
+        }
+        
+        function selectNode(d) {
+            selectedNode = d;
+            
+            document.getElementById('cwe-name').textContent = d.label;
+            
+            // Handle both string IDs and object references (after force simulation)
+            const getNodeId = (node) => typeof node === 'object' ? node.id : node;
+            
+            const connectedLinks = graphData.links.filter(l => {
+                const sourceId = getNodeId(l.source);
+                const targetId = getNodeId(l.target);
+                return sourceId === d.id || targetId === d.id;
+            });
+            
+            document.getElementById('cooccurrence-count').textContent = connectedLinks.length;
+            
+            const totalCooccurrences = connectedLinks.reduce((sum, l) => sum + l.weight, 0);
+            document.getElementById('total-count').textContent = totalCooccurrences;
+            
+            // Show partner CWEs sorted by weight
+            const partners = connectedLinks
+                .map(l => {
+                    const sourceId = getNodeId(l.source);
+                    const targetId = getNodeId(l.target);
+                    const partnerId = sourceId === d.id ? targetId : sourceId;
+                    const partnerNode = graphData.nodes.find(n => n.id === partnerId);
+                    return {
+                        cwe: partnerNode ? partnerNode.label : partnerId,
+                        count: l.weight
+                    };
+                })
+                .sort((a, b) => b.count - a.count)
+                .slice(0, 20);
+            
+            document.getElementById('partner-list').innerHTML = partners
+                .map(p => `<div class="flex justify-between py-1"><span>${p.cwe}</span><span class="text-slate-500">${p.count}</span></div>`)
+                .join('');
+            
+            // Highlight
+            const connectedNodeIds = new Set(connectedLinks.flatMap(l => {
+                const sourceId = getNodeId(l.source);
+                const targetId = getNodeId(l.target);
+                return [sourceId, targetId];
+            }));
+            window.graphElements.node.classed("highlighted", n => n.id === d.id || connectedNodeIds.has(n.id));
+            window.graphElements.link.classed("highlighted", l => {
+                const sourceId = getNodeId(l.source);
+                const targetId = getNodeId(l.target);
+                return sourceId === d.id || targetId === d.id;
+            });
+        }
+        
+        function clearSelection() {
+            selectedNode = null;
+            window.graphElements.node.classed("highlighted", false);
+            window.graphElements.link.classed("highlighted", false);
+            
+            document.getElementById('cwe-name').textContent = '-';
+            document.getElementById('cooccurrence-count').textContent = '-';
+            document.getElementById('total-count').textContent = '-';
+            document.getElementById('partner-list').innerHTML = '';
+        }
+        
+        function handleMouseOver(event, d, element) {
+            if (!selectedNode || selectedNode.id !== d.id) {
+                d3.select(element).classed("highlighted", true);
+            }
+            
+            // Handle both string IDs and object references
+            const getNodeId = (node) => typeof node === 'object' ? node.id : node;
+            
+            const connectedLinks = graphData.links.filter(l => {
+                const sourceId = getNodeId(l.source);
+                const targetId = getNodeId(l.target);
+                return sourceId === d.id || targetId === d.id;
+            });
+            const totalCount = connectedLinks.reduce((sum, l) => sum + l.weight, 0);
+            
+            tooltip
+                .style("opacity", 1)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 10) + "px")
+                .html(`<strong>${d.label}</strong><br>Co-occurs with: ${connectedLinks.length} CWEs<br>Total instances: ${totalCount}`);
+        }
+        
+        function handleMouseOut(event, d, element) {
+            if (!selectedNode || selectedNode.id !== d.id) {
+                d3.select(element).classed("highlighted", false);
+            }
+            tooltip.style("opacity", 0);
+        }
+        
+        function resetView() {
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity);
+        }
+        
+        function toggleLabels() {
+            showLabels = !showLabels;
+            window.graphElements.label.style("display", showLabels ? "block" : "none");
+        }
+        
+        function dragstarted(event, d) {
+            if (!event.active) window.graphElements.simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+        
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+        
+        function dragended(event, d) {
+            if (!event.active) window.graphElements.simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+        
+        // Event listeners
+        document.getElementById('reset-btn').addEventListener('click', resetView);
+        document.getElementById('clear-selection-btn').addEventListener('click', clearSelection);
+        document.getElementById('toggle-labels-btn').addEventListener('click', toggleLabels);
+        svg.on('click', clearSelection);
+        
+        loadData();
+    </script>
+</body>
+</html>

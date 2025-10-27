@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Map: CNA to CWE Associations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        #graph-container {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+        }
+        
+        .node {
+            cursor: pointer;
+            stroke: #fff;
+            stroke-width: 2px;
+        }
+        
+        .node.cna {
+            fill: #3b82f6;
+        }
+        
+        .node.cwe {
+            fill: #ef4444;
+        }
+        
+        .node.highlighted {
+            stroke: #fbbf24;
+            stroke-width: 4px;
+        }
+        
+        .link {
+            stroke: #64748b;
+            stroke-opacity: 0.3;
+        }
+        
+        .link.highlighted {
+            stroke: #fbbf24;
+            stroke-opacity: 0.8;
+            stroke-width: 3px;
+        }
+        
+        .node-label {
+            font-size: 10px;
+            fill: #e2e8f0;
+            pointer-events: none;
+            text-anchor: middle;
+            user-select: none;
+        }
+        
+        #tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #e2e8f0;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+        }
+        
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            padding: 20px;
+            color: #e2e8f0;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        #header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        .stat-item {
+            margin: 8px 0;
+            padding: 8px;
+            background: rgba(51, 65, 85, 0.5);
+            border-radius: 4px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+            border: 2px solid #fff;
+        }
+        
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        
+        button:hover {
+            background: #2563eb;
+        }
+        
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #e2e8f0;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(59, 130, 246, 0.3);
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-slate-900">
+    <div id="loading">
+        <div class="spinner"></div>
+        <div class="text-xl">Loading CVE Map Data...</div>
+    </div>
+    
+    <div id="header">
+        <h1 class="text-4xl font-bold text-white mb-2">CVE Map</h1>
+        <p class="text-slate-300 text-lg">CNA to CWE Associations</p>
+        <p id="last-updated" class="text-slate-400 text-sm mt-2">Loading...</p>
+    </div>
+    
+    <div id="info-panel" style="display: none;">
+        <h3 class="text-xl font-bold mb-3 text-white">Node Information</h3>
+        <div id="node-info" class="space-y-2">
+            <div class="stat-item">
+                <div class="text-sm text-slate-400">Type</div>
+                <div id="node-type" class="text-lg font-semibold"></div>
+            </div>
+            <div class="stat-item">
+                <div class="text-sm text-slate-400">ID</div>
+                <div id="node-id" class="text-lg font-semibold break-all"></div>
+            </div>
+            <div class="stat-item">
+                <div class="text-sm text-slate-400">Connections</div>
+                <div id="node-connections" class="text-lg font-semibold"></div>
+            </div>
+        </div>
+        
+        <div class="mt-4 pt-4 border-t border-slate-600">
+            <h4 class="text-sm font-semibold mb-2 text-slate-300">Legend</h4>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #3b82f6;"></div>
+                <span class="text-sm">CNA (CVE Numbering Authority)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ef4444;"></div>
+                <span class="text-sm">CWE (Common Weakness Enumeration)</span>
+            </div>
+        </div>
+        
+        <div id="graph-stats" class="mt-4 pt-4 border-t border-slate-600 text-sm text-slate-300">
+            <div class="mb-1"><span class="font-semibold">Nodes:</span> <span id="stat-nodes">-</span></div>
+            <div class="mb-1"><span class="font-semibold">CNAs:</span> <span id="stat-cnas">-</span></div>
+            <div class="mb-1"><span class="font-semibold">CWEs:</span> <span id="stat-cwes">-</span></div>
+            <div><span class="font-semibold">Edges:</span> <span id="stat-edges">-</span></div>
+        </div>
+    </div>
+    
+    <div id="controls">
+        <button id="reset-btn" class="mb-2">Reset View</button>
+        <button id="clear-selection-btn">Clear Selection</button>
+    </div>
+    
+    <div id="tooltip"></div>
+    <svg id="graph-container"></svg>
+
+    <script>
+        // Configuration
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        // Create SVG
+        const svg = d3.select("#graph-container")
+            .attr("width", width)
+            .attr("height", height);
+        
+        // Create zoom behavior
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 10])
+            .on("zoom", (event) => {
+                g.attr("transform", event.transform);
+            });
+        
+        svg.call(zoom);
+        
+        // Container for graph elements
+        const g = svg.append("g");
+        
+        // Tooltip
+        const tooltip = d3.select("#tooltip");
+        
+        let simulation, link, node, label;
+        let selectedNode = null;
+        let graphData = null;
+        
+        // Load and visualize data
+        async function loadData() {
+            try {
+                // Load graph data
+                const response = await fetch('./data/cna_to_cwe_map.json');
+                graphData = await response.json();
+                
+                // Load last updated timestamp
+                try {
+                    const timestampResponse = await fetch('./data/last_updated.txt');
+                    const timestamp = await timestampResponse.text();
+                    document.getElementById('last-updated').textContent = `Last updated: ${timestamp}`;
+                } catch (e) {
+                    document.getElementById('last-updated').textContent = 
+                        `Last updated: ${new Date(graphData.metadata?.generated_at).toLocaleString()}`;
+                }
+                
+                // Update stats
+                if (graphData.metadata) {
+                    document.getElementById('stat-nodes').textContent = graphData.metadata.node_count;
+                    document.getElementById('stat-cnas').textContent = graphData.metadata.cna_count;
+                    document.getElementById('stat-cwes').textContent = graphData.metadata.cwe_count;
+                    document.getElementById('stat-edges').textContent = graphData.metadata.edge_count;
+                }
+                
+                // Hide loading, show info panel
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('info-panel').style.display = 'block';
+                
+                // Visualize
+                visualizeGraph(graphData);
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('loading').innerHTML = 
+                    '<div class="text-red-400 text-xl">Error loading data. Please try again later.</div>';
+            }
+        }
+        
+        function visualizeGraph(data) {
+            // Stable tiny jitter based on node id to avoid line artifacts
+            function hashToUnit(id) {
+                let h = 2166136261 >>> 0;
+                const s = String(id);
+                for (let i = 0; i < s.length; i++) {
+                    h ^= s.charCodeAt(i);
+                    h = Math.imul(h, 16777619);
+                }
+                // Map to [-1, 1]
+                return (h % 2000) / 1000 - 1;
+            }
+
+            data.nodes.forEach(n => {
+                n.jx = hashToUnit(n.id) * 80; // small, stable x-offset
+                n.jy = hashToUnit(n.id + "::") * 80; // small, stable y-offset
+            });
+            // Create force simulation
+            simulation = d3.forceSimulation(data.nodes)
+                .velocityDecay(0.35)
+                .force("link", d3.forceLink(data.links)
+                    .id(d => d.id)
+                    .distance(d => 40 + 8 * Math.log(d.weight + 1))
+                    .strength(0.05))
+                .force("charge", d3.forceManyBody()
+                    .strength(d => d.type === 'cna' ? -220 : -140))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("collision", d3.forceCollide()
+                    .radius(d => nodeRadius(d) + 8)
+                    .strength(0.7))
+                // Gentle jitter forces reduce straight-line alignment during dragging
+                .force("jitterX", d3.forceX(d => width / 2 + d.jx).strength(0.015))
+                .force("jitterY", d3.forceY(d => height / 2 + d.jy).strength(0.015));
+            
+            // Calculate node sizes based on degree
+            const nodeConnections = new Map();
+            data.links.forEach(link => {
+                const source = typeof link.source === 'object' ? link.source.id : link.source;
+                const target = typeof link.target === 'object' ? link.target.id : link.target;
+                nodeConnections.set(source, (nodeConnections.get(source) || 0) + 1);
+                nodeConnections.set(target, (nodeConnections.get(target) || 0) + 1);
+            });
+            
+            data.nodes.forEach(node => {
+                node.connections = nodeConnections.get(node.id) || 0;
+            });
+            
+            // Calculate edge opacity based on weight
+            const maxWeight = d3.max(data.links, d => d.weight);
+            
+            // Create links
+            link = g.append("g")
+                .selectAll("line")
+                .data(data.links)
+                .join("line")
+                .attr("class", "link")
+                .attr("stroke-width", d => Math.sqrt(d.weight) / 2)
+                .attr("stroke-opacity", d => 0.1 + (d.weight / maxWeight) * 0.5);
+            
+            // Create nodes
+            node = g.append("g")
+                .selectAll("circle")
+                .data(data.nodes)
+                .join("circle")
+                .attr("class", d => `node ${d.type}`)
+                .attr("r", nodeRadius)
+                .on("mouseover", handleMouseOver)
+                .on("mouseout", handleMouseOut)
+                .on("click", handleClick)
+                .call(drag(simulation));
+            
+            // Create labels (only show for highly connected nodes)
+            label = g.append("g")
+                .selectAll("text")
+                .data(data.nodes.filter(d => d.connections > 10))
+                .join("text")
+                .attr("class", "node-label")
+                .text(d => d.label)
+                .attr("dy", d => nodeRadius(d) + 12);
+            
+            // Update positions on tick
+            simulation.on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+                
+                node
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y);
+                
+                label
+                    .attr("x", d => d.x)
+                    .attr("y", d => d.y);
+            });
+        }
+        
+        function nodeRadius(d) {
+            return Math.max(5, Math.min(20, 3 + Math.sqrt(d.connections) * 2));
+        }
+        
+        function handleMouseOver(event, d) {
+            if (selectedNode !== d) {
+                d3.select(this).classed("highlighted", true);
+            }
+            
+            tooltip
+                .style("opacity", 1)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 10) + "px")
+                .html(`
+                    <strong>${d.label}</strong><br>
+                    Type: ${d.type.toUpperCase()}<br>
+                    Connections: ${d.connections}
+                `);
+        }
+        
+        function handleMouseOut(event, d) {
+            if (selectedNode !== d) {
+                d3.select(this).classed("highlighted", false);
+            }
+            tooltip.style("opacity", 0);
+        }
+        
+        function handleClick(event, d) {
+            event.stopPropagation();
+            
+            // Clear previous selection
+            node.classed("highlighted", false);
+            link.classed("highlighted", false);
+            
+            // Set new selection
+            selectedNode = d;
+            
+            // Highlight selected node
+            d3.select(this).classed("highlighted", true);
+            
+            // Find connected nodes and links
+            const connectedNodes = new Set([d.id]);
+            link.each(function(l) {
+                const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
+                const targetId = typeof l.target === 'object' ? l.target.id : l.target;
+                
+                if (sourceId === d.id || targetId === d.id) {
+                    d3.select(this).classed("highlighted", true);
+                    connectedNodes.add(sourceId);
+                    connectedNodes.add(targetId);
+                }
+            });
+            
+            // Highlight connected nodes
+            node.each(function(n) {
+                if (connectedNodes.has(n.id) && n.id !== d.id) {
+                    d3.select(this).classed("highlighted", true);
+                }
+            });
+            
+            // Update info panel
+            document.getElementById('node-type').textContent = d.type.toUpperCase();
+            document.getElementById('node-id').textContent = d.label;
+            document.getElementById('node-connections').textContent = d.connections;
+        }
+        
+        function clearSelection() {
+            selectedNode = null;
+            node.classed("highlighted", false);
+            link.classed("highlighted", false);
+            document.getElementById('node-type').textContent = '-';
+            document.getElementById('node-id').textContent = '-';
+            document.getElementById('node-connections').textContent = '-';
+        }
+        
+        function resetView() {
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity);
+        }
+        
+        function drag(simulation) {
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.2).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+            
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+            
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+            
+            return d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended);
+        }
+        
+        // Event listeners
+        document.getElementById('reset-btn').addEventListener('click', resetView);
+        document.getElementById('clear-selection-btn').addEventListener('click', clearSelection);
+        svg.on('click', clearSelection);
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const newWidth = window.innerWidth;
+            const newHeight = window.innerHeight;
+            svg.attr("width", newWidth).attr("height", newHeight);
+            if (simulation) {
+                simulation.force("center", d3.forceCenter(newWidth / 2, newHeight / 2));
+                simulation.alpha(0.3).restart();
+            }
+        });
+        
+        // Load data on page load
+        loadData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+name: Update CVE Map Data
+
+on:
+  # Allow manual trigger
+  workflow_dispatch:
+  
+  # Run every 3 hours
+  schedule:
+    - cron: '0 */3 * * *'
+
+# Required permissions for GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install networkx
+      
+      - name: Clone CVE data repository
+        run: |
+          echo "Cloning CVE data repository..."
+          git clone --depth 1 https://github.com/CVEProject/cvelistV5.git cve-data
+          echo "Clone complete. Repository size:"
+          du -sh cve-data
+      
+      - name: Run build script
+        run: |
+          echo "Building CVE map graph..."
+          python build_graph.py
+          echo "Build complete!"
+      
+      - name: Verify output
+        run: |
+          echo "Checking output files..."
+          ls -lh web/data/
+          if [ -f web/data/cna_to_cwe_map.json ]; then
+            echo "✓ Graph data file created successfully"
+            echo "File size: $(du -h web/data/cna_to_cwe_map.json | cut -f1)"
+          else
+            echo "✗ ERROR: Graph data file not found!"
+            exit 1
+          fi
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './web'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

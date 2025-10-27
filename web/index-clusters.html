@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Map: Independent CNA Clusters</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        #graph-container {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+        }
+        
+        .node {
+            cursor: pointer;
+            stroke: #fff;
+            stroke-width: 2px;
+        }
+        
+        .node.cna {
+            fill: #3b82f6;
+            stroke-width: 3px;
+        }
+        
+        .node.cwe {
+            fill: #ef4444;
+        }
+        
+        .node.highlighted {
+            stroke: #fbbf24;
+            stroke-width: 4px;
+        }
+        
+        .link {
+            stroke: #64748b;
+            stroke-opacity: 0.6;
+        }
+        
+        .link.highlighted {
+            stroke: #fbbf24;
+            stroke-opacity: 1;
+            stroke-width: 3px;
+        }
+        
+        .cluster-boundary {
+            fill: none;
+            stroke: #475569;
+            stroke-width: 1px;
+            stroke-dasharray: 5,5;
+            stroke-opacity: 0.3;
+        }
+        
+        .cluster-boundary.highlighted {
+            stroke: #fbbf24;
+            stroke-opacity: 0.6;
+            stroke-width: 2px;
+        }
+        
+        .node-label {
+            font-size: 10px;
+            fill: #ffffff;
+            pointer-events: none;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            user-select: none;
+            font-weight: 600;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+        }
+        
+        .cwe-label {
+            font-size: 8px;
+            fill: #cbd5e1;
+        }
+        
+        #tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #e2e8f0;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+        }
+        
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            padding: 20px;
+            color: #e2e8f0;
+            max-width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        #header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        .stat-item {
+            margin: 8px 0;
+            padding: 8px;
+            background: rgba(51, 65, 85, 0.5);
+            border-radius: 4px;
+        }
+        
+        .cwe-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+            font-size: 11px;
+        }
+        
+        .cwe-item {
+            padding: 4px 8px;
+            margin: 2px 0;
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        button:hover {
+            background: #2563eb;
+        }
+        
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #e2e8f0;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(59, 130, 246, 0.3);
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        input[type="text"] {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #475569;
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            width: 200px;
+            font-size: 14px;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-slate-900">
+    <div id="loading">
+        <div class="spinner"></div>
+        <div class="text-xl">Loading CVE Map Data...</div>
+    </div>
+    
+    <div id="header">
+        <h1 class="text-4xl font-bold text-white mb-2">CVE Map - Independent Clusters</h1>
+        <p class="text-slate-300 text-lg">Each CNA as Isolated Network</p>
+        <p id="last-updated" class="text-slate-400 text-sm mt-2">Loading...</p>
+    </div>
+    
+    <div id="info-panel" style="display: none;">
+        <h3 class="text-xl font-bold mb-3 text-white">Cluster Information</h3>
+        <div id="cluster-info" class="space-y-2">
+            <div class="stat-item">
+                <div class="text-sm text-slate-400">CNA</div>
+                <div id="cna-name" class="text-lg font-semibold break-all"></div>
+            </div>
+            <div class="stat-item">
+                <div class="text-sm text-slate-400">Unique CWEs</div>
+                <div id="cwe-count" class="text-lg font-semibold"></div>
+            </div>
+            <div class="stat-item">
+                <div class="text-sm text-slate-400">Total Associations</div>
+                <div id="total-assoc" class="text-lg font-semibold"></div>
+            </div>
+        </div>
+        
+        <div class="mt-4 pt-4 border-t border-slate-600">
+            <h4 class="text-sm font-semibold mb-2 text-slate-300">CWEs in this cluster:</h4>
+            <div id="cwe-list" class="cwe-list"></div>
+        </div>
+        
+        <div id="graph-stats" class="mt-4 pt-4 border-t border-slate-600 text-sm text-slate-300">
+            <div class="mb-1"><span class="font-semibold">Total CNAs:</span> <span id="stat-cnas">-</span></div>
+            <div class="mb-1"><span class="font-semibold">Total CWEs:</span> <span id="stat-cwes">-</span></div>
+            <div><span class="font-semibold">Total Associations:</span> <span id="stat-edges">-</span></div>
+        </div>
+    </div>
+    
+    <div id="controls">
+        <div class="mb-2">
+            <input type="text" id="search-input" placeholder="Filter CNA or CWE..." />
+        </div>
+        <button id="reset-btn">Reset View</button>
+        <button id="clear-selection-btn">Clear Selection</button>
+        <button id="toggle-labels-btn">Toggle Labels</button>
+        <label class="ml-2 text-slate-300 text-sm">
+            <input type="checkbox" id="sort-size-toggle" class="mr-1 align-middle"> Sort by size (desc)
+        </label>
+        <div class="mt-3 text-slate-300 text-sm">
+            Density
+            <input id="density-slider" type="range" min="6" max="24" value="12" step="1" style="vertical-align: middle; width: 200px; margin-left: 8px;">
+            <span id="density-value" class="ml-2">12</span>
+        </div>
+    </div>
+    
+    <div id="tooltip"></div>
+    <svg id="graph-container"></svg>
+
+    <script>
+        // Configuration
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        let showLabels = true;
+        
+        // Create SVG
+        const svg = d3.select("#graph-container")
+            .attr("width", width)
+            .attr("height", height);
+        
+        // Create zoom behavior
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 10])
+            .filter(function(event) {
+                // Allow zoom/pan only when not dragging a node
+                // Prevent zoom from interfering with node dragging
+                return !event.button && event.target.tagName !== 'circle';
+            })
+            .on("zoom", (event) => {
+                g.attr("transform", event.transform);
+            });
+        
+        svg.call(zoom);
+        
+        // Container for graph elements
+        const g = svg.append("g");
+        
+        // Tooltip
+        const tooltip = d3.select("#tooltip");
+        
+    let clusters = [];
+        let selectedCluster = null;
+        let graphData = null;
+        let clusterBoundaries = null;
+    let densitySpacing = 12;    // controls spacing between CWEs on rings
+    let sortDescending = true;  // controls cluster sorting by size
+        
+        // Load and process data
+        async function loadData() {
+            try {
+                const response = await fetch('./data/cna_to_cwe_map.json');
+                graphData = await response.json();
+                
+                // Load timestamp
+                try {
+                    const timestampResponse = await fetch('./data/last_updated.txt');
+                    const timestamp = await timestampResponse.text();
+                    document.getElementById('last-updated').textContent = `Last updated: ${timestamp}`;
+                } catch (e) {
+                    document.getElementById('last-updated').textContent = 
+                        `Last updated: ${new Date(graphData.metadata?.generated_at).toLocaleString()}`;
+                }
+                
+                // Update stats
+                if (graphData.metadata) {
+                    document.getElementById('stat-cnas').textContent = graphData.metadata.cna_count;
+                    document.getElementById('stat-cwes').textContent = graphData.metadata.cwe_count;
+                    document.getElementById('stat-edges').textContent = graphData.metadata.edge_count;
+                }
+                
+                // Hide loading, show info panel
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('info-panel').style.display = 'block';
+                
+                // Create independent clusters and draw
+                createClusters(graphData);
+                layoutClusters();
+                visualizeClusters();
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('loading').innerHTML = 
+                    '<div class="text-red-400 text-xl">Error loading data. Please try again later.</div>';
+            }
+        }
+        
+        function createClusters(data) {
+            // Group nodes and edges by CNA - create SEPARATE CWE instances per CNA
+            const cnaMap = new Map();
+            
+            // Identify CNAs
+            data.nodes.forEach(node => {
+                if (node.type === 'cna') {
+                    cnaMap.set(node.id, {
+                        cna: { ...node },
+                        cwes: [],
+                        links: []
+                    });
+                }
+            });
+            
+            // Create INDEPENDENT CWE instances for each CNA
+            data.links.forEach((link, linkIndex) => {
+                const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+                const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+                
+                // Find which node is CNA and which is CWE
+                const sourceNode = data.nodes.find(n => n.id === sourceId);
+                const targetNode = data.nodes.find(n => n.id === targetId);
+                
+                let cnaId, cweOriginal;
+                if (sourceNode.type === 'cna') {
+                    cnaId = sourceId;
+                    cweOriginal = targetNode;
+                } else {
+                    cnaId = targetId;
+                    cweOriginal = sourceNode;
+                }
+                
+                if (cnaMap.has(cnaId)) {
+                    // Create a UNIQUE copy of the CWE for this CNA cluster
+                    const cweClone = {
+                        id: `${cweOriginal.id}_${cnaId}_${linkIndex}`, // Unique ID
+                        originalId: cweOriginal.id, // Keep reference to original CWE
+                        label: cweOriginal.label,
+                        type: 'cwe'
+                    };
+                    
+                    cnaMap.get(cnaId).cwes.push(cweClone);
+                    
+                    // Update link to point to the cloned CWE
+                    const linkClone = {
+                        source: cnaId,
+                        target: cweClone.id,
+                        weight: link.weight,
+                        originalLink: link
+                    };
+                    cnaMap.get(cnaId).links.push(linkClone);
+                }
+            });
+            
+            // Convert to array; we will layout in a separate step
+            clusters = Array.from(cnaMap.values())
+                .filter(cluster => cluster.cwes.length > 0);
+
+            sortClusters();
+        }
+
+        function sortClusters() {
+            clusters.sort((a, b) => sortDescending ? (b.cwes.length - a.cwes.length) : (a.cwes.length - b.cwes.length));
+        }
+
+        function layoutClusters() {
+            // Flow layout with variable cell sizes based on cluster size
+            const margin = 24;
+            const visibleClusters = clusters.filter(c => c.visible !== false);
+            const targetCols = Math.min(12, Math.max(6, Math.ceil(Math.sqrt(visibleClusters.length))));
+            const baseCell = Math.max(140, Math.floor((width - margin * 2) / targetCols));
+
+            let x = margin, y = margin, rowHeight = 0;
+
+            visibleClusters.forEach((cluster, i) => {
+                cluster.index = i;
+                const n = cluster.cwes.length;
+                const weight = n > 200 ? 2.0 : n > 80 ? 1.5 : 1.0;
+                const cellW = baseCell * weight;
+                const cellH = baseCell * weight;
+
+                if (x + cellW > width - margin) {
+                    x = margin;
+                    y += rowHeight + margin;
+                    rowHeight = 0;
+                }
+
+                const centerX = x + cellW / 2;
+                const centerY = y + cellH / 2;
+                cluster.centerX = centerX;
+                cluster.centerY = centerY;
+
+                const padding = 16;
+                cluster.radius = Math.max(36, Math.min(cellW, cellH) / 2 - padding);
+
+                // CNA size scaled by CWE count
+                const cnaSize = Math.max(6, Math.min(28, 6 + Math.sqrt(cluster.cwes.length) * 1.2));
+                cluster.cna.cnaSize = cnaSize;
+
+                // Position CNA
+                cluster.cna.x = centerX;
+                cluster.cna.y = centerY;
+                cluster.cna.fx = centerX;
+                cluster.cna.fy = centerY;
+
+                // Position CWEs using rings, controlled by density slider
+                let spacing = densitySpacing;             // min distance on a ring
+                let r = Math.max(18, cnaSize + 10);       // start just outside CNA
+                const rStep = Math.max(10, densitySpacing + 2);
+                let placed = 0;
+                
+                while (placed < cluster.cwes.length) {
+                    const capacity = Math.max(6, Math.floor((2 * Math.PI * r) / spacing));
+                    for (let k = 0; k < capacity && placed < cluster.cwes.length; k++) {
+                        const angle = (2 * Math.PI * k) / capacity;
+                        const cwe = cluster.cwes[placed++];
+                        cwe.x = centerX + r * Math.cos(angle);
+                        cwe.y = centerY + r * Math.sin(angle);
+                        cwe.clusterIndex = i;
+                    }
+                    r += rStep;
+                    if (r > cluster.radius && placed < cluster.cwes.length) {
+                        // Tighten spacing and continue one dense ring near boundary
+                        if (spacing > 6) {
+                            spacing -= 2;
+                            r = Math.min(cluster.radius - 2, r);
+                        } else {
+                            // Force remaining on last ring uniformly
+                            const remaining = cluster.cwes.length - placed;
+                            for (let k = 0; k < remaining; k++) {
+                                const angle = (2 * Math.PI * k) / remaining;
+                                const cwe = cluster.cwes[placed++];
+                                cwe.x = centerX + (cluster.radius - 2) * Math.cos(angle);
+                                cwe.y = centerY + (cluster.radius - 2) * Math.sin(angle);
+                                cwe.clusterIndex = i;
+                            }
+                        }
+                    }
+                }
+
+                // Calculate totals
+                cluster.totalAssociations = cluster.links.reduce((sum, link) => sum + link.weight, 0);
+
+                x += cellW + margin;
+                rowHeight = Math.max(rowHeight, cellH);
+            });
+        }
+        
+        function visualizeClusters() {
+            // Clear previous
+            g.selectAll('*').remove();
+
+            // Filter to only visible clusters
+            const visibleClusters = clusters.filter(c => c.visible !== false);
+
+            // Draw cluster boundaries
+            clusterBoundaries = g.append("g")
+                .selectAll("circle")
+                .data(visibleClusters)
+                .join("circle")
+                .attr("class", "cluster-boundary")
+                .attr("cx", d => d.centerX)
+                .attr("cy", d => d.centerY)
+                .attr("r", d => d.radius)
+                .on("click", function(event, d) {
+                    event.stopPropagation();
+                    selectCluster(d);
+                });
+            
+            // Draw links - now using cloned CWEs with unique IDs
+            const link = g.append("g")
+                .selectAll("line")
+                .data(visibleClusters.flatMap(c => c.links))
+                .join("line")
+                .attr("class", "link")
+                .attr("stroke-width", d => Math.sqrt(d.weight) / 2)
+                .attr("x1", d => {
+                    // Find CNA node
+                    const cluster = visibleClusters.find(c => c.cna.id === d.source);
+                    return cluster ? cluster.cna.x : 0;
+                })
+                .attr("y1", d => {
+                    const cluster = visibleClusters.find(c => c.cna.id === d.source);
+                    return cluster ? cluster.cna.y : 0;
+                })
+                .attr("x2", d => {
+                    // Find the specific cloned CWE node
+                    const allCwes = visibleClusters.flatMap(c => c.cwes);
+                    const targetNode = allCwes.find(n => n.id === d.target);
+                    return targetNode ? targetNode.x : 0;
+                })
+                .attr("y2", d => {
+                    const allCwes = visibleClusters.flatMap(c => c.cwes);
+                    const targetNode = allCwes.find(n => n.id === d.target);
+                    return targetNode ? targetNode.y : 0;
+                });
+            
+            // Draw nodes
+            const allNodes = visibleClusters.flatMap(c => [c.cna, ...c.cwes]);
+            const node = g.append("g")
+                .selectAll("circle")
+                .data(allNodes)
+                .join("circle")
+                .attr("class", d => `node ${d.type}`)
+                .attr("r", d => d.type === 'cna' ? (d.cnaSize || 10) : 3.5)
+                .attr("cx", d => d.x)
+                .attr("cy", d => d.y)
+                .on("mouseover", function(event, d) {
+                    handleMouseOver(event, d, this);
+                })
+                .on("mouseout", function(event, d) {
+                    handleMouseOut(event, d, this);
+                })
+                .on("click", function(event, d) {
+                    event.stopPropagation();
+                    if (d.type === 'cna') {
+                        const cluster = visibleClusters.find(c => c.cna.id === d.id);
+                        selectCluster(cluster);
+                    }
+                })
+                .call(d3.drag()
+                    .on("start", function (event, d) {
+                        // no-op for now
+                    })
+                    .on("drag", function (event, d) {
+                        // Constrain dragging to the node's cluster circle to avoid lines
+                        const cluster = visibleClusters[d.clusterIndex] || visibleClusters.find(c => c.cna.id === d.id);
+                        if (!cluster) return;
+                        const cx = cluster.centerX;
+                        const cy = cluster.centerY;
+                        const maxR = (d.type === 'cna') ? 0 : cluster.radius - 4;
+                        let nx = event.x, ny = event.y;
+                        const dx = nx - cx;
+                        const dy = ny - cy;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if (d.type === 'cna') {
+                            // Keep CNA fixed at center
+                            d.x = cx; d.y = cy;
+                        } else if (dist > maxR) {
+                            // Clamp CWEs to cluster boundary
+                            const k = maxR / (dist || 1);
+                            d.x = cx + dx * k;
+                            d.y = cy + dy * k;
+                        } else {
+                            d.x = nx; d.y = ny;
+                        }
+                        d3.select(this).attr('cx', d.x).attr('cy', d.y);
+                        // Update links connected to this node only
+                        window.graphElements.link
+                            .filter(l => l.target === d.id || (typeof l.target === 'object' && l.target.id === d.id))
+                            .attr('x2', d.x)
+                            .attr('y2', d.y);
+                    })
+                    .on("end", function (event, d) {
+                        // snap stays in place
+                    })
+                );
+            
+            // Draw labels (CNAs only - inside the circles)
+            const label = g.append("g")
+                .selectAll("text")
+                .data(allNodes.filter(d => d.type === 'cna'))
+                .join("text")
+                .attr("class", "node-label")
+                .text(d => {
+                    // Truncate long names to fit inside circle
+                    const maxLen = Math.floor((d.cnaSize || 10) / 2.5);
+                    return d.label.length > maxLen ? d.label.substring(0, maxLen - 1) + '…' : d.label;
+                })
+                .attr("x", d => d.x)
+                .attr("y", d => d.y)
+                .attr("font-size", d => {
+                    // Scale font size based on circle size, but keep readable
+                    const size = d.cnaSize || 10;
+                    return Math.max(6, Math.min(9, size * 0.32)) + 'px';
+                })
+                .style("display", "block")  // Always show labels inside circles
+                .style("pointer-events", "none");
+            
+            // Store references
+            window.graphElements = { link, node, label };
+        }
+        
+        function selectCluster(cluster) {
+            selectedCluster = cluster;
+            
+            // Update info panel
+            document.getElementById('cna-name').textContent = cluster.cna.label;
+            document.getElementById('cwe-count').textContent = cluster.cwes.length;
+            document.getElementById('total-assoc').textContent = cluster.totalAssociations;
+            
+            // Show CWE list (group by original CWE ID to avoid duplicates in display)
+            const cweList = document.getElementById('cwe-list');
+            const cweMap = new Map();
+            cluster.cwes.forEach(cwe => {
+                const originalId = cwe.originalId || cwe.id;
+                if (!cweMap.has(originalId)) {
+                    cweMap.set(originalId, { label: cwe.label, count: 0 });
+                }
+                const link = cluster.links.find(l => l.target === cwe.id);
+                if (link) {
+                    cweMap.get(originalId).count += link.weight;
+                }
+            });
+            
+            cweList.innerHTML = Array.from(cweMap.entries())
+                .map(([id, data]) => `<div class="cwe-item">
+                    <span>${data.label}</span>
+                    <span class="text-slate-400">${data.count}</span>
+                </div>`)
+                .join('');
+            
+            // Highlight cluster
+            clusterBoundaries.classed("highlighted", d => d === cluster);
+            
+            // Highlight nodes and links in this cluster
+            const clusterNodeIds = new Set([cluster.cna.id, ...cluster.cwes.map(c => c.id)]);
+            window.graphElements.node.classed("highlighted", d => clusterNodeIds.has(d.id));
+            window.graphElements.link.classed("highlighted", l => {
+                const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
+                const targetId = typeof l.target === 'object' ? l.target.id : l.target;
+                return clusterNodeIds.has(sourceId) && clusterNodeIds.has(targetId);
+            });
+            
+            // Zoom to cluster
+            const scale = 2;
+            const transform = d3.zoomIdentity
+                .translate(width / 2, height / 2)
+                .scale(scale)
+                .translate(-cluster.centerX, -cluster.centerY);
+            
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, transform);
+        }
+        
+        function clearSelection() {
+            selectedCluster = null;
+            clusterBoundaries.classed("highlighted", false);
+            window.graphElements.node.classed("highlighted", false);
+            window.graphElements.link.classed("highlighted", false);
+            
+            document.getElementById('cna-name').textContent = '-';
+            document.getElementById('cwe-count').textContent = '-';
+            document.getElementById('total-assoc').textContent = '-';
+            document.getElementById('cwe-list').innerHTML = '<div class="text-slate-400">Select a cluster to view details</div>';
+        }
+        
+        function handleMouseOver(event, d, element) {
+            if (!selectedCluster || selectedCluster.cna.id !== d.id) {
+                d3.select(element).classed("highlighted", true);
+            }
+            
+            let tooltipText = `<strong>${d.label}</strong><br>Type: ${d.type.toUpperCase()}`;
+            if (d.type === 'cna') {
+                const cluster = clusters.find(c => c.cna.id === d.id);
+                if (cluster) {
+                    tooltipText += `<br>CWEs: ${cluster.cwes.length}<br>Associations: ${cluster.totalAssociations}`;
+                }
+            }
+            
+            tooltip
+                .style("opacity", 1)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 10) + "px")
+                .html(tooltipText);
+        }
+        
+        function handleMouseOut(event, d, element) {
+            if (!selectedCluster || selectedCluster.cna.id !== d.id) {
+                d3.select(element).classed("highlighted", false);
+            }
+            tooltip.style("opacity", 0);
+        }
+        
+        function resetView() {
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity);
+            clearSelection();
+        }
+        
+        function toggleLabels() {
+            showLabels = !showLabels;
+            window.graphElements.label.style("display", showLabels ? "block" : "none");
+        }
+        
+        function searchCNA() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            
+            if (!query) {
+                // Show all clusters when search is empty
+                clusters.forEach(cluster => {
+                    cluster.visible = true;
+                });
+                visualizeClusters();
+                clearSelection();
+                return;
+            }
+            
+            // Filter clusters based on query
+            let matchCount = 0;
+            clusters.forEach(cluster => {
+                const matches = cluster.cna.label.toLowerCase().includes(query) ||
+                    cluster.cwes.some(cwe => (cwe.originalId || cwe.label).toLowerCase().includes(query));
+                cluster.visible = matches;
+                if (matches) matchCount++;
+            });
+            
+            // Re-layout and visualize with filtered clusters
+            layoutClusters();
+            visualizeClusters();
+            
+            // Update info panel to show filter status
+            if (matchCount === 0) {
+                alert('No matching CNA or CWE found');
+            }
+        }
+        
+        // Event listeners
+        document.getElementById('reset-btn').addEventListener('click', resetView);
+        document.getElementById('clear-selection-btn').addEventListener('click', clearSelection);
+        document.getElementById('toggle-labels-btn').addEventListener('click', toggleLabels);
+        document.getElementById('sort-size-toggle').addEventListener('change', (e) => {
+            sortDescending = e.target.checked;
+            sortClusters();
+            layoutClusters();
+            visualizeClusters();
+        });
+        document.getElementById('density-slider').addEventListener('input', (e) => {
+            densitySpacing = parseInt(e.target.value, 10);
+            document.getElementById('density-value').textContent = densitySpacing;
+            layoutClusters();
+            visualizeClusters();
+        });
+        document.getElementById('search-input').addEventListener('input', searchCNA);
+        document.getElementById('search-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchCNA();
+        });
+        svg.on('click', clearSelection);
+        
+        // Load data on page load
+        loadData();
+    </script>
+</body>
+</html>

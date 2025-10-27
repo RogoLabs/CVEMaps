@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Maps - Network Visualizations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+        
+        .card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #475569;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+            border-color: #3b82f6;
+        }
+        
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        
+        .icon-network {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+        
+        .icon-cluster {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        
+        .icon-coming {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .badge-blue {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+        
+        .badge-red {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+        }
+        
+        .badge-purple {
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+        }
+        
+        .stat {
+            display: inline-block;
+            margin-right: 16px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        
+        .stat strong {
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+        
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="bg-slate-900">
+    <div class="container mx-auto px-6 py-12 max-w-6xl">
+        <!-- Header -->
+        <header class="text-center mb-16">
+            <h1 class="text-5xl font-bold text-white mb-4">CVE Maps</h1>
+            <p class="text-xl text-slate-300 mb-2">Visualizing CVE-to-CWE Relationships</p>
+            <p id="last-updated" class="text-sm text-slate-400">Loading stats...</p>
+            <div class="mt-6 flex justify-center gap-4 flex-wrap">
+                <span class="stat"><strong id="stat-cnas">-</strong> CNAs</span>
+                <span class="stat"><strong id="stat-cwes">-</strong> CWEs</span>
+                <span class="stat"><strong id="stat-edges">-</strong> Associations</span>
+                <span class="stat"><strong id="stat-cves">315,567</strong> CVEs Analyzed</span>
+            </div>
+        </header>
+
+        <!-- Visualization Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <!-- Force-Directed Graph -->
+            <div class="card" onclick="window.location.href='index-force.html'">
+                <div class="card-icon icon-network">🌐</div>
+                <h2 class="text-2xl font-bold text-white mb-3">Force-Directed Network</h2>
+                <p class="text-slate-300 mb-4">
+                    Interactive force-directed graph showing all CNAs and CWEs connected by their associations. 
+                    Explore the full interconnected ecosystem.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-blue">Interactive</span>
+                    <span class="badge badge-blue">Pannable</span>
+                    <span class="badge badge-blue">Zoomable</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>Drag nodes to explore relationships</li>
+                    <li>Click to highlight connections</li>
+                    <li>Node size reflects connection count</li>
+                    <li>Edge thickness shows association strength</li>
+                </ul>
+                <div class="mt-4 text-blue-400 font-semibold">View Network →</div>
+            </div>
+
+            <!-- Independent Clusters -->
+            <div class="card" onclick="window.location.href='index-clusters.html'">
+                <div class="card-icon icon-cluster">🎯</div>
+                <h2 class="text-2xl font-bold text-white mb-3">Independent Clusters</h2>
+                <p class="text-slate-300 mb-4">
+                    Each CNA displayed as an isolated mini-network with its own CWEs. 
+                    Perfect for analyzing individual CNA vulnerability profiles.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-red">Isolated</span>
+                    <span class="badge badge-red">Sortable</span>
+                    <span class="badge badge-red">Searchable</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>409 independent mini-networks</li>
+                    <li>Sort by size or search by name</li>
+                    <li>Adjustable density slider</li>
+                    <li>CNA size scales with CWE count</li>
+                </ul>
+                <div class="mt-4 text-red-400 font-semibold">View Clusters →</div>
+            </div>
+
+            <!-- CWE Co-occurrence -->
+            <div class="card" onclick="window.location.href='index-cwe-cooccurrence.html'">
+                <div class="card-icon">🔗</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CWE Co-occurrence Network</h2>
+                <p class="text-slate-300 mb-4">
+                    See which weaknesses commonly appear together in the same CVE. 
+                    Reveals patterns in vulnerability combinations.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-blue">Active</span>
+                    <span class="badge badge-blue">Interactive</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>577 CWE nodes, 903 co-occurrence edges</li>
+                    <li>Click to see common partners</li>
+                    <li>Size = frequency of co-occurrence</li>
+                </ul>
+                <div class="mt-4 text-blue-400 font-semibold">Explore Patterns →</div>
+            </div>
+        </div>
+
+        <!-- Compact Graph Visualizations Section -->
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white mb-6 text-center">Compact Network Layouts</h2>
+            <p class="text-center text-slate-300 mb-8">Optimized views using different NetworkX graph layouts</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <!-- Top 50 CNA-CWE Bipartite -->
+            <div class="card" onclick="window.location.href='index-bipartite-top50.html'">
+                <div class="card-icon icon-network">⚖️</div>
+                <h2 class="text-2xl font-bold text-white mb-3">Top 50 CNA-CWE Bipartite</h2>
+                <p class="text-slate-300 mb-4">
+                    Two-column layout showing top 50 CNAs on left, their 603 CWEs on right. 
+                    Clean separation for easy pattern recognition.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-blue">Bipartite</span>
+                    <span class="badge badge-blue">Top 50</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>50 most active CNAs</li>
+                    <li>4,175 associations</li>
+                    <li>Left-right bipartite layout</li>
+                </ul>
+                <div class="mt-4 text-blue-400 font-semibold">View Bipartite →</div>
+            </div>
+
+            <!-- CWE Hierarchy Tree -->
+            <div class="card" onclick="window.location.href='index-cwe-hierarchy.html'">
+                <div class="card-icon icon-cluster">🌳</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CWE Hierarchy Tree</h2>
+                <p class="text-slate-300 mb-4">
+                    Organized tree structure grouping CWEs by category. 
+                    Perfect for understanding weakness classifications.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-red">Hierarchical</span>
+                    <span class="badge badge-red">Compact</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>3-level tree structure</li>
+                    <li>Color-coded by type</li>
+                    <li>Node size = CVE count</li>
+                </ul>
+                <div class="mt-4 text-red-400 font-semibold">View Tree →</div>
+            </div>
+
+            <!-- CWE Star Graphs -->
+            <div class="card" onclick="window.location.href='index-cwe-stars.html'">
+                <div class="card-icon">⭐</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CWE Star Graphs</h2>
+                <p class="text-slate-300 mb-4">
+                    Top 12 CWEs displayed as star centers with their CNAs radiating outward. 
+                    Shows which organizations focus on which weaknesses.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-purple">Star Layout</span>
+                    <span class="badge badge-purple">Top 12</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>12 star graphs for top CWEs</li>
+                    <li>252 total nodes</li>
+                    <li>Radial arrangement per CWE</li>
+                </ul>
+                <div class="mt-4 text-purple-400 font-semibold">View Stars →</div>
+            </div>
+
+            <!-- Circular CWE Layout -->
+            <div class="card" onclick="window.location.href='index-cwe-circular.html'">
+                <div class="card-icon">⭕</div>
+                <h2 class="text-2xl font-bold text-white mb-3">Circular CWE Layout</h2>
+                <p class="text-slate-300 mb-4">
+                    Top 40 CWEs arranged in a circle with interconnections. 
+                    Symmetric view highlighting central weaknesses.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-blue">Circular</span>
+                    <span class="badge badge-blue">Symmetric</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>40 CWEs in circle</li>
+                    <li>227 interconnections</li>
+                    <li>Click to highlight neighbors</li>
+                </ul>
+                <div class="mt-4 text-blue-400 font-semibold">View Circle →</div>
+            </div>
+
+            <!-- CNA Collaboration Network -->
+            <div class="card" onclick="window.location.href='index-cna-collaboration.html'">
+                <div class="card-icon icon-network">🤝</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CNA Collaboration Network</h2>
+                <p class="text-slate-300 mb-4">
+                    CNAs connected by shared CWE focus areas. 
+                    Reveals collaboration patterns and common research interests.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-blue">Collaboration</span>
+                    <span class="badge badge-blue">Spring Layout</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>396 CNAs connected</li>
+                    <li>4,190 collaboration edges</li>
+                    <li>Edge weight = shared CWEs</li>
+                </ul>
+                <div class="mt-4 text-blue-400 font-semibold">View Network →</div>
+            </div>
+
+            <!-- MITRE Ego Network -->
+            <div class="card" onclick="window.location.href='index-mitre-ego.html'">
+                <div class="card-icon icon-cluster">🎯</div>
+                <h2 class="text-2xl font-bold text-white mb-3">MITRE Ego Network</h2>
+                <p class="text-slate-300 mb-4">
+                    MITRE Corporation at center with all directly connected CNAs. 
+                    Shows immediate collaboration sphere.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-red">Ego Network</span>
+                    <span class="badge badge-red">Radius 1</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>340 nodes (MITRE + neighbors)</li>
+                    <li>Radial layout from center</li>
+                    <li>Colored by distance</li>
+                </ul>
+                <div class="mt-4 text-red-400 font-semibold">View Ego →</div>
+            </div>
+
+            <!-- Coming Soon: Vendor-CWE Profile -->
+            <div class="card opacity-60 cursor-not-allowed" onclick="event.preventDefault()">
+                <div class="card-icon icon-coming">🏢</div>
+                <h2 class="text-2xl font-bold text-white mb-3">Vendor Vulnerability Profiles</h2>
+                <p class="text-slate-300 mb-4">
+                    Bipartite graph linking vendors to their most common weakness types. 
+                    Identify systemic development issues.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-purple">Coming Soon</span>
+                </div>
+                <p class="text-sm text-slate-400">
+                    This visualization shows 9,685 vendors and their vulnerability footprints. File size: 2.7 MB.
+                </p>
+            </div>
+
+            <!-- Coming Soon: CNA-Vendor Reporting -->
+            <div class="card opacity-60 cursor-not-allowed" onclick="event.preventDefault()">
+                <div class="card-icon icon-coming">📝</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CNA-Vendor Reporting Map</h2>
+                <p class="text-slate-300 mb-4">
+                    Which security organizations report on which vendors? 
+                    Shows research focus and coverage patterns.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-purple">Coming Soon</span>
+                </div>
+                <p class="text-sm text-slate-400">
+                    Links 350 CNAs to 9,718 vendors they report vulnerabilities for. File size: 1.8 MB.
+                </p>
+            </div>
+
+            <!-- Coming Soon: Sankey Diagram -->
+            <div class="card opacity-60 cursor-not-allowed" onclick="event.preventDefault()">
+                <div class="card-icon icon-coming">📊</div>
+                <h2 class="text-2xl font-bold text-white mb-3">Sankey Flow Diagram</h2>
+                <p class="text-slate-300 mb-4">
+                    Visualize the flow from CNAs to CWEs with thickness representing frequency. 
+                    Clear left-to-right flow for pattern recognition.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-purple">Coming Soon</span>
+                </div>
+                <p class="text-sm text-slate-400">
+                    This visualization will show the directional flow of vulnerabilities from CVE Numbering Authorities to specific weakness types.
+                </p>
+            </div>
+
+            <!-- Coming Soon: Heatmap Matrix -->
+            <div class="card opacity-60 cursor-not-allowed" onclick="event.preventDefault()">
+                <div class="card-icon icon-coming">🔥</div>
+                <h2 class="text-2xl font-bold text-white mb-3">Heatmap Matrix</h2>
+                <p class="text-slate-300 mb-4">
+                    CNAs vs CWEs in a color-coded matrix. 
+                    Instantly spot patterns and hotspots in vulnerability distributions.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-purple">Coming Soon</span>
+                </div>
+                <p class="text-sm text-slate-400">
+                    Quantitative analysis view with sortable axes and exportable data for deeper investigation.
+                </p>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="bg-slate-800/50 border border-slate-700 rounded-lg p-8 mb-8">
+            <h3 class="text-2xl font-bold text-white mb-4">About CVE Maps</h3>
+            <div class="grid md:grid-cols-2 gap-6 text-slate-300">
+                <div>
+                    <h4 class="font-semibold text-white mb-2">Data Source</h4>
+                    <p class="text-sm">
+                        Parsed from the official <a href="https://github.com/CVEProject/cvelistV5" class="text-blue-400 hover:underline">CVE List V5</a> repository. 
+                        Data includes CNA assignments and CWE mappings from both primary sources and authorized data publishers.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-2">Auto-Updates</h4>
+                    <p class="text-sm">
+                        Automatically rebuilds every 3 hours via GitHub Actions, ensuring you always see the latest vulnerability landscape and emerging patterns.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-2">CNAs</h4>
+                    <p class="text-sm">
+                        CVE Numbering Authorities are organizations authorized to assign CVE IDs. 
+                        Examples include MITRE, Oracle, Microsoft, and hundreds of others.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-2">CWEs</h4>
+                    <p class="text-sm">
+                        Common Weakness Enumerations categorize software vulnerabilities (e.g., CWE-79: Cross-Site Scripting, CWE-89: SQL Injection).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-slate-400 text-sm">
+            <p class="mb-2">
+                Built with ❤️ using D3.js, NetworkX, and GitHub Actions
+            </p>
+            <p>
+                <a href="https://github.com/RogoLabs/CVEMaps">View on GitHub</a> | 
+                <a href="../README.md">Documentation</a> | 
+                <a href="../ALTERNATIVE_GRAPHS.md">More Visualizations</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Load stats from the graph data
+        async function loadStats() {
+            try {
+                const response = await fetch('./data/cna_to_cwe_map.json');
+                const data = await response.json();
+                
+                if (data.metadata) {
+                    document.getElementById('stat-cnas').textContent = data.metadata.cna_count || '-';
+                    document.getElementById('stat-cwes').textContent = data.metadata.cwe_count || '-';
+                    document.getElementById('stat-edges').textContent = data.metadata.edge_count?.toLocaleString() || '-';
+                }
+                
+                // Load timestamp
+                try {
+                    const timestampResponse = await fetch('./data/last_updated.txt');
+                    const timestamp = await timestampResponse.text();
+                    document.getElementById('last-updated').textContent = `Last updated: ${timestamp}`;
+                } catch (e) {
+                    const date = new Date(data.metadata?.generated_at);
+                    document.getElementById('last-updated').textContent = `Last updated: ${date.toLocaleString()}`;
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+        
+        loadStats();
+    </script>
+</body>
+</html>
