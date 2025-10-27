@@ -9,6 +9,13 @@ web/data/vendor_cwe_map.json
 web/data/cna_vendor_map.json
 web/data/cve_references_map.json
 
+# Test and coverage
+.coverage
+htmlcov/
+.pytest_cache/
+coverage.xml
+*.cover
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

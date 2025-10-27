@@ -35,36 +35,101 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
       
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install networkx
       
+      - name: Cache CVE data
+        id: cache-cve
+        uses: actions/cache@v3
+        with:
+          path: cve-data
+          key: cve-data-${{ github.run_id }}
+          restore-keys: |
+            cve-data-
+      
       - name: Clone CVE data repository
+        if: steps.cache-cve.outputs.cache-hit != 'true'
         run: |
           echo "Cloning CVE data repository..."
           git clone --depth 1 https://github.com/CVEProject/cvelistV5.git cve-data
           echo "Clone complete. Repository size:"
           du -sh cve-data
       
-      - name: Run build script
+      - name: Update CVE data (if cached)
+        if: steps.cache-cve.outputs.cache-hit == 'true'
         run: |
-          echo "Building CVE map graph..."
+          echo "Updating cached CVE data..."
+          cd cve-data
+          git pull --depth 1
+          cd ..
+          echo "Update complete. Repository size:"
+          du -sh cve-data
+      
+      - name: Run main graph build script
+        run: |
+          echo "Building main CVE map graph..."
           python build_graph.py
-          echo "Build complete!"
+          echo "Main graph build complete!"
+      
+      - name: Run alternative graphs build script
+        run: |
+          echo "Building alternative visualizations..."
+          python build_alternative_graphs.py
+          echo "Alternative graphs build complete!"
+        continue-on-error: true
+      
+      - name: Run compact graphs build script
+        run: |
+          echo "Building compact visualizations..."
+          python build_compact_graphs.py
+          echo "Compact graphs build complete!"
+        continue-on-error: true
       
       - name: Verify output
         run: |
           echo "Checking output files..."
           ls -lh web/data/
+          
+          # Check main graph
           if [ -f web/data/cna_to_cwe_map.json ]; then
-            echo "✓ Graph data file created successfully"
-            echo "File size: $(du -h web/data/cna_to_cwe_map.json | cut -f1)"
+            echo "✓ Main graph data file created successfully"
+            echo "  File size: $(du -h web/data/cna_to_cwe_map.json | cut -f1)"
           else
-            echo "✗ ERROR: Graph data file not found!"
+            echo "✗ ERROR: Main graph data file not found!"
             exit 1
           fi
+          
+          # Check alternative graphs (optional)
+          echo ""
+          echo "Alternative visualization files:"
+          for file in cwe_cooccurrence_map.json top_cna_cwe_bipartite.json cwe_hierarchy_tree.json \
+                      cwe_star_graphs.json cwe_circular_layout.json cna_collaboration.json mitre_ego_network.json; do
+            if [ -f "web/data/$file" ]; then
+              echo "  ✓ $file ($(du -h "web/data/$file" | cut -f1))"
+            else
+              echo "  ⚠ $file not found (optional)"
+            fi
+          done
+      
+      - name: Generate build summary
+        run: |
+          echo "## Build Summary 📊" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Generated Files" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          ls -lh web/data/ >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Statistics" >> $GITHUB_STEP_SUMMARY
+          if [ -f web/data/cna_to_cwe_map.json ]; then
+            echo "- **Main Graph Size**: $(du -h web/data/cna_to_cwe_map.json | cut -f1)" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "- **Build Time**: $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Python Version**: $(python --version)" >> $GITHUB_STEP_SUMMARY
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -77,3 +142,8 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::Build failed! Check the logs for details."
