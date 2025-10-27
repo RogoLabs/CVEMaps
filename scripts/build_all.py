@@ -19,6 +19,7 @@ BUILD_SCRIPTS = [
     "build_alternative_graphs.py",  # Alternative visualizations
     "build_compact_graphs.py",      # Compact layouts
     "build_extended_graphs.py",    # Extended visualizations (CVSS, temporal, etc.)
+    "build_analytical_graphs.py",  # Analytical visualizations (timeline, trending, distribution)
 ]
 
 # Post-processing scripts

@@ -1,0 +1,3023 @@
+{
+  "cwes": [
+    {
+      "cwe": "CWE-79",
+      "total_count": 7832,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 109
+        },
+        {
+          "month": "2024-11",
+          "count": 683
+        },
+        {
+          "month": "2024-12",
+          "count": 638
+        },
+        {
+          "month": "2025-01",
+          "count": 947
+        },
+        {
+          "month": "2025-02",
+          "count": 565
+        },
+        {
+          "month": "2025-03",
+          "count": 781
+        },
+        {
+          "month": "2025-04",
+          "count": 760
+        },
+        {
+          "month": "2025-05",
+          "count": 435
+        },
+        {
+          "month": "2025-06",
+          "count": 702
+        },
+        {
+          "month": "2025-07",
+          "count": 464
+        },
+        {
+          "month": "2025-08",
+          "count": 550
+        },
+        {
+          "month": "2025-09",
+          "count": 670
+        },
+        {
+          "month": "2025-10",
+          "count": 528
+        }
+      ],
+      "trend_percent": -5.4,
+      "trend_direction": "stable"
+    },
+    {
+      "cwe": "CWE-89",
+      "total_count": 3780,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 45
+        },
+        {
+          "month": "2024-11",
+          "count": 200
+        },
+        {
+          "month": "2024-12",
+          "count": 205
+        },
+        {
+          "month": "2025-01",
+          "count": 244
+        },
+        {
+          "month": "2025-02",
+          "count": 205
+        },
+        {
+          "month": "2025-03",
+          "count": 309
+        },
+        {
+          "month": "2025-04",
+          "count": 391
+        },
+        {
+          "month": "2025-05",
+          "count": 402
+        },
+        {
+          "month": "2025-06",
+          "count": 431
+        },
+        {
+          "month": "2025-07",
+          "count": 418
+        },
+        {
+          "month": "2025-08",
+          "count": 320
+        },
+        {
+          "month": "2025-09",
+          "count": 356
+        },
+        {
+          "month": "2025-10",
+          "count": 254
+        }
+      ],
+      "trend_percent": 82.5,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-74",
+      "total_count": 2378,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 1
+        },
+        {
+          "month": "2024-11",
+          "count": 103
+        },
+        {
+          "month": "2024-12",
+          "count": 105
+        },
+        {
+          "month": "2025-01",
+          "count": 116
+        },
+        {
+          "month": "2025-02",
+          "count": 66
+        },
+        {
+          "month": "2025-03",
+          "count": 183
+        },
+        {
+          "month": "2025-04",
+          "count": 201
+        },
+        {
+          "month": "2025-05",
+          "count": 308
+        },
+        {
+          "month": "2025-06",
+          "count": 343
+        },
+        {
+          "month": "2025-07",
+          "count": 301
+        },
+        {
+          "month": "2025-08",
+          "count": 215
+        },
+        {
+          "month": "2025-09",
+          "count": 292
+        },
+        {
+          "month": "2025-10",
+          "count": 144
+        }
+      ],
+      "trend_percent": 169.4,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-862",
+      "total_count": 2340,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 21
+        },
+        {
+          "month": "2024-11",
+          "count": 248
+        },
+        {
+          "month": "2024-12",
+          "count": 411
+        },
+        {
+          "month": "2025-01",
+          "count": 283
+        },
+        {
+          "month": "2025-02",
+          "count": 121
+        },
+        {
+          "month": "2025-03",
+          "count": 187
+        },
+        {
+          "month": "2025-04",
+          "count": 237
+        },
+        {
+          "month": "2025-05",
+          "count": 135
+        },
+        {
+          "month": "2025-06",
+          "count": 157
+        },
+        {
+          "month": "2025-07",
+          "count": 100
+        },
+        {
+          "month": "2025-08",
+          "count": 104
+        },
+        {
+          "month": "2025-09",
+          "count": 202
+        },
+        {
+          "month": "2025-10",
+          "count": 134
+        }
+      ],
+      "trend_percent": -27.9,
+      "trend_direction": "down"
+    },
+    {
+      "cwe": "CWE-352",
+      "total_count": 1810,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 15
+        },
+        {
+          "month": "2024-11",
+          "count": 79
+        },
+        {
+          "month": "2024-12",
+          "count": 164
+        },
+        {
+          "month": "2025-01",
+          "count": 312
+        },
+        {
+          "month": "2025-02",
+          "count": 141
+        },
+        {
+          "month": "2025-03",
+          "count": 221
+        },
+        {
+          "month": "2025-04",
+          "count": 246
+        },
+        {
+          "month": "2025-05",
+          "count": 105
+        },
+        {
+          "month": "2025-06",
+          "count": 159
+        },
+        {
+          "month": "2025-07",
+          "count": 54
+        },
+        {
+          "month": "2025-08",
+          "count": 88
+        },
+        {
+          "month": "2025-09",
+          "count": 157
+        },
+        {
+          "month": "2025-10",
+          "count": 69
+        }
+      ],
+      "trend_percent": -19.3,
+      "trend_direction": "down"
+    },
+    {
+      "cwe": "CWE-94",
+      "total_count": 1328,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 9
+        },
+        {
+          "month": "2024-11",
+          "count": 65
+        },
+        {
+          "month": "2024-12",
+          "count": 91
+        },
+        {
+          "month": "2025-01",
+          "count": 104
+        },
+        {
+          "month": "2025-02",
+          "count": 88
+        },
+        {
+          "month": "2025-03",
+          "count": 140
+        },
+        {
+          "month": "2025-04",
+          "count": 118
+        },
+        {
+          "month": "2025-05",
+          "count": 93
+        },
+        {
+          "month": "2025-06",
+          "count": 102
+        },
+        {
+          "month": "2025-07",
+          "count": 138
+        },
+        {
+          "month": "2025-08",
+          "count": 188
+        },
+        {
+          "month": "2025-09",
+          "count": 130
+        },
+        {
+          "month": "2025-10",
+          "count": 62
+        }
+      ],
+      "trend_percent": 43.3,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-284",
+      "total_count": 1088,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 3
+        },
+        {
+          "month": "2024-11",
+          "count": 54
+        },
+        {
+          "month": "2024-12",
+          "count": 39
+        },
+        {
+          "month": "2025-01",
+          "count": 68
+        },
+        {
+          "month": "2025-02",
+          "count": 75
+        },
+        {
+          "month": "2025-03",
+          "count": 127
+        },
+        {
+          "month": "2025-04",
+          "count": 136
+        },
+        {
+          "month": "2025-05",
+          "count": 104
+        },
+        {
+          "month": "2025-06",
+          "count": 61
+        },
+        {
+          "month": "2025-07",
+          "count": 105
+        },
+        {
+          "month": "2025-08",
+          "count": 95
+        },
+        {
+          "month": "2025-09",
+          "count": 115
+        },
+        {
+          "month": "2025-10",
+          "count": 106
+        }
+      ],
+      "trend_percent": 69.1,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-119",
+      "total_count": 1067,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 6
+        },
+        {
+          "month": "2024-11",
+          "count": 49
+        },
+        {
+          "month": "2024-12",
+          "count": 11
+        },
+        {
+          "month": "2025-01",
+          "count": 22
+        },
+        {
+          "month": "2025-02",
+          "count": 31
+        },
+        {
+          "month": "2025-03",
+          "count": 75
+        },
+        {
+          "month": "2025-04",
+          "count": 96
+        },
+        {
+          "month": "2025-05",
+          "count": 159
+        },
+        {
+          "month": "2025-06",
+          "count": 191
+        },
+        {
+          "month": "2025-07",
+          "count": 196
+        },
+        {
+          "month": "2025-08",
+          "count": 93
+        },
+        {
+          "month": "2025-09",
+          "count": 61
+        },
+        {
+          "month": "2025-10",
+          "count": 77
+        }
+      ],
+      "trend_percent": 285.7,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-22",
+      "total_count": 985,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 6
+        },
+        {
+          "month": "2024-11",
+          "count": 82
+        },
+        {
+          "month": "2024-12",
+          "count": 44
+        },
+        {
+          "month": "2025-01",
+          "count": 73
+        },
+        {
+          "month": "2025-02",
+          "count": 78
+        },
+        {
+          "month": "2025-03",
+          "count": 96
+        },
+        {
+          "month": "2025-04",
+          "count": 75
+        },
+        {
+          "month": "2025-05",
+          "count": 74
+        },
+        {
+          "month": "2025-06",
+          "count": 104
+        },
+        {
+          "month": "2025-07",
+          "count": 108
+        },
+        {
+          "month": "2025-08",
+          "count": 99
+        },
+        {
+          "month": "2025-09",
+          "count": 71
+        },
+        {
+          "month": "2025-10",
+          "count": 75
+        }
+      ],
+      "trend_percent": 37.1,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-125",
+      "total_count": 869,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 10
+        },
+        {
+          "month": "2024-11",
+          "count": 175
+        },
+        {
+          "month": "2024-12",
+          "count": 94
+        },
+        {
+          "month": "2025-01",
+          "count": 48
+        },
+        {
+          "month": "2025-02",
+          "count": 49
+        },
+        {
+          "month": "2025-03",
+          "count": 62
+        },
+        {
+          "month": "2025-04",
+          "count": 66
+        },
+        {
+          "month": "2025-05",
+          "count": 60
+        },
+        {
+          "month": "2025-06",
+          "count": 49
+        },
+        {
+          "month": "2025-07",
+          "count": 74
+        },
+        {
+          "month": "2025-08",
+          "count": 63
+        },
+        {
+          "month": "2025-09",
+          "count": 65
+        },
+        {
+          "month": "2025-10",
+          "count": 54
+        }
+      ],
+      "trend_percent": -15.7,
+      "trend_direction": "down"
+    },
+    {
+      "cwe": "CWE-416",
+      "total_count": 865,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 10
+        },
+        {
+          "month": "2024-11",
+          "count": 94
+        },
+        {
+          "month": "2024-12",
+          "count": 92
+        },
+        {
+          "month": "2025-01",
+          "count": 54
+        },
+        {
+          "month": "2025-02",
+          "count": 139
+        },
+        {
+          "month": "2025-03",
+          "count": 70
+        },
+        {
+          "month": "2025-04",
+          "count": 76
+        },
+        {
+          "month": "2025-05",
+          "count": 46
+        },
+        {
+          "month": "2025-06",
+          "count": 42
+        },
+        {
+          "month": "2025-07",
+          "count": 42
+        },
+        {
+          "month": "2025-08",
+          "count": 70
+        },
+        {
+          "month": "2025-09",
+          "count": 53
+        },
+        {
+          "month": "2025-10",
+          "count": 77
+        }
+      ],
+      "trend_percent": -24.2,
+      "trend_direction": "down"
+    },
+    {
+      "cwe": "CWE-434",
+      "total_count": 813,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 15
+        },
+        {
+          "month": "2024-11",
+          "count": 81
+        },
+        {
+          "month": "2024-12",
+          "count": 42
+        },
+        {
+          "month": "2025-01",
+          "count": 65
+        },
+        {
+          "month": "2025-02",
+          "count": 36
+        },
+        {
+          "month": "2025-03",
+          "count": 53
+        },
+        {
+          "month": "2025-04",
+          "count": 63
+        },
+        {
+          "month": "2025-05",
+          "count": 69
+        },
+        {
+          "month": "2025-06",
+          "count": 55
+        },
+        {
+          "month": "2025-07",
+          "count": 109
+        },
+        {
+          "month": "2025-08",
+          "count": 96
+        },
+        {
+          "month": "2025-09",
+          "count": 71
+        },
+        {
+          "month": "2025-10",
+          "count": 58
+        }
+      ],
+      "trend_percent": 52.9,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-78",
+      "total_count": 791,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 3
+        },
+        {
+          "month": "2024-11",
+          "count": 84
+        },
+        {
+          "month": "2024-12",
+          "count": 33
+        },
+        {
+          "month": "2025-01",
+          "count": 56
+        },
+        {
+          "month": "2025-02",
+          "count": 42
+        },
+        {
+          "month": "2025-03",
+          "count": 60
+        },
+        {
+          "month": "2025-04",
+          "count": 46
+        },
+        {
+          "month": "2025-05",
+          "count": 30
+        },
+        {
+          "month": "2025-06",
+          "count": 68
+        },
+        {
+          "month": "2025-07",
+          "count": 93
+        },
+        {
+          "month": "2025-08",
+          "count": 136
+        },
+        {
+          "month": "2025-09",
+          "count": 79
+        },
+        {
+          "month": "2025-10",
+          "count": 61
+        }
+      ],
+      "trend_percent": 58.2,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-121",
+      "total_count": 787,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 2
+        },
+        {
+          "month": "2024-11",
+          "count": 48
+        },
+        {
+          "month": "2024-12",
+          "count": 26
+        },
+        {
+          "month": "2025-01",
+          "count": 30
+        },
+        {
+          "month": "2025-02",
+          "count": 35
+        },
+        {
+          "month": "2025-03",
+          "count": 39
+        },
+        {
+          "month": "2025-04",
+          "count": 55
+        },
+        {
+          "month": "2025-05",
+          "count": 86
+        },
+        {
+          "month": "2025-06",
+          "count": 69
+        },
+        {
+          "month": "2025-07",
+          "count": 116
+        },
+        {
+          "month": "2025-08",
+          "count": 151
+        },
+        {
+          "month": "2025-09",
+          "count": 42
+        },
+        {
+          "month": "2025-10",
+          "count": 88
+        }
+      ],
+      "trend_percent": 189.0,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-120",
+      "total_count": 759,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 6
+        },
+        {
+          "month": "2024-11",
+          "count": 24
+        },
+        {
+          "month": "2024-12",
+          "count": 30
+        },
+        {
+          "month": "2025-01",
+          "count": 80
+        },
+        {
+          "month": "2025-02",
+          "count": 46
+        },
+        {
+          "month": "2025-03",
+          "count": 51
+        },
+        {
+          "month": "2025-04",
+          "count": 83
+        },
+        {
+          "month": "2025-05",
+          "count": 131
+        },
+        {
+          "month": "2025-06",
+          "count": 113
+        },
+        {
+          "month": "2025-07",
+          "count": 66
+        },
+        {
+          "month": "2025-08",
+          "count": 46
+        },
+        {
+          "month": "2025-09",
+          "count": 44
+        },
+        {
+          "month": "2025-10",
+          "count": 39
+        }
+      ],
+      "trend_percent": 88.8,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-200",
+      "total_count": 753,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 6
+        },
+        {
+          "month": "2024-11",
+          "count": 49
+        },
+        {
+          "month": "2024-12",
+          "count": 46
+        },
+        {
+          "month": "2025-01",
+          "count": 74
+        },
+        {
+          "month": "2025-02",
+          "count": 52
+        },
+        {
+          "month": "2025-03",
+          "count": 93
+        },
+        {
+          "month": "2025-04",
+          "count": 55
+        },
+        {
+          "month": "2025-05",
+          "count": 65
+        },
+        {
+          "month": "2025-06",
+          "count": 37
+        },
+        {
+          "month": "2025-07",
+          "count": 61
+        },
+        {
+          "month": "2025-08",
+          "count": 70
+        },
+        {
+          "month": "2025-09",
+          "count": 64
+        },
+        {
+          "month": "2025-10",
+          "count": 81
+        }
+      ],
+      "trend_percent": 16.0,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-787",
+      "total_count": 714,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 10
+        },
+        {
+          "month": "2024-11",
+          "count": 134
+        },
+        {
+          "month": "2024-12",
+          "count": 80
+        },
+        {
+          "month": "2025-01",
+          "count": 71
+        },
+        {
+          "month": "2025-02",
+          "count": 57
+        },
+        {
+          "month": "2025-03",
+          "count": 57
+        },
+        {
+          "month": "2025-04",
+          "count": 39
+        },
+        {
+          "month": "2025-05",
+          "count": 53
+        },
+        {
+          "month": "2025-06",
+          "count": 35
+        },
+        {
+          "month": "2025-07",
+          "count": 55
+        },
+        {
+          "month": "2025-08",
+          "count": 34
+        },
+        {
+          "month": "2025-09",
+          "count": 44
+        },
+        {
+          "month": "2025-10",
+          "count": 45
+        }
+      ],
+      "trend_percent": -36.1,
+      "trend_direction": "down"
+    },
+    {
+      "cwe": "CWE-476",
+      "total_count": 691,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 1
+        },
+        {
+          "month": "2024-11",
+          "count": 57
+        },
+        {
+          "month": "2024-12",
+          "count": 93
+        },
+        {
+          "month": "2025-01",
+          "count": 66
+        },
+        {
+          "month": "2025-02",
+          "count": 125
+        },
+        {
+          "month": "2025-03",
+          "count": 66
+        },
+        {
+          "month": "2025-04",
+          "count": 63
+        },
+        {
+          "month": "2025-05",
+          "count": 42
+        },
+        {
+          "month": "2025-06",
+          "count": 24
+        },
+        {
+          "month": "2025-07",
+          "count": 28
+        },
+        {
+          "month": "2025-08",
+          "count": 46
+        },
+        {
+          "month": "2025-09",
+          "count": 26
+        },
+        {
+          "month": "2025-10",
+          "count": 54
+        }
+      ],
+      "trend_percent": -40.5,
+      "trend_direction": "down"
+    },
+    {
+      "cwe": "CWE-77",
+      "total_count": 665,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 3
+        },
+        {
+          "month": "2024-11",
+          "count": 36
+        },
+        {
+          "month": "2024-12",
+          "count": 21
+        },
+        {
+          "month": "2025-01",
+          "count": 43
+        },
+        {
+          "month": "2025-02",
+          "count": 38
+        },
+        {
+          "month": "2025-03",
+          "count": 56
+        },
+        {
+          "month": "2025-04",
+          "count": 39
+        },
+        {
+          "month": "2025-05",
+          "count": 94
+        },
+        {
+          "month": "2025-06",
+          "count": 70
+        },
+        {
+          "month": "2025-07",
+          "count": 54
+        },
+        {
+          "month": "2025-08",
+          "count": 81
+        },
+        {
+          "month": "2025-09",
+          "count": 85
+        },
+        {
+          "month": "2025-10",
+          "count": 45
+        }
+      ],
+      "trend_percent": 103.6,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-20",
+      "total_count": 646,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 3
+        },
+        {
+          "month": "2024-11",
+          "count": 59
+        },
+        {
+          "month": "2024-12",
+          "count": 37
+        },
+        {
+          "month": "2025-01",
+          "count": 29
+        },
+        {
+          "month": "2025-02",
+          "count": 55
+        },
+        {
+          "month": "2025-03",
+          "count": 45
+        },
+        {
+          "month": "2025-04",
+          "count": 56
+        },
+        {
+          "month": "2025-05",
+          "count": 64
+        },
+        {
+          "month": "2025-06",
+          "count": 60
+        },
+        {
+          "month": "2025-07",
+          "count": 72
+        },
+        {
+          "month": "2025-08",
+          "count": 60
+        },
+        {
+          "month": "2025-09",
+          "count": 67
+        },
+        {
+          "month": "2025-10",
+          "count": 39
+        }
+      ],
+      "trend_percent": 57.1,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-502",
+      "total_count": 601,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 5
+        },
+        {
+          "month": "2024-11",
+          "count": 43
+        },
+        {
+          "month": "2024-12",
+          "count": 26
+        },
+        {
+          "month": "2025-01",
+          "count": 50
+        },
+        {
+          "month": "2025-02",
+          "count": 28
+        },
+        {
+          "month": "2025-03",
+          "count": 58
+        },
+        {
+          "month": "2025-04",
+          "count": 62
+        },
+        {
+          "month": "2025-05",
+          "count": 74
+        },
+        {
+          "month": "2025-06",
+          "count": 47
+        },
+        {
+          "month": "2025-07",
+          "count": 52
+        },
+        {
+          "month": "2025-08",
+          "count": 48
+        },
+        {
+          "month": "2025-09",
+          "count": 56
+        },
+        {
+          "month": "2025-10",
+          "count": 52
+        }
+      ],
+      "trend_percent": 59.6,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-122",
+      "total_count": 550,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 5
+        },
+        {
+          "month": "2024-11",
+          "count": 64
+        },
+        {
+          "month": "2024-12",
+          "count": 32
+        },
+        {
+          "month": "2025-01",
+          "count": 58
+        },
+        {
+          "month": "2025-02",
+          "count": 33
+        },
+        {
+          "month": "2025-03",
+          "count": 51
+        },
+        {
+          "month": "2025-04",
+          "count": 43
+        },
+        {
+          "month": "2025-05",
+          "count": 30
+        },
+        {
+          "month": "2025-06",
+          "count": 35
+        },
+        {
+          "month": "2025-07",
+          "count": 70
+        },
+        {
+          "month": "2025-08",
+          "count": 59
+        },
+        {
+          "month": "2025-09",
+          "count": 42
+        },
+        {
+          "month": "2025-10",
+          "count": 28
+        }
+      ],
+      "trend_percent": 8.3,
+      "trend_direction": "stable"
+    },
+    {
+      "cwe": "CWE-918",
+      "total_count": 496,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 1
+        },
+        {
+          "month": "2024-11",
+          "count": 19
+        },
+        {
+          "month": "2024-12",
+          "count": 22
+        },
+        {
+          "month": "2025-01",
+          "count": 31
+        },
+        {
+          "month": "2025-02",
+          "count": 27
+        },
+        {
+          "month": "2025-03",
+          "count": 78
+        },
+        {
+          "month": "2025-04",
+          "count": 54
+        },
+        {
+          "month": "2025-05",
+          "count": 30
+        },
+        {
+          "month": "2025-06",
+          "count": 41
+        },
+        {
+          "month": "2025-07",
+          "count": 38
+        },
+        {
+          "month": "2025-08",
+          "count": 48
+        },
+        {
+          "month": "2025-09",
+          "count": 68
+        },
+        {
+          "month": "2025-10",
+          "count": 39
+        }
+      ],
+      "trend_percent": 53.1,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-863",
+      "total_count": 448,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 11
+        },
+        {
+          "month": "2024-11",
+          "count": 22
+        },
+        {
+          "month": "2024-12",
+          "count": 24
+        },
+        {
+          "month": "2025-01",
+          "count": 77
+        },
+        {
+          "month": "2025-02",
+          "count": 28
+        },
+        {
+          "month": "2025-03",
+          "count": 45
+        },
+        {
+          "month": "2025-04",
+          "count": 35
+        },
+        {
+          "month": "2025-05",
+          "count": 47
+        },
+        {
+          "month": "2025-06",
+          "count": 38
+        },
+        {
+          "month": "2025-07",
+          "count": 32
+        },
+        {
+          "month": "2025-08",
+          "count": 28
+        },
+        {
+          "month": "2025-09",
+          "count": 26
+        },
+        {
+          "month": "2025-10",
+          "count": 35
+        }
+      ],
+      "trend_percent": -0.2,
+      "trend_direction": "stable"
+    },
+    {
+      "cwe": "CWE-400",
+      "total_count": 427,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 4
+        },
+        {
+          "month": "2024-11",
+          "count": 15
+        },
+        {
+          "month": "2024-12",
+          "count": 15
+        },
+        {
+          "month": "2025-01",
+          "count": 35
+        },
+        {
+          "month": "2025-02",
+          "count": 35
+        },
+        {
+          "month": "2025-03",
+          "count": 46
+        },
+        {
+          "month": "2025-04",
+          "count": 39
+        },
+        {
+          "month": "2025-05",
+          "count": 31
+        },
+        {
+          "month": "2025-06",
+          "count": 32
+        },
+        {
+          "month": "2025-07",
+          "count": 57
+        },
+        {
+          "month": "2025-08",
+          "count": 37
+        },
+        {
+          "month": "2025-09",
+          "count": 38
+        },
+        {
+          "month": "2025-10",
+          "count": 43
+        }
+      ],
+      "trend_percent": 58.3,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-266",
+      "total_count": 400,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 5
+        },
+        {
+          "month": "2024-11",
+          "count": 19
+        },
+        {
+          "month": "2024-12",
+          "count": 21
+        },
+        {
+          "month": "2025-01",
+          "count": 34
+        },
+        {
+          "month": "2025-02",
+          "count": 13
+        },
+        {
+          "month": "2025-03",
+          "count": 49
+        },
+        {
+          "month": "2025-04",
+          "count": 55
+        },
+        {
+          "month": "2025-05",
+          "count": 27
+        },
+        {
+          "month": "2025-06",
+          "count": 35
+        },
+        {
+          "month": "2025-07",
+          "count": 22
+        },
+        {
+          "month": "2025-08",
+          "count": 36
+        },
+        {
+          "month": "2025-09",
+          "count": 62
+        },
+        {
+          "month": "2025-10",
+          "count": 22
+        }
+      ],
+      "trend_percent": 57.4,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-98",
+      "total_count": 396,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 6
+        },
+        {
+          "month": "2024-11",
+          "count": 13
+        },
+        {
+          "month": "2024-12",
+          "count": 14
+        },
+        {
+          "month": "2025-01",
+          "count": 19
+        },
+        {
+          "month": "2025-02",
+          "count": 16
+        },
+        {
+          "month": "2025-03",
+          "count": 35
+        },
+        {
+          "month": "2025-04",
+          "count": 64
+        },
+        {
+          "month": "2025-05",
+          "count": 44
+        },
+        {
+          "month": "2025-06",
+          "count": 75
+        },
+        {
+          "month": "2025-07",
+          "count": 13
+        },
+        {
+          "month": "2025-08",
+          "count": 57
+        },
+        {
+          "month": "2025-09",
+          "count": 22
+        },
+        {
+          "month": "2025-10",
+          "count": 18
+        }
+      ],
+      "trend_percent": 143.8,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-306",
+      "total_count": 375,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 2
+        },
+        {
+          "month": "2024-11",
+          "count": 23
+        },
+        {
+          "month": "2024-12",
+          "count": 15
+        },
+        {
+          "month": "2025-01",
+          "count": 18
+        },
+        {
+          "month": "2025-02",
+          "count": 27
+        },
+        {
+          "month": "2025-03",
+          "count": 23
+        },
+        {
+          "month": "2025-04",
+          "count": 21
+        },
+        {
+          "month": "2025-05",
+          "count": 25
+        },
+        {
+          "month": "2025-06",
+          "count": 31
+        },
+        {
+          "month": "2025-07",
+          "count": 57
+        },
+        {
+          "month": "2025-08",
+          "count": 42
+        },
+        {
+          "month": "2025-09",
+          "count": 51
+        },
+        {
+          "month": "2025-10",
+          "count": 40
+        }
+      ],
+      "trend_percent": 111.9,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-287",
+      "total_count": 354,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 2
+        },
+        {
+          "month": "2024-11",
+          "count": 21
+        },
+        {
+          "month": "2024-12",
+          "count": 20
+        },
+        {
+          "month": "2025-01",
+          "count": 17
+        },
+        {
+          "month": "2025-02",
+          "count": 27
+        },
+        {
+          "month": "2025-03",
+          "count": 38
+        },
+        {
+          "month": "2025-04",
+          "count": 25
+        },
+        {
+          "month": "2025-05",
+          "count": 34
+        },
+        {
+          "month": "2025-06",
+          "count": 41
+        },
+        {
+          "month": "2025-07",
+          "count": 36
+        },
+        {
+          "month": "2025-08",
+          "count": 25
+        },
+        {
+          "month": "2025-09",
+          "count": 34
+        },
+        {
+          "month": "2025-10",
+          "count": 34
+        }
+      ],
+      "trend_percent": 57.0,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-770",
+      "total_count": 347,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 4
+        },
+        {
+          "month": "2024-11",
+          "count": 14
+        },
+        {
+          "month": "2024-12",
+          "count": 17
+        },
+        {
+          "month": "2025-01",
+          "count": 55
+        },
+        {
+          "month": "2025-02",
+          "count": 23
+        },
+        {
+          "month": "2025-03",
+          "count": 41
+        },
+        {
+          "month": "2025-04",
+          "count": 34
+        },
+        {
+          "month": "2025-05",
+          "count": 18
+        },
+        {
+          "month": "2025-06",
+          "count": 30
+        },
+        {
+          "month": "2025-07",
+          "count": 18
+        },
+        {
+          "month": "2025-08",
+          "count": 32
+        },
+        {
+          "month": "2025-09",
+          "count": 26
+        },
+        {
+          "month": "2025-10",
+          "count": 35
+        }
+      ],
+      "trend_percent": 7.4,
+      "trend_direction": "stable"
+    },
+    {
+      "cwe": "CWE-639",
+      "total_count": 332,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 6
+        },
+        {
+          "month": "2024-11",
+          "count": 32
+        },
+        {
+          "month": "2024-12",
+          "count": 25
+        },
+        {
+          "month": "2025-01",
+          "count": 13
+        },
+        {
+          "month": "2025-02",
+          "count": 29
+        },
+        {
+          "month": "2025-03",
+          "count": 29
+        },
+        {
+          "month": "2025-04",
+          "count": 43
+        },
+        {
+          "month": "2025-05",
+          "count": 18
+        },
+        {
+          "month": "2025-06",
+          "count": 11
+        },
+        {
+          "month": "2025-07",
+          "count": 23
+        },
+        {
+          "month": "2025-08",
+          "count": 23
+        },
+        {
+          "month": "2025-09",
+          "count": 45
+        },
+        {
+          "month": "2025-10",
+          "count": 35
+        }
+      ],
+      "trend_percent": 26.7,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-269",
+      "total_count": 301,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 0
+        },
+        {
+          "month": "2024-11",
+          "count": 14
+        },
+        {
+          "month": "2024-12",
+          "count": 11
+        },
+        {
+          "month": "2025-01",
+          "count": 20
+        },
+        {
+          "month": "2025-02",
+          "count": 18
+        },
+        {
+          "month": "2025-03",
+          "count": 31
+        },
+        {
+          "month": "2025-04",
+          "count": 34
+        },
+        {
+          "month": "2025-05",
+          "count": 21
+        },
+        {
+          "month": "2025-06",
+          "count": 30
+        },
+        {
+          "month": "2025-07",
+          "count": 43
+        },
+        {
+          "month": "2025-08",
+          "count": 30
+        },
+        {
+          "month": "2025-09",
+          "count": 31
+        },
+        {
+          "month": "2025-10",
+          "count": 18
+        }
+      ],
+      "trend_percent": 88.8,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-285",
+      "total_count": 284,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 2
+        },
+        {
+          "month": "2024-11",
+          "count": 21
+        },
+        {
+          "month": "2024-12",
+          "count": 14
+        },
+        {
+          "month": "2025-01",
+          "count": 16
+        },
+        {
+          "month": "2025-02",
+          "count": 14
+        },
+        {
+          "month": "2025-03",
+          "count": 32
+        },
+        {
+          "month": "2025-04",
+          "count": 28
+        },
+        {
+          "month": "2025-05",
+          "count": 17
+        },
+        {
+          "month": "2025-06",
+          "count": 14
+        },
+        {
+          "month": "2025-07",
+          "count": 19
+        },
+        {
+          "month": "2025-08",
+          "count": 23
+        },
+        {
+          "month": "2025-09",
+          "count": 57
+        },
+        {
+          "month": "2025-10",
+          "count": 27
+        }
+      ],
+      "trend_percent": 60.2,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-276",
+      "total_count": 242,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 5
+        },
+        {
+          "month": "2024-11",
+          "count": 43
+        },
+        {
+          "month": "2024-12",
+          "count": 16
+        },
+        {
+          "month": "2025-01",
+          "count": 40
+        },
+        {
+          "month": "2025-02",
+          "count": 10
+        },
+        {
+          "month": "2025-03",
+          "count": 23
+        },
+        {
+          "month": "2025-04",
+          "count": 11
+        },
+        {
+          "month": "2025-05",
+          "count": 21
+        },
+        {
+          "month": "2025-06",
+          "count": 20
+        },
+        {
+          "month": "2025-07",
+          "count": 13
+        },
+        {
+          "month": "2025-08",
+          "count": 16
+        },
+        {
+          "month": "2025-09",
+          "count": 11
+        },
+        {
+          "month": "2025-10",
+          "count": 13
+        }
+      ],
+      "trend_percent": -34.3,
+      "trend_direction": "down"
+    },
+    {
+      "cwe": "CWE-190",
+      "total_count": 231,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 0
+        },
+        {
+          "month": "2024-11",
+          "count": 17
+        },
+        {
+          "month": "2024-12",
+          "count": 18
+        },
+        {
+          "month": "2025-01",
+          "count": 17
+        },
+        {
+          "month": "2025-02",
+          "count": 25
+        },
+        {
+          "month": "2025-03",
+          "count": 21
+        },
+        {
+          "month": "2025-04",
+          "count": 26
+        },
+        {
+          "month": "2025-05",
+          "count": 15
+        },
+        {
+          "month": "2025-06",
+          "count": 22
+        },
+        {
+          "month": "2025-07",
+          "count": 16
+        },
+        {
+          "month": "2025-08",
+          "count": 19
+        },
+        {
+          "month": "2025-09",
+          "count": 22
+        },
+        {
+          "month": "2025-10",
+          "count": 13
+        }
+      ],
+      "trend_percent": 16.3,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-601",
+      "total_count": 224,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 2
+        },
+        {
+          "month": "2024-11",
+          "count": 8
+        },
+        {
+          "month": "2024-12",
+          "count": 9
+        },
+        {
+          "month": "2025-01",
+          "count": 32
+        },
+        {
+          "month": "2025-02",
+          "count": 14
+        },
+        {
+          "month": "2025-03",
+          "count": 22
+        },
+        {
+          "month": "2025-04",
+          "count": 14
+        },
+        {
+          "month": "2025-05",
+          "count": 21
+        },
+        {
+          "month": "2025-06",
+          "count": 18
+        },
+        {
+          "month": "2025-07",
+          "count": 25
+        },
+        {
+          "month": "2025-08",
+          "count": 25
+        },
+        {
+          "month": "2025-09",
+          "count": 15
+        },
+        {
+          "month": "2025-10",
+          "count": 19
+        }
+      ],
+      "trend_percent": 35.0,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-401",
+      "total_count": 213,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 1
+        },
+        {
+          "month": "2024-11",
+          "count": 18
+        },
+        {
+          "month": "2024-12",
+          "count": 28
+        },
+        {
+          "month": "2025-01",
+          "count": 8
+        },
+        {
+          "month": "2025-02",
+          "count": 73
+        },
+        {
+          "month": "2025-03",
+          "count": 21
+        },
+        {
+          "month": "2025-04",
+          "count": 10
+        },
+        {
+          "month": "2025-05",
+          "count": 29
+        },
+        {
+          "month": "2025-06",
+          "count": 2
+        },
+        {
+          "month": "2025-07",
+          "count": 7
+        },
+        {
+          "month": "2025-08",
+          "count": 5
+        },
+        {
+          "month": "2025-09",
+          "count": 2
+        },
+        {
+          "month": "2025-10",
+          "count": 9
+        }
+      ],
+      "trend_percent": -63.2,
+      "trend_direction": "down"
+    },
+    {
+      "cwe": "CWE-362",
+      "total_count": 203,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 1
+        },
+        {
+          "month": "2024-11",
+          "count": 12
+        },
+        {
+          "month": "2024-12",
+          "count": 13
+        },
+        {
+          "month": "2025-01",
+          "count": 10
+        },
+        {
+          "month": "2025-02",
+          "count": 54
+        },
+        {
+          "month": "2025-03",
+          "count": 10
+        },
+        {
+          "month": "2025-04",
+          "count": 10
+        },
+        {
+          "month": "2025-05",
+          "count": 15
+        },
+        {
+          "month": "2025-06",
+          "count": 4
+        },
+        {
+          "month": "2025-07",
+          "count": 13
+        },
+        {
+          "month": "2025-08",
+          "count": 17
+        },
+        {
+          "month": "2025-09",
+          "count": 30
+        },
+        {
+          "month": "2025-10",
+          "count": 14
+        }
+      ],
+      "trend_percent": -11.7,
+      "trend_direction": "down"
+    },
+    {
+      "cwe": "CWE-427",
+      "total_count": 191,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 0
+        },
+        {
+          "month": "2024-11",
+          "count": 28
+        },
+        {
+          "month": "2024-12",
+          "count": 3
+        },
+        {
+          "month": "2025-01",
+          "count": 17
+        },
+        {
+          "month": "2025-02",
+          "count": 26
+        },
+        {
+          "month": "2025-03",
+          "count": 6
+        },
+        {
+          "month": "2025-04",
+          "count": 16
+        },
+        {
+          "month": "2025-05",
+          "count": 27
+        },
+        {
+          "month": "2025-06",
+          "count": 12
+        },
+        {
+          "month": "2025-07",
+          "count": 10
+        },
+        {
+          "month": "2025-08",
+          "count": 15
+        },
+        {
+          "month": "2025-09",
+          "count": 16
+        },
+        {
+          "month": "2025-10",
+          "count": 15
+        }
+      ],
+      "trend_percent": 18.9,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-798",
+      "total_count": 186,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 3
+        },
+        {
+          "month": "2024-11",
+          "count": 13
+        },
+        {
+          "month": "2024-12",
+          "count": 6
+        },
+        {
+          "month": "2025-01",
+          "count": 10
+        },
+        {
+          "month": "2025-02",
+          "count": 15
+        },
+        {
+          "month": "2025-03",
+          "count": 17
+        },
+        {
+          "month": "2025-04",
+          "count": 9
+        },
+        {
+          "month": "2025-05",
+          "count": 15
+        },
+        {
+          "month": "2025-06",
+          "count": 8
+        },
+        {
+          "month": "2025-07",
+          "count": 29
+        },
+        {
+          "month": "2025-08",
+          "count": 20
+        },
+        {
+          "month": "2025-09",
+          "count": 29
+        },
+        {
+          "month": "2025-10",
+          "count": 12
+        }
+      ],
+      "trend_percent": 63.4,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-288",
+      "total_count": 180,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 10
+        },
+        {
+          "month": "2024-11",
+          "count": 12
+        },
+        {
+          "month": "2024-12",
+          "count": 15
+        },
+        {
+          "month": "2025-01",
+          "count": 5
+        },
+        {
+          "month": "2025-02",
+          "count": 14
+        },
+        {
+          "month": "2025-03",
+          "count": 22
+        },
+        {
+          "month": "2025-04",
+          "count": 9
+        },
+        {
+          "month": "2025-05",
+          "count": 22
+        },
+        {
+          "month": "2025-06",
+          "count": 14
+        },
+        {
+          "month": "2025-07",
+          "count": 10
+        },
+        {
+          "month": "2025-08",
+          "count": 24
+        },
+        {
+          "month": "2025-09",
+          "count": 5
+        },
+        {
+          "month": "2025-10",
+          "count": 18
+        }
+      ],
+      "trend_percent": 12.1,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-732",
+      "total_count": 176,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 1
+        },
+        {
+          "month": "2024-11",
+          "count": 16
+        },
+        {
+          "month": "2024-12",
+          "count": 14
+        },
+        {
+          "month": "2025-01",
+          "count": 24
+        },
+        {
+          "month": "2025-02",
+          "count": 9
+        },
+        {
+          "month": "2025-03",
+          "count": 5
+        },
+        {
+          "month": "2025-04",
+          "count": 22
+        },
+        {
+          "month": "2025-05",
+          "count": 21
+        },
+        {
+          "month": "2025-06",
+          "count": 8
+        },
+        {
+          "month": "2025-07",
+          "count": 10
+        },
+        {
+          "month": "2025-08",
+          "count": 21
+        },
+        {
+          "month": "2025-09",
+          "count": 18
+        },
+        {
+          "month": "2025-10",
+          "count": 7
+        }
+      ],
+      "trend_percent": 32.9,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-532",
+      "total_count": 157,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 3
+        },
+        {
+          "month": "2024-11",
+          "count": 11
+        },
+        {
+          "month": "2024-12",
+          "count": 6
+        },
+        {
+          "month": "2025-01",
+          "count": 23
+        },
+        {
+          "month": "2025-02",
+          "count": 8
+        },
+        {
+          "month": "2025-03",
+          "count": 13
+        },
+        {
+          "month": "2025-04",
+          "count": 15
+        },
+        {
+          "month": "2025-05",
+          "count": 7
+        },
+        {
+          "month": "2025-06",
+          "count": 10
+        },
+        {
+          "month": "2025-07",
+          "count": 24
+        },
+        {
+          "month": "2025-08",
+          "count": 10
+        },
+        {
+          "month": "2025-09",
+          "count": 14
+        },
+        {
+          "month": "2025-10",
+          "count": 13
+        }
+      ],
+      "trend_percent": 24.6,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-404",
+      "total_count": 157,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 0
+        },
+        {
+          "month": "2024-11",
+          "count": 5
+        },
+        {
+          "month": "2024-12",
+          "count": 13
+        },
+        {
+          "month": "2025-01",
+          "count": 10
+        },
+        {
+          "month": "2025-02",
+          "count": 16
+        },
+        {
+          "month": "2025-03",
+          "count": 19
+        },
+        {
+          "month": "2025-04",
+          "count": 9
+        },
+        {
+          "month": "2025-05",
+          "count": 12
+        },
+        {
+          "month": "2025-06",
+          "count": 13
+        },
+        {
+          "month": "2025-07",
+          "count": 16
+        },
+        {
+          "month": "2025-08",
+          "count": 21
+        },
+        {
+          "month": "2025-09",
+          "count": 13
+        },
+        {
+          "month": "2025-10",
+          "count": 10
+        }
+      ],
+      "trend_percent": 27.9,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-59",
+      "total_count": 142,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 4
+        },
+        {
+          "month": "2024-11",
+          "count": 29
+        },
+        {
+          "month": "2024-12",
+          "count": 10
+        },
+        {
+          "month": "2025-01",
+          "count": 7
+        },
+        {
+          "month": "2025-02",
+          "count": 8
+        },
+        {
+          "month": "2025-03",
+          "count": 12
+        },
+        {
+          "month": "2025-04",
+          "count": 7
+        },
+        {
+          "month": "2025-05",
+          "count": 16
+        },
+        {
+          "month": "2025-06",
+          "count": 9
+        },
+        {
+          "month": "2025-07",
+          "count": 16
+        },
+        {
+          "month": "2025-08",
+          "count": 8
+        },
+        {
+          "month": "2025-09",
+          "count": 6
+        },
+        {
+          "month": "2025-10",
+          "count": 10
+        }
+      ],
+      "trend_percent": -11.8,
+      "trend_direction": "down"
+    },
+    {
+      "cwe": "CWE-497",
+      "total_count": 141,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 1
+        },
+        {
+          "month": "2024-11",
+          "count": 11
+        },
+        {
+          "month": "2024-12",
+          "count": 8
+        },
+        {
+          "month": "2025-01",
+          "count": 11
+        },
+        {
+          "month": "2025-02",
+          "count": 6
+        },
+        {
+          "month": "2025-03",
+          "count": 7
+        },
+        {
+          "month": "2025-04",
+          "count": 20
+        },
+        {
+          "month": "2025-05",
+          "count": 14
+        },
+        {
+          "month": "2025-06",
+          "count": 11
+        },
+        {
+          "month": "2025-07",
+          "count": 12
+        },
+        {
+          "month": "2025-08",
+          "count": 9
+        },
+        {
+          "month": "2025-09",
+          "count": 18
+        },
+        {
+          "month": "2025-10",
+          "count": 13
+        }
+      ],
+      "trend_percent": 89.0,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-295",
+      "total_count": 132,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 1
+        },
+        {
+          "month": "2024-11",
+          "count": 5
+        },
+        {
+          "month": "2024-12",
+          "count": 12
+        },
+        {
+          "month": "2025-01",
+          "count": 11
+        },
+        {
+          "month": "2025-02",
+          "count": 12
+        },
+        {
+          "month": "2025-03",
+          "count": 10
+        },
+        {
+          "month": "2025-04",
+          "count": 5
+        },
+        {
+          "month": "2025-05",
+          "count": 12
+        },
+        {
+          "month": "2025-06",
+          "count": 14
+        },
+        {
+          "month": "2025-07",
+          "count": 11
+        },
+        {
+          "month": "2025-08",
+          "count": 19
+        },
+        {
+          "month": "2025-09",
+          "count": 12
+        },
+        {
+          "month": "2025-10",
+          "count": 8
+        }
+      ],
+      "trend_percent": 36.1,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-80",
+      "total_count": 124,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 2
+        },
+        {
+          "month": "2024-11",
+          "count": 10
+        },
+        {
+          "month": "2024-12",
+          "count": 8
+        },
+        {
+          "month": "2025-01",
+          "count": 11
+        },
+        {
+          "month": "2025-02",
+          "count": 9
+        },
+        {
+          "month": "2025-03",
+          "count": 18
+        },
+        {
+          "month": "2025-04",
+          "count": 7
+        },
+        {
+          "month": "2025-05",
+          "count": 7
+        },
+        {
+          "month": "2025-06",
+          "count": 8
+        },
+        {
+          "month": "2025-07",
+          "count": 9
+        },
+        {
+          "month": "2025-08",
+          "count": 9
+        },
+        {
+          "month": "2025-09",
+          "count": 6
+        },
+        {
+          "month": "2025-10",
+          "count": 20
+        }
+      ],
+      "trend_percent": -2.5,
+      "trend_direction": "stable"
+    },
+    {
+      "cwe": "CWE-73",
+      "total_count": 122,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 2
+        },
+        {
+          "month": "2024-11",
+          "count": 3
+        },
+        {
+          "month": "2024-12",
+          "count": 6
+        },
+        {
+          "month": "2025-01",
+          "count": 7
+        },
+        {
+          "month": "2025-02",
+          "count": 12
+        },
+        {
+          "month": "2025-03",
+          "count": 18
+        },
+        {
+          "month": "2025-04",
+          "count": 13
+        },
+        {
+          "month": "2025-05",
+          "count": 10
+        },
+        {
+          "month": "2025-06",
+          "count": 10
+        },
+        {
+          "month": "2025-07",
+          "count": 7
+        },
+        {
+          "month": "2025-08",
+          "count": 11
+        },
+        {
+          "month": "2025-09",
+          "count": 8
+        },
+        {
+          "month": "2025-10",
+          "count": 15
+        }
+      ],
+      "trend_percent": 32.1,
+      "trend_direction": "up"
+    },
+    {
+      "cwe": "CWE-126",
+      "total_count": 116,
+      "monthly_data": [
+        {
+          "month": "2024-10",
+          "count": 0
+        },
+        {
+          "month": "2024-11",
+          "count": 8
+        },
+        {
+          "month": "2024-12",
+          "count": 3
+        },
+        {
+          "month": "2025-01",
+          "count": 11
+        },
+        {
+          "month": "2025-02",
+          "count": 9
+        },
+        {
+          "month": "2025-03",
+          "count": 3
+        },
+        {
+          "month": "2025-04",
+          "count": 14
+        },
+        {
+          "month": "2025-05",
+          "count": 12
+        },
+        {
+          "month": "2025-06",
+          "count": 7
+        },
+        {
+          "month": "2025-07",
+          "count": 12
+        },
+        {
+          "month": "2025-08",
+          "count": 4
+        },
+        {
+          "month": "2025-09",
+          "count": 18
+        },
+        {
+          "month": "2025-10",
+          "count": 15
+        }
+      ],
+      "trend_percent": 106.7,
+      "trend_direction": "up"
+    }
+  ],
+  "months": [
+    "2024-10",
+    "2024-11",
+    "2024-12",
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10"
+  ],
+  "metadata": {
+    "total_cwes": 577,
+    "months_analyzed": 13
+  }
+}

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack Surface Timeline - CVE Maps</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+            color: #e2e8f0;
+        }
+        
+        #main-container {
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .chart-container {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #475569;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .scatter-point {
+            fill-opacity: 0.6;
+            stroke: #fff;
+            stroke-width: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .scatter-point:hover {
+            fill-opacity: 1;
+            stroke-width: 2px;
+            r: 8;
+        }
+        
+        .axis path,
+        .axis line {
+            stroke: #64748b;
+        }
+        
+        .axis text {
+            fill: #cbd5e1;
+            font-size: 12px;
+        }
+        
+        .grid line {
+            stroke: #334155;
+            stroke-opacity: 0.3;
+        }
+        
+        #tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 12px;
+            color: #e2e8f0;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+            border: 1px solid #fff;
+        }
+        
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: #2563eb;
+        }
+        
+        button.back-btn {
+            background: #64748b;
+        }
+        
+        button.back-btn:hover {
+            background: #475569;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(51, 65, 85, 0.5);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #60a5fa;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-container">
+        <div class="chart-container">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px;">
+                <div>
+                    <h1 class="text-3xl font-bold text-white mb-2">Attack Surface Timeline</h1>
+                    <p class="text-slate-400">CVE severity distribution over time - each point is a published CVE</p>
+                </div>
+                <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
+            </div>
+            
+            <div class="stats-grid" id="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-cves">-</div>
+                    <div class="stat-label">Total CVEs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="critical-count" style="color: #ef4444;">-</div>
+                    <div class="stat-label">Critical (9.0-10.0)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="high-count" style="color: #f97316;">-</div>
+                    <div class="stat-label">High (7.0-8.9)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="medium-count" style="color: #eab308;">-</div>
+                    <div class="stat-label">Medium (4.0-6.9)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="low-count" style="color: #22c55e;">-</div>
+                    <div class="stat-label">Low (0.0-3.9)</div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ef4444;"></div>
+                    <span>Critical</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f97316;"></div>
+                    <span>High</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #eab308;"></div>
+                    <span>Medium</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #22c55e;"></div>
+                    <span>Low</span>
+                </div>
+            </div>
+            
+            <div id="chart"></div>
+        </div>
+        
+        <div class="chart-container">
+            <h2 class="text-2xl font-bold text-white mb-4">Daily Vulnerability Trend</h2>
+            <div id="trend-chart"></div>
+        </div>
+    </div>
+    
+    <div id="tooltip"></div>
+    
+    <script>
+        let data = null;
+        const tooltip = d3.select("#tooltip");
+        
+        function getSeverityColor(score) {
+            if (score >= 9.0) return '#ef4444';  // Critical - red
+            if (score >= 7.0) return '#f97316';  // High - orange
+            if (score >= 4.0) return '#eab308';  // Medium - yellow
+            return '#22c55e';  // Low - green
+        }
+        
+        async function loadData() {
+            try {
+                const response = await fetch('./data/attack_surface_timeline.json');
+                data = await response.json();
+                
+                // Update stats
+                const critical = data.timeline.filter(d => d.cvss_score >= 9.0).length;
+                const high = data.timeline.filter(d => d.cvss_score >= 7.0 && d.cvss_score < 9.0).length;
+                const medium = data.timeline.filter(d => d.cvss_score >= 4.0 && d.cvss_score < 7.0).length;
+                const low = data.timeline.filter(d => d.cvss_score < 4.0).length;
+                
+                document.getElementById('total-cves').textContent = data.timeline.length.toLocaleString();
+                document.getElementById('critical-count').textContent = critical.toLocaleString();
+                document.getElementById('high-count').textContent = high.toLocaleString();
+                document.getElementById('medium-count').textContent = medium.toLocaleString();
+                document.getElementById('low-count').textContent = low.toLocaleString();
+                
+                createScatterPlot();
+                createTrendChart();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        function createScatterPlot() {
+            const container = document.getElementById('chart');
+            const width = container.offsetWidth;
+            const height = 500;
+            const margin = { top: 20, right: 30, bottom: 60, left: 60 };
+            
+            const svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            
+            // Parse dates
+            const parseDate = d3.timeParse("%Y-%m-%d");
+            data.timeline.forEach(d => {
+                d.parsedDate = parseDate(d.date);
+            });
+            
+            // Scales
+            const x = d3.scaleTime()
+                .domain(d3.extent(data.timeline, d => d.parsedDate))
+                .range([margin.left, width - margin.right]);
+            
+            const y = d3.scaleLinear()
+                .domain([0, 10])
+                .range([height - margin.bottom, margin.top]);
+            
+            // Grid
+            svg.append("g")
+                .attr("class", "grid")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x).tickSize(-height + margin.top + margin.bottom).tickFormat(""));
+            
+            svg.append("g")
+                .attr("class", "grid")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y).tickSize(-width + margin.left + margin.right).tickFormat(""));
+            
+            // Axes
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x).ticks(10));
+            
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y));
+            
+            // Axis labels
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", height - 10)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#cbd5e1")
+                .text("Publication Date");
+            
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("x", -height / 2)
+                .attr("y", 15)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#cbd5e1")
+                .text("CVSS Score");
+            
+            // Add jitter to prevent overlap
+            const jitterStrength = 0.15;
+            
+            // Points
+            svg.selectAll("circle")
+                .data(data.timeline)
+                .join("circle")
+                .attr("class", "scatter-point")
+                .attr("cx", d => x(d.parsedDate))
+                .attr("cy", d => y(d.cvss_score) + (Math.random() - 0.5) * 20 * jitterStrength)
+                .attr("r", d => Math.max(3, Math.min(6, d.affected_count)))
+                .attr("fill", d => getSeverityColor(d.cvss_score))
+                .on("mouseover", function(event, d) {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr("r", 8);
+                    
+                    tooltip
+                        .style("opacity", 1)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 10) + "px")
+                        .html(`
+                            <strong>${d.cve_id}</strong><br>
+                            Date: ${d.date}<br>
+                            CVSS: ${d.cvss_score} (${d.cvss_severity})<br>
+                            CNA: ${d.cna}<br>
+                            CWEs: ${d.cwes.length > 0 ? d.cwes.join(', ') : 'None'}<br>
+                            Affected Products: ${d.affected_count}
+                        `);
+                })
+                .on("mouseout", function(event, d) {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr("r", Math.max(3, Math.min(6, d.affected_count)));
+                    
+                    tooltip.style("opacity", 0);
+                });
+        }
+        
+        function createTrendChart() {
+            const container = document.getElementById('trend-chart');
+            const width = container.offsetWidth;
+            const height = 300;
+            const margin = { top: 20, right: 30, bottom: 60, left: 60 };
+            
+            const svg = d3.select("#trend-chart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            
+            // Parse dates
+            const parseDate = d3.timeParse("%Y-%m-%d");
+            data.daily_aggregates.forEach(d => {
+                d.parsedDate = parseDate(d.date);
+            });
+            
+            // Scales
+            const x = d3.scaleTime()
+                .domain(d3.extent(data.daily_aggregates, d => d.parsedDate))
+                .range([margin.left, width - margin.right]);
+            
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data.daily_aggregates, d => d.count)])
+                .nice()
+                .range([height - margin.bottom, margin.top]);
+            
+            // Area generator
+            const area = d3.area()
+                .x(d => x(d.parsedDate))
+                .y0(height - margin.bottom)
+                .y1(d => y(d.count))
+                .curve(d3.curveMonotoneX);
+            
+            // Add area
+            svg.append("path")
+                .datum(data.daily_aggregates)
+                .attr("fill", "#3b82f6")
+                .attr("fill-opacity", 0.3)
+                .attr("d", area);
+            
+            // Line
+            const line = d3.line()
+                .x(d => x(d.parsedDate))
+                .y(d => y(d.count))
+                .curve(d3.curveMonotoneX);
+            
+            svg.append("path")
+                .datum(data.daily_aggregates)
+                .attr("fill", "none")
+                .attr("stroke", "#3b82f6")
+                .attr("stroke-width", 2)
+                .attr("d", line);
+            
+            // Axes
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x).ticks(10));
+            
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y));
+            
+            // Labels
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", height - 10)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#cbd5e1")
+                .text("Date");
+            
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("x", -height / 2)
+                .attr("y", 15)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#cbd5e1")
+                .text("CVEs per Day");
+        }
+        
+        loadData();
+    </script>
+</body>
+</html>

@@ -144,58 +144,134 @@
                 <div class="mt-4 text-blue-400 font-semibold">View Network →</div>
             </div>
 
-            <!-- Independent Clusters -->
-            <div class="card" onclick="window.location.href='clusters.html'">
-                <div class="card-icon icon-cluster">🎯</div>
-                <h2 class="text-2xl font-bold text-white mb-3">Independent Clusters</h2>
+            <!-- Temporal Trends -->
+            <div class="card" onclick="window.location.href='temporal-trends.html'">
+                <div class="card-icon">📈</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CVE Publication Trends</h2>
                 <p class="text-slate-300 mb-4">
-                    Each CNA displayed as an isolated mini-network with its own CWEs. 
-                    Perfect for analyzing individual CNA vulnerability profiles.
-                </p>
-                <div class="mb-4">
-                    <span class="badge badge-red">Isolated</span>
-                    <span class="badge badge-red">Sortable</span>
-                    <span class="badge badge-red">Searchable</span>
-                </div>
-                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
-                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
-                    <li>409 independent mini-networks</li>
-                    <li>Sort by size or search by name</li>
-                    <li>Adjustable density slider</li>
-                    <li>CNA size scales with CWE count</li>
-                </ul>
-                <div class="mt-4 text-red-400 font-semibold">View Clusters →</div>
-            </div>
-
-            <!-- CWE Co-occurrence -->
-            <div class="card" onclick="window.location.href='cwe-cooccurrence.html'">
-                <div class="card-icon">🔗</div>
-                <h2 class="text-2xl font-bold text-white mb-3">CWE Co-occurrence Network</h2>
-                <p class="text-slate-300 mb-4">
-                    See which weaknesses commonly appear together in the same CVE. 
-                    Reveals patterns in vulnerability combinations.
+                    Track CVE publications over time with monthly breakdowns. 
+                    Compare activity across top CNAs with interactive timelines.
                 </p>
                 <div class="mb-4">
                     <span class="badge badge-blue">Active</span>
-                    <span class="badge badge-blue">Interactive</span>
+                    <span class="badge badge-blue">Timeline</span>
                 </div>
                 <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
                 <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
-                    <li>577 CWE nodes, 903 co-occurrence edges</li>
-                    <li>Click to see common partners</li>
-                    <li>Size = frequency of co-occurrence</li>
+                    <li>13 months of publication data</li>
+                    <li>Top 10 CNAs tracked over time</li>
+                    <li>Interactive legend to filter CNAs</li>
                 </ul>
-                <div class="mt-4 text-blue-400 font-semibold">Explore Patterns →</div>
+                <div class="mt-4 text-blue-400 font-semibold">View Timeline →</div>
             </div>
-        </div>
 
-        <!-- Compact Graph Visualizations Section -->
-        <div class="mb-8">
-            <h2 class="text-3xl font-bold text-white mb-6 text-center">Compact Network Layouts</h2>
-            <p class="text-center text-slate-300 mb-8">Optimized views using different NetworkX graph layouts</p>
-        </div>
+            <!-- CWE Co-occurrence -->
+                        <!-- Temporal Trends -->
+            <div class="card" onclick="window.location.href='temporal-trends.html'">
+                <div class="card-icon">📈</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CVE Publication Trends</h2>
+                <p class="text-slate-300 mb-4">
+                    Track CVE publications over time with monthly breakdowns. 
+                    Compare activity across top CNAs with interactive timelines.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-blue">Active</span>
+                    <span class="badge badge-blue">Timeline</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>13 months of publication data</li>
+                    <li>Top 10 CNAs tracked over time</li>
+                    <li>Interactive legend to filter CNAs</li>
+                </ul>
+                <div class="mt-4 text-blue-400 font-semibold">View Timeline →</div>
+            </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <!-- Attack Surface Timeline -->
+            <div class="card" onclick="window.location.href='attack-surface-timeline.html'">
+                <div class="card-icon icon-cluster">�</div>
+                <h2 class="text-2xl font-bold text-white mb-3">Attack Surface Timeline</h2>
+                <p class="text-slate-300 mb-4">
+                    Scatter plot of all CVEs by publication date and CVSS score. 
+                    Identify critical vulnerability windows and severity trends over time.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-red">Active</span>
+                    <span class="badge badge-red">Timeline</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>Interactive scatter plot with jitter</li>
+                    <li>Color-coded by severity</li>
+                    <li>Daily aggregation trend line</li>
+                    <li>Filter by CVSS score range</li>
+                </ul>
+                <div class="mt-4 text-red-400 font-semibold">View Timeline →</div>
+            </div>
+
+            <!-- CVSS Severity Distribution -->
+            <div class="card" onclick="window.location.href='cvss-severity.html'">
+                <div class="card-icon">📊</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CVSS Severity Distribution</h2>
+                <p class="text-slate-300 mb-4">
+                    Analyze vulnerability severity ratings across all CVEs. 
+                    See which CNAs report the most critical vulnerabilities.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-red">Active</span>
+                    <span class="badge badge-red">Interactive</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>41,384 CVEs with CVSS scores</li>
+                    <li>Severity breakdown by score ranges</li>
+                    <li>Top 20 CNAs by critical CVEs</li>
+                </ul>
+                <div class="mt-4 text-red-400 font-semibold">View Analysis →</div>
+            </div>
+
+            <!-- Heatmap Matrix -->
+            <div class="card" onclick="window.location.href='heatmap-matrix.html'">
+                <div class="card-icon">🔥</div>
+                <h2 class="text-2xl font-bold text-white mb-3">Heatmap Matrix</h2>
+                <p class="text-slate-300 mb-4">
+                    Top CNAs vs CWEs in a color-coded matrix. 
+                    Instantly spot patterns and hotspots in vulnerability distributions.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-red">Active</span>
+                    <span class="badge badge-red">Matrix</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>30 CNAs × 40 CWEs matrix</li>
+                    <li>Color intensity = CVE count</li>
+                    <li>Click labels to highlight rows/cols</li>
+                </ul>
+                <div class="mt-4 text-red-400 font-semibold">View Matrix →</div>
+            </div>
+
+            <!-- Sankey Flow Diagram -->
+            <div class="card" onclick="window.location.href='sankey-flow.html'">
+                <div class="card-icon">🌊</div>
+                <h2 class="text-2xl font-bold text-white mb-3">Sankey Flow Diagram</h2>
+                <p class="text-slate-300 mb-4">
+                    Visualize the flow from top CNAs to CWEs with thickness representing frequency. 
+                    Clear left-to-right flow for pattern recognition.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-blue">Active</span>
+                    <span class="badge badge-blue">Flow</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>20 CNAs flowing to 30 CWEs</li>
+                    <li>Flow thickness = CVE count</li>
+                    <li>Gradient colors CNA to CWE</li>
+                </ul>
+                <div class="mt-4 text-blue-400 font-semibold">View Flow →</div>
+            </div>
+
             <!-- Top 50 CNA-CWE Bipartite -->
             <div class="card" onclick="window.location.href='bipartite-top50.html'">
                 <div class="card-icon icon-network">⚖️</div>
@@ -215,6 +291,49 @@
                     <li>Left-right bipartite layout</li>
                 </ul>
                 <div class="mt-4 text-blue-400 font-semibold">View Bipartite →</div>
+            </div>
+
+            <!-- CWE Co-occurrence -->
+            <div class="card" onclick="window.location.href='cwe-cooccurrence.html'">
+                <div class="card-icon">�🔗</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CWE Co-occurrence Network</h2>
+                <p class="text-slate-300 mb-4">
+                    See which weaknesses commonly appear together in the same CVE. 
+                    Reveals patterns in vulnerability combinations.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-blue">Active</span>
+                    <span class="badge badge-blue">Interactive</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>577 CWE nodes, 903 co-occurrence edges</li>
+                    <li>Click to see common partners</li>
+                    <li>Size = frequency of co-occurrence</li>
+                </ul>
+                <div class="mt-4 text-blue-400 font-semibold">Explore Patterns →</div>
+            </div>
+
+            <!-- CWE Trending -->
+            <div class="card" onclick="window.location.href='cwe-trending.html'">
+                <div class="card-icon icon-network">📈</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CWE Trending Analysis</h2>
+                <p class="text-slate-300 mb-4">
+                    Track which CWE types are increasing or decreasing over time. 
+                    Sparklines show month-over-month trends with percentage changes.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-blue">Active</span>
+                    <span class="badge badge-blue">Trending</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>50 CWEs with trend indicators</li>
+                    <li>Sparkline visualizations</li>
+                    <li>Filter by trend direction</li>
+                    <li>Search and sort capabilities</li>
+                </ul>
+                <div class="mt-4 text-blue-400 font-semibold">View Trends →</div>
             </div>
 
             <!-- CWE Hierarchy Tree -->
@@ -280,6 +399,28 @@
                 <div class="mt-4 text-blue-400 font-semibold">View Circle →</div>
             </div>
 
+            <!-- CVSS Distribution by CWE -->
+            <div class="card" onclick="window.location.href='cwe-cvss-distribution.html'">
+                <div class="card-icon icon-cluster">📉</div>
+                <h2 class="text-2xl font-bold text-white mb-3">CVSS Distribution by CWE</h2>
+                <p class="text-slate-300 mb-4">
+                    Statistical analysis showing CVSS score distributions across different CWE types. 
+                    Box plots reveal median severity and outliers for each weakness.
+                </p>
+                <div class="mb-4">
+                    <span class="badge badge-purple">Active</span>
+                    <span class="badge badge-purple">Statistical</span>
+                </div>
+                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
+                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
+                    <li>50 CWEs with quartile analysis</li>
+                    <li>Interactive box plots</li>
+                    <li>Sort by mean score or count</li>
+                    <li>Severity breakdown bars</li>
+                </ul>
+                <div class="mt-4 text-purple-400 font-semibold">View Distribution →</div>
+            </div>
+
             <!-- CNA Collaboration Network -->
             <div class="card" onclick="window.location.href='cna-collaboration.html'">
                 <div class="card-icon icon-network">🤝</div>
@@ -343,88 +484,27 @@
                 <div class="mt-4 text-purple-400 font-semibold">View Profiles →</div>
             </div>
 
-            <!-- Sankey Flow Diagram -->
-            <div class="card" onclick="window.location.href='sankey-flow.html'">
-                <div class="card-icon">🌊</div>
-                <h2 class="text-2xl font-bold text-white mb-3">Sankey Flow Diagram</h2>
+            <!-- Independent Clusters -->
+            <div class="card" onclick="window.location.href='clusters.html'">
+                <div class="card-icon icon-cluster">🎯</div>
+                <h2 class="text-2xl font-bold text-white mb-3">Independent Clusters</h2>
                 <p class="text-slate-300 mb-4">
-                    Visualize the flow from top CNAs to CWEs with thickness representing frequency. 
-                    Clear left-to-right flow for pattern recognition.
+                    Each CNA displayed as an isolated mini-network with its own CWEs. 
+                    Perfect for analyzing individual CNA vulnerability profiles.
                 </p>
                 <div class="mb-4">
-                    <span class="badge badge-blue">Active</span>
-                    <span class="badge badge-blue">Flow</span>
+                    <span class="badge badge-red">Isolated</span>
+                    <span class="badge badge-red">Sortable</span>
+                    <span class="badge badge-red">Searchable</span>
                 </div>
                 <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
                 <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
-                    <li>20 CNAs flowing to 30 CWEs</li>
-                    <li>Flow thickness = CVE count</li>
-                    <li>Gradient colors CNA to CWE</li>
+                    <li>409 independent mini-networks</li>
+                    <li>Sort by size or search by name</li>
+                    <li>Adjustable density slider</li>
+                    <li>CNA size scales with CWE count</li>
                 </ul>
-                <div class="mt-4 text-blue-400 font-semibold">View Flow →</div>
-            </div>
-
-            <!-- CVSS Severity Distribution -->
-            <div class="card" onclick="window.location.href='cvss-severity.html'">
-                <div class="card-icon">📊</div>
-                <h2 class="text-2xl font-bold text-white mb-3">CVSS Severity Distribution</h2>
-                <p class="text-slate-300 mb-4">
-                    Analyze vulnerability severity ratings across all CVEs. 
-                    See which CNAs report the most critical vulnerabilities.
-                </p>
-                <div class="mb-4">
-                    <span class="badge badge-red">Active</span>
-                    <span class="badge badge-red">Interactive</span>
-                </div>
-                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
-                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
-                    <li>41,384 CVEs with CVSS scores</li>
-                    <li>Severity breakdown by score ranges</li>
-                    <li>Top 20 CNAs by critical CVEs</li>
-                </ul>
-                <div class="mt-4 text-red-400 font-semibold">View Analysis →</div>
-            </div>
-
-            <!-- Temporal Trends -->
-            <div class="card" onclick="window.location.href='temporal-trends.html'">
-                <div class="card-icon">📈</div>
-                <h2 class="text-2xl font-bold text-white mb-3">CVE Publication Trends</h2>
-                <p class="text-slate-300 mb-4">
-                    Track CVE publications over time with monthly breakdowns. 
-                    Compare activity across top CNAs with interactive timelines.
-                </p>
-                <div class="mb-4">
-                    <span class="badge badge-blue">Active</span>
-                    <span class="badge badge-blue">Timeline</span>
-                </div>
-                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
-                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
-                    <li>13 months of publication data</li>
-                    <li>Top 10 CNAs tracked over time</li>
-                    <li>Interactive legend to filter CNAs</li>
-                </ul>
-                <div class="mt-4 text-blue-400 font-semibold">View Timeline →</div>
-            </div>
-
-            <!-- Heatmap Matrix -->
-            <div class="card" onclick="window.location.href='heatmap-matrix.html'">
-                <div class="card-icon">🔥</div>
-                <h2 class="text-2xl font-bold text-white mb-3">Heatmap Matrix</h2>
-                <p class="text-slate-300 mb-4">
-                    Top CNAs vs CWEs in a color-coded matrix. 
-                    Instantly spot patterns and hotspots in vulnerability distributions.
-                </p>
-                <div class="mb-4">
-                    <span class="badge badge-red">Active</span>
-                    <span class="badge badge-red">Matrix</span>
-                </div>
-                <p class="text-sm text-slate-400 mb-2"><strong>Features:</strong></p>
-                <ul class="text-sm text-slate-400 list-disc list-inside space-y-1">
-                    <li>30 CNAs × 40 CWEs matrix</li>
-                    <li>Color intensity = CVE count</li>
-                    <li>Click labels to highlight rows/cols</li>
-                </ul>
-                <div class="mt-4 text-red-400 font-semibold">View Matrix →</div>
+                <div class="mt-4 text-red-400 font-semibold">View Clusters →</div>
             </div>
         </div>
 
@@ -461,7 +541,7 @@
                 <div>
                     <h4 class="font-semibold text-white mb-2">Visualizations</h4>
                     <p class="text-sm">
-                        14 interactive network graphs covering CNA-CWE relationships, co-occurrence patterns, vendor profiles, CVSS severity analysis, temporal trends, and more. All visualizations support zoom, pan, and click-to-highlight interactions.
+                        17 interactive network graphs and analytical visualizations covering CNA-CWE relationships, co-occurrence patterns, vendor profiles, CVSS severity analysis, temporal trends, trending analysis, and more. All visualizations support zoom, pan, and click-to-highlight interactions.
                     </p>
                 </div>
                 <div>

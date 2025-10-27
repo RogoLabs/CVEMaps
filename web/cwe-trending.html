@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CWE Trending Analysis - CVE Maps</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+            color: #e2e8f0;
+        }
+        
+        #main-container {
+            padding: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .chart-container {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #475569;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .trend-up { color: #ef4444; }
+        .trend-down { color: #22c55e; }
+        .trend-stable { color: #94a3b8; }
+        
+        .cwe-row {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #334155;
+            transition: background 0.2s;
+        }
+        
+        .cwe-row:hover {
+            background: rgba(51, 65, 85, 0.5);
+        }
+        
+        .cwe-name {
+            width: 120px;
+            font-weight: 600;
+            color: #60a5fa;
+        }
+        
+        .cwe-sparkline {
+            flex: 1;
+            height: 40px;
+        }
+        
+        .cwe-trend {
+            width: 120px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .cwe-count {
+            width: 100px;
+            text-align: right;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: #2563eb;
+        }
+        
+        button.back-btn {
+            background: #64748b;
+        }
+        
+        button.back-btn:hover {
+            background: #475569;
+        }
+        
+        button.active {
+            background: #2563eb;
+        }
+        
+        .filter-controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        input[type="text"] {
+            background: rgba(51, 65, 85, 0.8);
+            border: 1px solid #475569;
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 300px;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-container">
+        <div class="chart-container">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px;">
+                <div>
+                    <h1 class="text-3xl font-bold text-white mb-2">CWE Trending Analysis</h1>
+                    <p class="text-slate-400">Track which vulnerability types are trending up or down over time</p>
+                </div>
+                <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
+            </div>
+            
+            <div class="filter-controls">
+                <input type="text" id="search-input" placeholder="Search CWE..." />
+                <button id="filter-all" class="active" onclick="filterTrend('all')">All</button>
+                <button id="filter-up" onclick="filterTrend('up')">↗ Trending Up</button>
+                <button id="filter-down" onclick="filterTrend('down')">↘ Trending Down</button>
+                <button id="filter-stable" onclick="filterTrend('stable')">→ Stable</button>
+            </div>
+            
+            <div id="cwe-list"></div>
+        </div>
+    </div>
+    
+    <script>
+        let data = null;
+        let currentFilter = 'all';
+        let searchTerm = '';
+        
+        async function loadData() {
+            try {
+                const response = await fetch('./data/cwe_trending.json');
+                data = await response.json();
+                renderCWEList();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        function filterTrend(trend) {
+            currentFilter = trend;
+            
+            // Update button states
+            document.querySelectorAll('.filter-controls button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`filter-${trend}`).classList.add('active');
+            
+            renderCWEList();
+        }
+        
+        function renderCWEList() {
+            const container = document.getElementById('cwe-list');
+            
+            // Filter data
+            let filtered = data.cwes.filter(cwe => {
+                const matchesFilter = currentFilter === 'all' || cwe.trend_direction === currentFilter;
+                const matchesSearch = cwe.cwe.toLowerCase().includes(searchTerm.toLowerCase());
+                return matchesFilter && matchesSearch;
+            });
+            
+            container.innerHTML = filtered.map(cwe => {
+                const trendClass = `trend-${cwe.trend_direction}`;
+                const trendIcon = cwe.trend_direction === 'up' ? '↗' : (cwe.trend_direction === 'down' ? '↘' : '→');
+                const trendText = `${trendIcon} ${Math.abs(cwe.trend_percent)}%`;
+                
+                return `
+                    <div class="cwe-row">
+                        <div class="cwe-name">${cwe.cwe}</div>
+                        <div class="cwe-sparkline" id="spark-${cwe.cwe}"></div>
+                        <div class="cwe-trend ${trendClass}">${trendText}</div>
+                        <div class="cwe-count">${cwe.total_count.toLocaleString()} CVEs</div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Render sparklines
+            filtered.forEach(cwe => {
+                renderSparkline(cwe);
+            });
+        }
+        
+        function renderSparkline(cwe) {
+            const container = document.getElementById(`spark-${cwe.cwe}`);
+            if (!container) return;
+            
+            const width = container.offsetWidth;
+            const height = 40;
+            const margin = { top: 5, right: 5, bottom: 5, left: 5 };
+            
+            const svg = d3.select(`#spark-${cwe.cwe}`)
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            
+            const values = cwe.monthly_data.map(d => d.count);
+            
+            const x = d3.scaleLinear()
+                .domain([0, values.length - 1])
+                .range([margin.left, width - margin.right]);
+            
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(values)])
+                .range([height - margin.bottom, margin.top]);
+            
+            const line = d3.line()
+                .x((d, i) => x(i))
+                .y(d => y(d))
+                .curve(d3.curveMonotoneX);
+            
+            // Area
+            const area = d3.area()
+                .x((d, i) => x(i))
+                .y0(height - margin.bottom)
+                .y1(d => y(d))
+                .curve(d3.curveMonotoneX);
+            
+            const color = cwe.trend_direction === 'up' ? '#ef4444' : 
+                         (cwe.trend_direction === 'down' ? '#22c55e' : '#3b82f6');
+            
+            svg.append("path")
+                .datum(values)
+                .attr("fill", color)
+                .attr("fill-opacity", 0.2)
+                .attr("d", area);
+            
+            svg.append("path")
+                .datum(values)
+                .attr("fill", "none")
+                .attr("stroke", color)
+                .attr("stroke-width", 2)
+                .attr("d", line);
+            
+            // Points
+            svg.selectAll("circle")
+                .data(values)
+                .join("circle")
+                .attr("cx", (d, i) => x(i))
+                .attr("cy", d => y(d))
+                .attr("r", 2)
+                .attr("fill", color);
+        }
+        
+        // Search functionality
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            searchTerm = e.target.value;
+            renderCWEList();
+        });
+        
+        loadData();
+    </script>
+</body>
+</html>

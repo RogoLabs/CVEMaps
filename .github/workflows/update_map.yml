@@ -53,23 +53,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       
-      - name: Cache CVE data
-        id: cache-cve
-        uses: actions/cache@v3
-        with:
-          path: cve-data
-          key: cve-data-${{ github.run_id }}
-          restore-keys: |
-            cve-data-
-      
-      - name: Setup CVE data directory
-        run: |
-          # Remove existing directory if it exists (handles cache restoration issues)
-          if [ -d "cve-data" ]; then
-            echo "Removing existing cve-data directory..."
-            rm -rf cve-data
-          fi
-      
       - name: Clone CVE data repository
         run: |
           echo "Cloning CVE data repository..."

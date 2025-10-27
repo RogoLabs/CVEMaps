@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVSS Distribution by CWE - CVE Maps</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+            color: #e2e8f0;
+        }
+        
+        #main-container {
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .chart-container {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #475569;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .box {
+            fill-opacity: 0.6;
+            stroke: #fff;
+            stroke-width: 1px;
+        }
+        
+        .box:hover {
+            fill-opacity: 0.8;
+        }
+        
+        .median-line {
+            stroke: #fff;
+            stroke-width: 2px;
+        }
+        
+        .whisker {
+            stroke: #cbd5e1;
+            stroke-width: 1px;
+        }
+        
+        .axis path,
+        .axis line {
+            stroke: #64748b;
+        }
+        
+        .axis text {
+            fill: #cbd5e1;
+            font-size: 11px;
+        }
+        
+        #tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 12px;
+            color: #e2e8f0;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: #2563eb;
+        }
+        
+        button.back-btn {
+            background: #64748b;
+        }
+        
+        button.back-btn:hover {
+            background: #475569;
+        }
+        
+        button.active {
+            background: #2563eb;
+        }
+        
+        .filter-controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        input[type="text"] {
+            background: rgba(51, 65, 85, 0.8);
+            border: 1px solid #475569;
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 300px;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-container">
+        <div class="chart-container">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px;">
+                <div>
+                    <h1 class="text-3xl font-bold text-white mb-2">CVSS Distribution by CWE</h1>
+                    <p class="text-slate-400">Box plot showing severity score distributions for each CWE type</p>
+                </div>
+                <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
+            </div>
+            
+            <div class="filter-controls">
+                <input type="text" id="search-input" placeholder="Search CWE..." />
+                <button id="sort-mean" class="active" onclick="sortBy('mean')">Sort by Mean Score</button>
+                <button id="sort-count" onclick="sortBy('count')">Sort by CVE Count</button>
+                <button id="sort-cwe" onclick="sortBy('cwe')">Sort by CWE ID</button>
+            </div>
+            
+            <div id="chart"></div>
+        </div>
+        
+        <div class="chart-container">
+            <h2 class="text-2xl font-bold text-white mb-4">Severity Breakdown</h2>
+            <div id="severity-chart"></div>
+        </div>
+    </div>
+    
+    <div id="tooltip"></div>
+    
+    <script>
+        let data = null;
+        let currentSort = 'mean';
+        let searchTerm = '';
+        const tooltip = d3.select("#tooltip");
+        
+        async function loadData() {
+            try {
+                const response = await fetch('./data/cwe_cvss_distribution.json');
+                data = await response.json();
+                renderCharts();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        function sortBy(criteria) {
+            currentSort = criteria;
+            
+            // Update button states
+            document.querySelectorAll('.filter-controls button[id^="sort-"]').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`sort-${criteria}`).classList.add('active');
+            
+            renderCharts();
+        }
+        
+        function renderCharts() {
+            // Filter and sort data
+            let filtered = data.distributions.filter(d => 
+                d.cwe.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            
+            if (currentSort === 'mean') {
+                filtered.sort((a, b) => b.mean - a.mean);
+            } else if (currentSort === 'count') {
+                filtered.sort((a, b) => b.count - a.count);
+            } else {
+                filtered.sort((a, b) => {
+                    const numA = parseInt(a.cwe.replace('CWE-', ''));
+                    const numB = parseInt(b.cwe.replace('CWE-', ''));
+                    return numA - numB;
+                });
+            }
+            
+            // Limit to top 30 for readability
+            filtered = filtered.slice(0, 30);
+            
+            renderBoxPlot(filtered);
+            renderSeverityBreakdown(filtered);
+        }
+        
+        function renderBoxPlot(filtered) {
+            const container = document.getElementById('chart');
+            container.innerHTML = '';
+            
+            const width = container.offsetWidth;
+            const height = Math.max(600, filtered.length * 25);
+            const margin = { top: 20, right: 30, bottom: 60, left: 100 };
+            
+            const svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            
+            // Scales
+            const x = d3.scaleLinear()
+                .domain([0, 10])
+                .range([margin.left, width - margin.right]);
+            
+            const y = d3.scaleBand()
+                .domain(filtered.map(d => d.cwe))
+                .range([margin.top, height - margin.bottom])
+                .padding(0.2);
+            
+            // Axes
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x).ticks(10));
+            
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y));
+            
+            // Axis labels
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", height - 20)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#cbd5e1")
+                .text("CVSS Score");
+            
+            // Box plots
+            const boxWidth = y.bandwidth();
+            
+            filtered.forEach(d => {
+                const yPos = y(d.cwe) + y.bandwidth() / 2;
+                
+                // Color based on mean severity
+                const color = d.mean >= 9.0 ? '#ef4444' :
+                             d.mean >= 7.0 ? '#f97316' :
+                             d.mean >= 4.0 ? '#eab308' : '#22c55e';
+                
+                // Whiskers (min to max)
+                svg.append("line")
+                    .attr("class", "whisker")
+                    .attr("x1", x(d.min))
+                    .attr("x2", x(d.max))
+                    .attr("y1", yPos)
+                    .attr("y2", yPos);
+                
+                // Box (Q1 to Q3)
+                svg.append("rect")
+                    .attr("class", "box")
+                    .attr("x", x(d.q1))
+                    .attr("y", yPos - boxWidth * 0.3)
+                    .attr("width", x(d.q3) - x(d.q1))
+                    .attr("height", boxWidth * 0.6)
+                    .attr("fill", color)
+                    .on("mouseover", function(event) {
+                        d3.select(this).attr("fill-opacity", 0.8);
+                        
+                        tooltip
+                            .style("opacity", 1)
+                            .style("left", (event.pageX + 10) + "px")
+                            .style("top", (event.pageY - 10) + "px")
+                            .html(`
+                                <strong>${d.cwe}</strong><br>
+                                Mean: ${d.mean}<br>
+                                Median: ${d.median}<br>
+                                Range: ${d.min} - ${d.max}<br>
+                                Q1: ${d.q1}, Q3: ${d.q3}<br>
+                                <br>
+                                <strong>Severity Breakdown:</strong><br>
+                                Critical: ${d.severity_breakdown.critical}<br>
+                                High: ${d.severity_breakdown.high}<br>
+                                Medium: ${d.severity_breakdown.medium}<br>
+                                Low: ${d.severity_breakdown.low}<br>
+                                <br>
+                                Total CVEs: ${d.count}
+                            `);
+                    })
+                    .on("mouseout", function() {
+                        d3.select(this).attr("fill-opacity", 0.6);
+                        tooltip.style("opacity", 0);
+                    });
+                
+                // Median line
+                svg.append("line")
+                    .attr("class", "median-line")
+                    .attr("x1", x(d.median))
+                    .attr("x2", x(d.median))
+                    .attr("y1", yPos - boxWidth * 0.3)
+                    .attr("y2", yPos + boxWidth * 0.3);
+            });
+        }
+        
+        function renderSeverityBreakdown(filtered) {
+            const container = document.getElementById('severity-chart');
+            container.innerHTML = '';
+            
+            const width = container.offsetWidth;
+            const height = 400;
+            const margin = { top: 20, right: 30, bottom: 60, left: 100 };
+            
+            const svg = d3.select("#severity-chart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            
+            // Take top 20 for clarity
+            const top20 = filtered.slice(0, 20);
+            
+            // Stack data
+            const stack = d3.stack()
+                .keys(['critical', 'high', 'medium', 'low'])
+                .value((d, key) => d.severity_breakdown[key]);
+            
+            const stackedData = stack(top20);
+            
+            // Scales
+            const x = d3.scaleLinear()
+                .domain([0, d3.max(top20, d => d.count)])
+                .range([margin.left, width - margin.right]);
+            
+            const y = d3.scaleBand()
+                .domain(top20.map(d => d.cwe))
+                .range([margin.top, height - margin.bottom])
+                .padding(0.2);
+            
+            const color = d3.scaleOrdinal()
+                .domain(['critical', 'high', 'medium', 'low'])
+                .range(['#ef4444', '#f97316', '#eab308', '#22c55e']);
+            
+            // Bars
+            svg.selectAll("g.layer")
+                .data(stackedData)
+                .join("g")
+                .attr("class", "layer")
+                .attr("fill", d => color(d.key))
+                .selectAll("rect")
+                .data(d => d)
+                .join("rect")
+                .attr("x", d => x(d[0]))
+                .attr("y", d => y(d.data.cwe))
+                .attr("width", d => x(d[1]) - x(d[0]))
+                .attr("height", y.bandwidth());
+            
+            // Axes
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x));
+            
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y));
+            
+            // Legend
+            const legend = svg.append("g")
+                .attr("transform", `translate(${width - 150}, ${margin.top})`);
+            
+            const legendData = [
+                { label: 'Critical (9.0-10)', color: '#ef4444' },
+                { label: 'High (7.0-8.9)', color: '#f97316' },
+                { label: 'Medium (4.0-6.9)', color: '#eab308' },
+                { label: 'Low (0-3.9)', color: '#22c55e' }
+            ];
+            
+            legendData.forEach((d, i) => {
+                legend.append("rect")
+                    .attr("x", 0)
+                    .attr("y", i * 20)
+                    .attr("width", 12)
+                    .attr("height", 12)
+                    .attr("fill", d.color);
+                
+                legend.append("text")
+                    .attr("x", 18)
+                    .attr("y", i * 20 + 10)
+                    .attr("fill", "#cbd5e1")
+                    .attr("font-size", "11px")
+                    .text(d.label);
+            });
+        }
+        
+        // Search functionality
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            searchTerm = e.target.value;
+            renderCharts();
+        });
+        
+        loadData();
+    </script>
+</body>
+</html>

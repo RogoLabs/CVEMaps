@@ -251,7 +251,7 @@
                 allNodes = graphData.nodes.map(d => ({...d}));
                 allLinks = graphData.links.map(d => ({...d}));
                 
-                const centerNodes = allNodes.filter(n => n.center);
+                const centerNodes = allNodes.filter(n => n.role === 'center');
                 document.getElementById('stats').textContent = 
                     `${centerNodes.length} CWE centers • ${allNodes.length} total nodes • ${graphData.metadata.edge_count} connections`;
                 
@@ -308,8 +308,8 @@
                 .selectAll("circle")
                 .data(allNodes)
                 .join("circle")
-                .attr("class", d => d.center ? "node node-center" : "node node-cna")
-                .attr("r", d => d.center ? 8 : 4)
+                .attr("class", d => d.role === 'center' ? "node node-center" : "node node-cna")
+                .attr("r", d => d.role === 'center' ? 8 : 4)
                 .attr("cx", d => d.displayX)
                 .attr("cy", d => d.displayY)
                 .on("mouseover", function(event, d) {
@@ -326,7 +326,7 @@
                         .style("opacity", 1)
                         .style("left", (event.pageX + 10) + "px")
                         .style("top", (event.pageY - 10) + "px")
-                        .html(`<strong>${d.label}</strong><br>Type: ${d.center ? 'CWE' : 'CNA'}<br>Connections: ${connections.length}${d.star_id !== undefined ? '<br>Star: ' + (d.star_id + 1) : ''}`);
+                        .html(`<strong>${d.label}</strong><br>Type: ${d.role === 'center' ? 'CWE' : 'CNA'}<br>Connections: ${connections.length}${d.star_id !== undefined ? '<br>Star: ' + (d.star_id + 1) : ''}`);
                 })
                 .on("mouseout", function(event, d) {
                     if (!selectedNode || selectedNode.id !== d.id) {
@@ -340,7 +340,7 @@
                 });
             
             // Draw labels (center nodes only by default)
-            const centerNodes = allNodes.filter(n => n.center);
+            const centerNodes = allNodes.filter(n => n.role === 'center');
             const label = g.append("g")
                 .selectAll("text")
                 .data(showLabels ? centerNodes : [])
@@ -357,7 +357,7 @@
             selectedNode = d;
             
             document.getElementById('node-name').textContent = d.label;
-            document.getElementById('node-type').textContent = d.center ? 'CWE (Center)' : 'CNA';
+            document.getElementById('node-type').textContent = d.role === 'center' ? 'CWE (Center)' : 'CNA';
             
             const getNodeId = (node) => typeof node === 'object' ? node.id : node;
             const connectedLinks = allLinks.filter(l => {
@@ -380,7 +380,7 @@
                 .slice(0, 50);
             
             document.getElementById('connection-list').innerHTML = connectedNodes
-                .map(n => `<div class="py-1">${n.label} <span class="text-slate-500">(${n.center ? 'CWE' : 'CNA'})</span></div>`)
+                .map(n => `<div class="py-1">${n.label} <span class="text-slate-500">(${n.role === 'center' ? 'CWE' : 'CNA'})</span></div>`)
                 .join('');
             
             // Highlight
