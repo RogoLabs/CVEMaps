@@ -4,15 +4,26 @@ on:
   # Allow manual trigger
   workflow_dispatch:
   
+  # Trigger on push to main branch (for testing)
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.gitattributes'
+  
   # Run every 3 hours
   schedule:
     - cron: '0 */3 * * *'
 
 # Required permissions for GitHub Pages deployment
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read      # Read repository contents
+  pages: write        # Deploy to GitHub Pages
+  id-token: write     # OIDC token for deployment
+  actions: read       # Read workflow run data
 
 # Allow only one concurrent deployment
 concurrency:
