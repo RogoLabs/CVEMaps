@@ -118,23 +118,40 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 500;
             margin-right: 8px;
             transition: all 0.2s;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         button:hover {
-            background: rgba(71, 85, 105, 0.9);
-            border-color: #64748b;
+            background: rgba(51, 65, 85, 0.95);
+            border-color: #94a3b8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
         }
         
         input[type="text"] {
-            background: rgba(30, 41, 59, 0.9);
+            background: rgba(30, 41, 59, 0.95);
             border: 1px solid #64748b;
             color: #f1f5f9;
             padding: 8px 12px;
             border-radius: 6px;
             font-size: 14px;
             width: 250px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        input[type="text"]::placeholder {
+            color: #94a3b8;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
         
         .legend {
@@ -176,11 +193,11 @@
             <div class="legend">
                 <div class="legend-item">
                     <div class="legend-color" style="background: #3b82f6;"></div>
-                    <span class="text-slate-200">CNAs (Left)</span>
+                    <span class="text-slate-200">CNAs (Left) • <span id="cna-cve-count">-</span> CVEs</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #ef4444;"></div>
-                    <span class="text-slate-200">CWEs (Right)</span>
+                    <span class="text-slate-200">CWEs (Right) • <span id="cwe-cve-count">-</span> CVEs</span>
                 </div>
             </div>
             <div class="mt-2 text-xs text-slate-500">
@@ -247,6 +264,32 @@
                 const cnaCount = allNodes.filter(n => n.bipartite === 0).length;
                 const cweCount = allNodes.filter(n => n.bipartite === 1).length;
                 
+                // Calculate total CVEs for CNAs and CWEs (sum of all edge weights)
+                const cnaCVEs = allNodes
+                    .filter(n => n.bipartite === 0)
+                    .reduce((sum, cna) => {
+                        const cnaLinks = allLinks.filter(l => {
+                            const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
+                            const targetId = typeof l.target === 'object' ? l.target.id : l.target;
+                            return sourceId === cna.id || targetId === cna.id;
+                        });
+                        return sum + cnaLinks.reduce((s, link) => s + (link.weight || 1), 0);
+                    }, 0);
+                
+                const cweCVEs = allNodes
+                    .filter(n => n.bipartite === 1)
+                    .reduce((sum, cwe) => {
+                        const cweLinks = allLinks.filter(l => {
+                            const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
+                            const targetId = typeof l.target === 'object' ? l.target.id : l.target;
+                            return sourceId === cwe.id || targetId === cwe.id;
+                        });
+                        return sum + cweLinks.reduce((s, link) => s + (link.weight || 1), 0);
+                    }, 0);
+                
+                document.getElementById('cna-cve-count').textContent = cnaCVEs.toLocaleString();
+                document.getElementById('cwe-cve-count').textContent = cweCVEs.toLocaleString();
+                
                 document.getElementById('stats').textContent = 
                     `${cnaCount} CNAs • ${cweCount} CWEs • ${graphData.metadata.edge_count} associations`;
                 
@@ -259,16 +302,23 @@
         function visualizeGraph() {
             g.selectAll('*').remove();
             
-            // Use pre-computed bipartite positions
+            // Use pre-computed bipartite positions with expanded height
             const padding = 150;
             const usableWidth = width - 2 * padding;
-            const usableHeight = height - 2 * padding;
             
             // Separate CNAs and CWEs
             const cnas = allNodes.filter(n => n.bipartite === 0);
             const cwes = allNodes.filter(n => n.bipartite === 1);
             
-            // Position CNAs on left, CWEs on right
+            // Calculate required height for readable spacing
+            const minSpacing = 18; // Minimum pixels between CWE labels
+            const requiredHeight = Math.max(height, cwes.length * minSpacing);
+            const usableHeight = requiredHeight - 2 * padding;
+            
+            // Update SVG height if needed
+            svg.attr("height", requiredHeight);
+            
+            // Position CNAs on left, CWEs on right with better spacing
             cnas.forEach((n, i) => {
                 n.displayX = padding;
                 n.displayY = padding + (i / (cnas.length - 1)) * usableHeight;
@@ -276,7 +326,7 @@
             
             cwes.forEach((n, i) => {
                 n.displayX = width - padding;
-                n.displayY = padding + (i / (cwes.length - 1)) * usableHeight;
+                n.displayY = padding + (i * minSpacing);
             });
             
             // Draw center divider line
@@ -285,7 +335,7 @@
                 .attr("x1", width / 2)
                 .attr("y1", padding - 20)
                 .attr("x2", width / 2)
-                .attr("y2", height - padding + 20);
+                .attr("y2", requiredHeight - padding + 20);
             
             // Draw links
             const link = g.append("g")
