@@ -38,8 +38,11 @@ def optimize_temporal_map(input_file, output_file):
     with open(input_file, 'r') as f:
         data = json.load(f)
     
-    # Aggregate by month
-    monthly_stats = defaultdict(lambda: {"count": 0, "cnas": defaultdict(int), "cwes": defaultdict(int)})
+    # Aggregate by month - using a helper function to avoid type checker issues
+    def create_stats_dict():
+        return {"count": 0, "cnas": defaultdict(int), "cwes": defaultdict(int)}
+    
+    monthly_stats: dict = defaultdict(create_stats_dict)
     
     for node in data.get("nodes", []):
         if node.get("type") == "cve":
@@ -49,22 +52,22 @@ def optimize_temporal_map(input_file, output_file):
                 parts = cve_id.split("-")
                 if len(parts) >= 2:
                     year_month = parts[1]  # Just use year for now
-                    monthly_stats[year_month]["count"] += 1
+                    monthly_stats[year_month]["count"] += 1  # type: ignore[index]
                     if "cna" in node:
-                        monthly_stats[year_month]["cnas"][node["cna"]] += 1
+                        monthly_stats[year_month]["cnas"][node["cna"]] += 1  # type: ignore[index]
     
     # Convert to timeline format
     timeline = []
     for period, stats in sorted(monthly_stats.items()):
         timeline.append({
             "period": period,
-            "count": stats["count"],
-            "top_cnas": sorted(stats["cnas"].items(), key=lambda x: x[1], reverse=True)[:10]
+            "count": stats["count"],  # type: ignore[index]
+            "top_cnas": sorted(stats["cnas"].items(), key=lambda x: x[1], reverse=True)[:10]  # type: ignore[index]
         })
     
     optimized = {
         "timeline": timeline,
-        "total_cves": sum(s["count"] for s in monthly_stats.values()),
+        "total_cves": sum(s["count"] for s in monthly_stats.values()),  # type: ignore[misc]
         "metadata": {
             "description": "Aggregated CVE timeline by year",
             "optimized": True
