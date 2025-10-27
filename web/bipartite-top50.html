@@ -470,16 +470,41 @@
                 allNodes.forEach(n => n.visible = true);
                 allLinks.forEach(l => l.visible = true);
             } else {
+                // First, mark nodes that match the search
+                const matchingNodeIds = new Set();
                 allNodes.forEach(n => {
-                    n.visible = n.label.toLowerCase().includes(query);
+                    if (n.label.toLowerCase().includes(query)) {
+                        matchingNodeIds.add(n.id);
+                    }
                 });
                 
-                const visibleNodeIds = new Set(allNodes.filter(n => n.visible).map(n => n.id));
+                // Find all nodes connected to matching nodes
+                const connectedNodeIds = new Set(matchingNodeIds);
                 allLinks.forEach(l => {
                     const getNodeId = (node) => typeof node === 'object' ? node.id : node;
                     const sourceId = getNodeId(l.source);
                     const targetId = getNodeId(l.target);
-                    l.visible = visibleNodeIds.has(sourceId) && visibleNodeIds.has(targetId);
+                    
+                    // If either end matches, show both ends and the link
+                    if (matchingNodeIds.has(sourceId)) {
+                        connectedNodeIds.add(targetId);
+                    }
+                    if (matchingNodeIds.has(targetId)) {
+                        connectedNodeIds.add(sourceId);
+                    }
+                });
+                
+                // Show matching nodes and their connections
+                allNodes.forEach(n => {
+                    n.visible = connectedNodeIds.has(n.id);
+                });
+                
+                // Show links that connect visible nodes
+                allLinks.forEach(l => {
+                    const getNodeId = (node) => typeof node === 'object' ? node.id : node;
+                    const sourceId = getNodeId(l.source);
+                    const targetId = getNodeId(l.target);
+                    l.visible = connectedNodeIds.has(sourceId) && connectedNodeIds.has(targetId);
                 });
             }
             
